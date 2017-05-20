@@ -1,0 +1,135 @@
+
+/* ------- PRINT BASIC STYLE ------ */
+
+/* Clearfix */
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
+}
+body{
+    
+}
+.print_title{
+    padding:0.938em;
+    border-bottom: 0.063em solid #7e7e7e;
+    border-top: 0.063em solid #7e7e7e;
+    text-align: center;
+    color: #002263;
+    font-size: 1em;
+    font-family:serif;
+    font-weight: bold;
+}
+.content{
+    width: 29%;
+    float: left;
+    margin: 1em 1em;
+    text-align: center;
+}
+.main{
+    width: 100%;
+    text-align: center;
+    margin:0 auto;
+    font-family: sans-serif;
+    font-size: 0.938em;
+    background: #fff;
+}
+label{
+    
+    color: #2c6bb2;
+    font-weight: bold;
+        display: block;
+    margin-top: 0.938em;
+    margin-bottom: 0.5em;
+}
+.content span{
+    //border: 0.063em solid #7e7e7e;
+}
+.main input[type="submit"], .main input[type="button"]{
+    width: 8.125em;
+    height: 2.500em;
+    //background-color:#002263;//#79bbff;
+    background-color:#236adb;
+    color:#ffffff;
+    font-family: Helvetica; //Verdana;
+    font-size: 1em;
+    font-weight: bold;
+    padding:0.518em 1.688em 0.518em 1.688em;
+    margin: 0.5em 0.313em;
+    text-decoration:none;
+    text-shadow:0em 0.063em 0em #528ecc;
+
+    -moz-border-radius:0.375em;
+    -webkit-border-radius:0.375em;
+    border-radius:0.375em;
+    display:inline-block;
+    cursor:pointer;
+    
+   
+	-moz-box-shadow:inset 0px 1px 0px 0px #346899;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #346899;
+	box-shadow:inset 0px 1px 0px 0px #346899;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3862ab), color-stop(1, #193872));
+	background:-moz-linear-gradient(top, #3862ab 5%, #193872 100%);
+	background:-webkit-linear-gradient(top, #3862ab 5%, #193872 100%);
+	background:-o-linear-gradient(top, #3862ab 5%, #193872 100%);
+	background:-ms-linear-gradient(top, #3862ab 5%, #193872 100%);
+	background:linear-gradient(to bottom, #3862ab 5%, #193872 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3862ab', endColorstr='#193872',GradientType=0);
+}
+
+.main input[type="submit"]:hover, .main input[type="button"]:hover {  
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #193872), color-stop(1, #3862ab));
+	background:-moz-linear-gradient(top, #193872 5%, #3862ab 100%);
+	background:-webkit-linear-gradient(top, #193872 5%, #3862ab 100%);
+	background:-o-linear-gradient(top, #193872 5%, #3862ab 100%);
+	background:-ms-linear-gradient(top, #193872 5%, #3862ab 100%);
+	background:linear-gradient(to bottom, #193872 5%, #3862ab 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#193872', endColorstr='#3862ab',GradientType=0);
+	background-color:#193872;
+}
+.main input[type="submit"]:active, .main input[type="button"]:active {
+    position:relative;
+    top:0.063em;
+}
+.main input[type="submit"]:disabled, .main input[type="button"]:disabled {
+	-moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;
+	-webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;
+	box-shadow:inset 0px 0px 14px -3px #f2fadc;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #c2cfb8));
+	background:-moz-linear-gradient(top, #dbe6c4 5%, #c2cfb8 100%);
+	background:-webkit-linear-gradient(top, #dbe6c4 5%, #c2cfb8 100%);
+	background:-o-linear-gradient(top, #dbe6c4 5%, #c2cfb8 100%);
+	background:-ms-linear-gradient(top, #dbe6c4 5%, #c2cfb8 100%);
+	background:linear-gradient(to bottom, #dbe6c4 5%, #c2cfb8 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe6c4', endColorstr='#c2cfb8',GradientType=0);
+	background-color:#dbe6c4;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #b2b8ad;
+	color:#868785;
+	text-shadow:0px 1px 0px #ced9bf;
+        cursor:default;
+
+}
+    @media screen and (max-width: 47.5em) {    
+   .content {
+        width: 100%;
+    }
+    .content label{
+        margin-top: 0.313em;
+    }
+    
+}
+@media print{
+    .main{
+    font-size: 0.756em;
+}
+}
