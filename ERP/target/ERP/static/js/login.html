@@ -1,0 +1,106 @@
+<html>
+<head>
+<link rel="stylesheet" href="mystyle.css">
+<link rel="shortcut icon" href="favicon.png">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+
+<script src="login.js"></script>
+</head>
+<body>
+	<nav id="header" class="navbar navbar-fixed-top navbar-inverse">
+		<div id="header-container" class="container navbar-container">
+			<div class="navbar-header">
+				<h1 style="color: white" align="center">Jerry Mouse</h1>
+				<!-- <a id="brand" class="navbar-brand" href="#">Jerry Mouse</a>-->
+			</div>
+
+		</div>
+		<!-- /.container -->
+	</nav>
+	<div class="container well " style="width: 65%; margin-top: 150px">
+		<div class="row">
+
+			<div class="col-md-6 col-md-offset-3">
+
+				<div style="padding: 20px;" id="form-login">
+					<h4 style="border-bottom: 1px solid #c5c5c5;">
+						<i class="glyphicon glyphicon-log-in"> </i> . Please Login to
+						Continue .
+					</h4>
+					<br>
+					<form accept-charset="UTF-8" role="form" id="login-form"
+						method="post">
+						<fieldset>
+							<div class="form-group input-group">
+								<span class="input-group-addon"> @ </span> <input
+									class="form-control" id="username" placeholder="Username/Email"
+									name="email" type="email" required="" autofocus="">
+							</div>
+							<div class="form-group input-group">
+								<span class="input-group-addon"> <i
+									class="glyphicon glyphicon-lock"> </i>
+								</span> <input class="form-control" id="password"
+									placeholder="Password" name="password" type="password" value=""
+									required=""> <a id="showHide" title="Show Password"
+									style="cursor: pointer; color: gray; margin-top: -2.5rem"
+									class="errspan" onclick="showPassword(this)"> <span><i
+										class="fa fa-eye" aria-hidden="true" id="imageOpen"></i></span>
+								</a>
+							</div>
+
+							<label class="checkbox" style="margin-left: 24px;"> <input
+								type="checkbox" value="remember-me"> Remember me
+							</label>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary btn-block">Login</button>
+								<p class="help-block">
+									<a class="pull-right text-muted" href="#" id="forgotPassword"><small>Forgot
+											your password?</small></a>
+								</p>
+							</div>
+							<div id="postResultDiv"></div>
+						</fieldset>
+					</form>
+				</div>
+				<div style="display: none;" id="form-login">
+					<h4 class="">Forgot your password?</h4>
+					<form accept-charset="UTF-8" role="form" id="login-recordar"
+						method="post">
+						<fieldset>
+							<span class="help-block"> Kindly enter email address or
+								phone number. <br> We'll send you a link with instructions
+								to reset a new password.
+							</span>
+							<div class="form-group input-group">
+								<span class="input-group-addon"> @ </span> <input
+									class="form-control" placeholder="Email" name="email"
+									type="email" required="">
+							</div>
+							<div class="form-group input-group">
+								<span class="input-group-addon"> <i
+									class="glyphicon glyphicon-user"> </i>
+								</span> <input class="form-control" placeholder="Phone Number"
+									name="email" type="email" required="" autofocus="">
+							</div>
+							<button type="submit" class="btn btn-primary btn-block"
+								id="btn-continue">Continue</button>
+							<p class="help-block">
+								<a class="text-muted" href="#" id="accessLogin"><small>Account
+										Login</small></a>
+							</p>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
