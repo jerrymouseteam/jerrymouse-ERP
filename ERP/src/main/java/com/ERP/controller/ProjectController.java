@@ -37,6 +37,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ERP.constants.ErpConstants;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
 import com.ERP.model.User;
@@ -59,14 +60,6 @@ public class ProjectController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
-
-	public static final String REST_SERVICE_URI = "http://localhost:8080/ERPoAuth";
-
-	public static final String AUTH_SERVER_URI = "http://localhost:8080/ERPoAuth/oauth/token";
-
-	public static final String QPM_PASSWORD_GRANT = "?grant_type=password&username=Sam&password=abc125";
-
-	public static final String QPM_ACCESS_TOKEN = "?access_token=";
 
 	/*
 	 * Prepare HTTP Headers.
@@ -101,8 +94,9 @@ public class ProjectController {
 
 		HttpEntity<String> request = new HttpEntity<String>(
 				getHeadersWithClientCredentials());
-		ResponseEntity<Object> response = restTemplate.exchange(AUTH_SERVER_URI
-				+ QPM_PASSWORD_GRANT, HttpMethod.POST, request, Object.class);
+		ResponseEntity<Object> response = restTemplate.exchange(
+				ErpConstants.AUTH_SERVER_URI + ErpConstants.QPM_PASSWORD_GRANT,
+				HttpMethod.POST, request, Object.class);
 		LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response
 				.getBody();
 		AuthTokenInfo tokenInfo = null;
@@ -152,7 +146,8 @@ public class ProjectController {
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 		try {
 			ResponseEntity<List> response = restTemplate.exchange(
-					REST_SERVICE_URI + "/project/" + QPM_ACCESS_TOKEN
+					ErpConstants.REST_SERVICE_URI + "/project/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
 							+ tokenInfo.getAccess_token(), HttpMethod.GET,
 					request, List.class);
 			projectssMap = (List<LinkedHashMap<String, Object>>) response
@@ -185,7 +180,8 @@ public class ProjectController {
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 		try {
 			ResponseEntity<List> response = restTemplate.exchange(
-					REST_SERVICE_URI + "/project/closed/" + QPM_ACCESS_TOKEN
+					ErpConstants.REST_SERVICE_URI + "/project/closed/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
 							+ tokenInfo.getAccess_token(), HttpMethod.GET,
 					request, List.class);
 			projectssMap = (List<LinkedHashMap<String, Object>>) response
@@ -244,7 +240,8 @@ public class ProjectController {
 				getHeaders());
 		try {
 			ResponseEntity<Project> response = restTemplate.postForEntity(
-					REST_SERVICE_URI + "/project/create/" + QPM_ACCESS_TOKEN
+					ErpConstants.REST_SERVICE_URI + "/project/create/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
 							+ tokenInfo.getAccess_token(), request,
 					Project.class);
 		} catch (HttpClientErrorException excep) {
@@ -282,7 +279,8 @@ public class ProjectController {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 		ResponseEntity<Project> response = restTemplate.exchange(
-				REST_SERVICE_URI + "/project/" + projectId + QPM_ACCESS_TOKEN
+				ErpConstants.REST_SERVICE_URI + "/project/" + projectId
+						+ ErpConstants.QPM_ACCESS_TOKEN
 						+ tokenInfo.getAccess_token(), HttpMethod.GET, request,
 				Project.class);
 		Project project = response.getBody();
@@ -328,9 +326,11 @@ public class ProjectController {
 
 		HttpEntity<Object> request = new HttpEntity<Object>(project,
 				getHeaders());
-		ResponseEntity<User> response = restTemplate.exchange(REST_SERVICE_URI
-				+ "/user/" + project.getProject_id() + QPM_ACCESS_TOKEN
-				+ tokenInfo.getAccess_token(), HttpMethod.PUT, request,
+		ResponseEntity<User> response = restTemplate.exchange(
+				ErpConstants.REST_SERVICE_URI + "/user/"
+						+ project.getProject_id()
+						+ ErpConstants.QPM_ACCESS_TOKEN
+						+ tokenInfo.getAccess_token(), HttpMethod.PUT, request,
 				User.class);
 		System.out.println(response.getBody());
 
@@ -350,9 +350,11 @@ public class ProjectController {
 		System.out.println("\nTesting delete User API----------");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		restTemplate.exchange(REST_SERVICE_URI + "/user/delete/" + projectId
-				+ QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
-				HttpMethod.DELETE, request, User.class);
+		restTemplate.exchange(
+				ErpConstants.REST_SERVICE_URI + "/user/delete/" + projectId
+						+ ErpConstants.QPM_ACCESS_TOKEN
+						+ tokenInfo.getAccess_token(), HttpMethod.DELETE,
+				request, User.class);
 
 		return "redirect:/list";
 	}

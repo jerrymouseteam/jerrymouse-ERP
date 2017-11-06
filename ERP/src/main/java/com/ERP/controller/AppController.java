@@ -41,6 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.ERP.constants.ErpConstants;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
 import com.ERP.model.User;
@@ -68,14 +69,6 @@ public class AppController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
-
-	public static final String REST_SERVICE_URI = "http://localhost:8080/ERPoAuth";
-
-	public static final String AUTH_SERVER_URI = "http://localhost:8080/ERPoAuth/oauth/token";
-
-	public static final String QPM_PASSWORD_GRANT = "?grant_type=password&username=Sam&password=abc125";
-
-	public static final String QPM_ACCESS_TOKEN = "?access_token=";
 
 	/*
 	 * Prepare HTTP Headers.
@@ -112,7 +105,8 @@ public class AppController {
 			HttpHeaders h = getHeadersWithClientCredentials();
 			HttpEntity<String> request = new HttpEntity<String>(h);
 			ResponseEntity<Object> response = restTemplate.exchange(
-					AUTH_SERVER_URI + QPM_PASSWORD_GRANT, HttpMethod.POST,
+					ErpConstants.AUTH_SERVER_URI
+							+ ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST,
 					request, Object.class);
 			LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response
 					.getBody();
@@ -194,7 +188,8 @@ public class AppController {
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 		try {
 			ResponseEntity<List> response = restTemplate.exchange(
-					REST_SERVICE_URI + "/user/" + QPM_ACCESS_TOKEN
+					ErpConstants.REST_SERVICE_URI + "/user/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
 							+ tokenInfo.getAccess_token(), HttpMethod.GET,
 					request, List.class);
 			List<LinkedHashMap<String, Object>> usersMap = (List<LinkedHashMap<String, Object>>) response
@@ -251,7 +246,8 @@ public class AppController {
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		try {
 			ResponseEntity<User> response = restTemplate.postForEntity(
-					REST_SERVICE_URI + "/user/create/" + QPM_ACCESS_TOKEN
+					ErpConstants.REST_SERVICE_URI + "/user/create/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
 							+ tokenInfo.getAccess_token(), request, User.class);
 		} catch (HttpClientErrorException excep) {
 			if (HttpStatus.CONFLICT.equals(excep.getStatusCode())) {
@@ -304,7 +300,8 @@ public class AppController {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 		ResponseEntity<User> response = restTemplate.exchange(
-				REST_SERVICE_URI + "/user/ssoid/" + ssoId + QPM_ACCESS_TOKEN
+				ErpConstants.REST_SERVICE_URI + "/user/ssoid/" + ssoId
+						+ ErpConstants.QPM_ACCESS_TOKEN
 						+ tokenInfo.getAccess_token(), HttpMethod.GET, request,
 				User.class);
 		User user = response.getBody();
@@ -349,7 +346,8 @@ public class AppController {
 
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		ResponseEntity<User> response = restTemplate.exchange(
-				REST_SERVICE_URI + "/user/" + user.getId() + QPM_ACCESS_TOKEN
+				ErpConstants.REST_SERVICE_URI + "/user/" + user.getId()
+						+ ErpConstants.QPM_ACCESS_TOKEN
 						+ tokenInfo.getAccess_token(), HttpMethod.PUT, request,
 				User.class);
 		System.out.println(response.getBody());
@@ -370,12 +368,15 @@ public class AppController {
 		System.out.println("\nTesting delete User API----------");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		System.out.println(" URL :::" + REST_SERVICE_URI + "/user/delete/"
-				+ ssoId + QPM_ACCESS_TOKEN + tokenInfo.getAccess_token()
-				+ HttpMethod.GET + request + User.class);
-		restTemplate.exchange(REST_SERVICE_URI + "/user/delete/" + ssoId
-				+ QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
-				HttpMethod.DELETE, request, User.class);
+		System.out.println(" URL :::" + ErpConstants.REST_SERVICE_URI
+				+ "/user/delete/" + ssoId + ErpConstants.QPM_ACCESS_TOKEN
+				+ tokenInfo.getAccess_token() + HttpMethod.GET + request
+				+ User.class);
+		restTemplate.exchange(
+				ErpConstants.REST_SERVICE_URI + "/user/delete/" + ssoId
+						+ ErpConstants.QPM_ACCESS_TOKEN
+						+ tokenInfo.getAccess_token(), HttpMethod.DELETE,
+				request, User.class);
 
 		return "redirect:/list";
 	}
