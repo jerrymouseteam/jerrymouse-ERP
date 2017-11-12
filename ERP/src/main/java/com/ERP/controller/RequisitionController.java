@@ -1,6 +1,7 @@
 package com.ERP.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -137,6 +139,38 @@ public class RequisitionController {
 		model.setViewName("requisitionERP");
 
 		return model;
+	}
+
+	/**
+	 * This method will list all existing projects.
+	 */
+	@RequestMapping(value = "/listproject", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	List<Requisition> listRequisition(ModelMap model) {
+		AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
+		List<Requisition> requisitionList = null;
+
+		HttpEntity<String> request = new HttpEntity<String>(
+				AuthTokenAccess.getHeaders());
+		try {
+			ResponseEntity<List> response = restTemplate.exchange(
+					ErpConstants.REST_SERVICE_URI + "/requisitionAuth/list/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
+							+ tokenInfo.getAccess_token(), HttpMethod.GET,
+					request, List.class);
+			requisitionList = (List<Requisition>) response.getBody();
+			if (!requisitionList.isEmpty()) {
+
+				model.addAttribute("loggedinuser", getPrincipal());
+			} else {
+				System.out.println("List is empty ----------");
+			}
+
+		} catch (Exception excep) {
+			excep.printStackTrace();
+		}
+
+		return requisitionList;
 	}
 
 	/**

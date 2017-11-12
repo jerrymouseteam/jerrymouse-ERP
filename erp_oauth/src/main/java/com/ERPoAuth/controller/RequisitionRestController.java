@@ -45,4 +45,14 @@ public class RequisitionRestController {
 		return new ResponseEntity<Requisition>(requisition, HttpStatus.OK);
 	}
 
+	/*
+	 * @RequestMapping(value = "/requisitionAuth/list/", method =
+	 * RequestMethod.GET) public ResponseEntity<List<Project>> listAllprojects()
+	 * { List<Project> Projects = requisitionService.findAllRequisition();
+	 * System.out.println(" Projects in web service " + Projects); if
+	 * (Projects.isEmpty()) { return new
+	 * ResponseEntity<List<Project>>(HttpStatus.NO_CONTENT); } return new
+	 * ResponseEntity<List<Project>>(Projects, HttpStatus.OK); }
+	 */
+
 }
