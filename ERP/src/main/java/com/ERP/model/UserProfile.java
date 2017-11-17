@@ -68,7 +68,7 @@ public class UserProfile implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ", type=" + type + "]";
+		return type;
 	}
 
 	

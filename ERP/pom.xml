@@ -16,6 +16,7 @@
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<mysql.connector.version>5.1.31</mysql.connector.version>
 		<jackson.library>2.7.5</jackson.library>
+		<apachetiles.version>3.0.5</apachetiles.version>
 	</properties>
 
 	<dependencies>
@@ -138,6 +139,28 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
+		</dependency>
+		
+			<!-- Apache Tiles -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-api</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>${apachetiles.version}</version>
 		</dependency>
 
 	</dependencies>

@@ -1,16 +1,29 @@
 package com.ERP.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.codec.binary.Base64;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
@@ -46,6 +59,7 @@ import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
 import com.ERP.model.User;
 import com.ERP.model.UserProfile;
+import com.ERP.model.UserProfileType;
 import com.ERP.service.UserProfileService;
 import com.ERP.service.UserService;
 import com.ERP.service.UserServiceImpl;
@@ -138,7 +152,7 @@ public class AppController {
 	}
 
 	@RequestMapping(value = { "/", "/project" }, method = RequestMethod.GET)
-	public ModelAndView UserDashboard(
+	public String UserDashboard(
 			HttpServletRequest request,
 			ModelMap model,
 			@RequestParam(value = "remember-me", required = false) boolean asSelectedCheckbox) {
@@ -166,7 +180,9 @@ public class AppController {
 		mv.setViewName("projectERP");
 		// mv.setView( view.PATH_VARIABLES);
 
-		return mv;
+		//return mv;
+		
+		return "redirect:/dashBoard";
 	}
 
 	/**
@@ -212,37 +228,91 @@ public class AppController {
 	/**
 	 * This method will provide the medium to add a new user.
 	 */
-	@RequestMapping(value = { "/newuser" }, method = RequestMethod.GET)
-	public String newUser(ModelMap model) {
+	@RequestMapping(value = { "/registerUser" }, method = RequestMethod.GET)
+	public String newUser(@ModelAttribute("userForm")User user, BindingResult result,
+			ModelMap model) {
 
-		User user = new User();
-		System.out.println("user");
-		model.addAttribute("user", user);
-		model.addAttribute("edit", false);
-		model.addAttribute("loggedinuser", getPrincipal());
+		model.addAttribute("success", "");
+		
+		
 		return "registration";
 	}
+	
+	@RequestMapping(value = { "/registerProject" }, method = RequestMethod.GET)
+	public String registerProject(@ModelAttribute("projectForm")Project project, BindingResult result,
+			ModelMap model) {
 
+		model.addAttribute("success", "");
+		
+		
+		return "registerProject";
+	}
+	
+	@RequestMapping(value = { "/addProject" }, method = RequestMethod.POST)
+	public String addProject(@ModelAttribute("projectForm")Project project, BindingResult result,
+			ModelMap model) {
+
+		model.addAttribute("success", "");
+		System.out.println("\nTesting create Project API----------" + project);
+		
+		
+		return "registerProject";
+	}
+	
+	
+	
+	@RequestMapping(value = { "/editProjectList" }, method = RequestMethod.GET)
+	public String editProjectList(@ModelAttribute("projectForm")Project project, BindingResult result,
+			ModelMap model) {
+
+		model.addAttribute("success", "");
+		
+		
+		return "editProjectList";
+	}
+	
+	@RequestMapping(value = { "/closedProjectList" }, method = RequestMethod.GET)
+	public String closedProjectList(@ModelAttribute("projectForm")Project project, BindingResult result,
+			ModelMap model) {
+
+		model.addAttribute("success", "");
+		
+		
+		return "closedProjectList";
+	}
+	
+	
+	
+	@RequestMapping(value = { "/dashBoard" }, method = RequestMethod.GET)
+	public String dashBoard() {
+
+		
+		
+		
+		return "dashBoard";
+	}
+	
 	/**
 	 * This method will be called on form submission, handling POST request for
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-	public String saveUser(@Valid User user, BindingResult result,
+	public String saveUser(@ModelAttribute("userForm")User user, BindingResult result,
 			ModelMap model) {
-
+		
+		
+		System.out.println("AppController -- saveUser -- User : "+user);
+		System.out.println("AppController -- saveUser -- User : "+user.getUserProfiles());
 		AuthTokenInfo tokenInfo = sendTokenRequest();
-		user.setMobileNumber("9999999999");
-		user.setAlternateNumber("9999999999");
-		user.setAddress("Thane (west");
+		
 		user.setRetypePassword(user.getPassword());
-		if (result.hasErrors()) {
+		/*if (result.hasErrors()) {
 			return "registration";
-		}
+		}*/
 
 		System.out.println("\nTesting create User API----------" + user);
 		System.out.println("\nTesting create User API----------" + user);
-		RestTemplate restTemplate = new RestTemplate();
+		/*RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		try {
 			ResponseEntity<User> response = restTemplate.postForEntity(
@@ -258,7 +328,7 @@ public class AppController {
 				result.addError(ssoError);
 				return "registration";
 			}
-		}
+		}*/
 		/*
 		 * System.out.println(" What is the response code " +
 		 * response.getStatusCode() + " ## " + user.getSsoId());
@@ -286,9 +356,38 @@ public class AppController {
 		model.addAttribute("success", "User " + user.getFirstName() + " "
 				+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
-		// return "success";
-		return "registrationsuccess";
+		user.setId(null);
+		user.setFirstName("");
+		user.setMiddleName("");
+		user.setLastName("");
+		user.setMobileNumber("");
+		user.setAlternateNumber("");
+		user.setEmail("");
+		user.setAddress("");
+		user.setPassword("");
+		user.setSsoId("");
+		user.setRetypePassword("");
+		user.setUserProfiles(null);
+		
+		return "registration";
 	}
+	
+	
+	@RequestMapping(value = { "/editUserList" }, method = RequestMethod.GET)
+	public String editUserList(ModelMap model) {
+		AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting getUser API----------");
+		
+		User user = new User();
+		System.out.println(user);
+
+		// User user = userService.findBySSO(ssoId);
+		model.addAttribute("user", user);
+		model.addAttribute("edit", true);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "editUser";
+	}
+
 
 	/**
 	 * This method will provide the medium to update an existing user.
@@ -500,6 +599,25 @@ public class AppController {
 		}
 		return "aaa";
 
+	}
+	
+	public User setClearUserData()
+	{
+		User user=new User();
+		user.setId(null);
+		user.setFirstName("");
+		user.setMiddleName("");
+		user.setLastName("");
+		user.setMobileNumber("");
+		user.setAlternateNumber("");
+		user.setEmail("");
+		user.setAddress("");
+		user.setPassword("");
+		user.setRetypePassword("");
+		user.setUserProfiles(null);
+
+		return user;
+		
 	}
 
 }

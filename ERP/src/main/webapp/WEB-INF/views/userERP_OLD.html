@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>ProjectERP</title>
+	<title>UserERP</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -119,36 +119,32 @@ box-shadow:none !important;
                         <p>Home</p>
                     </a>
                 </li>
-                <li>
-                    <a href="userERP.html">
-                        <i class="pe-7s-user"></i>
-                        <p>Users<b class="caret" ></b></p>
-                    </a>
-                </li>
                 <li class="active">
                     <a href="#">
+                        <i class="pe-7s-user"></i>
+         <p id="userSide" >Users <b id="userMenu" class="caret" ></b></p>
+                    </a>
+                </li>
+					<div id="dropdownUser" align="left" style="display: none; color:black">
+				<li>
+                    <a href="#">
+                   <p id="userAdd" style="color: burlywood;">Register User</p>
+                    </a>
+                </li>
+				<li>
+                    <a href="#">
+                   <p id="userSearch" style="color: burlywood;">Search / Edit User</p>
+                    </a>
+                </li>
+				
+</div>
+                <li>
+                    <a href="ProjectERP.html">
                         <i class="pe-7s-note2"></i>
-                        <p id="projectSide" >Projects <b id="projectMenu" class="caret" ></b></p>
+                         <p>Projects <b class="caret" ></b></p>
                     </a>
                 </li>
-	<div id="dropdownProject" align="left" style="display: none; color:black">
-				<li>
-                    <a href="#">
-                   <p id="projectAdd" style="color: burlywood;">Add Project</p>
-                    </a>
-                </li>
-				<li>
-                    <a href="#">
-                   <p id="projectSearch" style="color: burlywood;">Search / Edit Project</p>
-                    </a>
-                </li>
-				<li>
-                    <a href="#">
-                   <p id="ClosedProject" style="color: burlywood;">Closed Project</p>
-                    </a>
-                </li>
-</div>				
-
+	
                 <li>
                     <a href="#">
                         <i class="pe-7s-graph2"></i>
@@ -263,17 +259,17 @@ box-shadow:none !important;
             <div class="container-fluid">
                           <div class="row">
                     <div class="col-md-12">
-                        <div class="card " id="projectMain">
+                        <div class="card " id="userMain">
                             <div class="header">
-                                <h4 class="title">Project</h4>
-                                <p class="category">Manage your projects here</p>
+                                <h4 class="title">Users</h4>
+                                <p class="category">Manage your account user here</p>
                             </div>
                             <div class="content">
                                   <div class="typo-line">
                                     <p class="category">ERP</p>
                                     <blockquote>
                                      <p>
-                                     Here you can manage your project by  accessing the tabs under project section.
+                                     Here you can manage your account user by  accessing the tabs under user section.
 									 </p>
                                      <small>
                                     Add / Search / Edit 
@@ -284,68 +280,17 @@ box-shadow:none !important;
                             </div>
                         </div>
 						
-					  <div class="card"  style="display: none;" id="divAddProject">
+					  <div class="card"  style="display: none;" id="divAddUser">
                             <div class="header">
-                                <h4 class="title">Project</h4>
-                                <p class="category">Enter details of new projects</p>
+                                <h4 class="title">Users</h4>
+                                <p class="category">Enter details of new Users</p>
                             </div>
                             <div class="content">
                                 <form>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Project Name</label>
-                                                <input type="text" class="form-control"  placeholder="Project name" >
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Sub Division Name</label>
-                                                <input type="text" class="form-control" placeholder="Subdivision name" >
-                                            </div>
-                                        </div>
-                                       
-                                    </div>
-
-                                    <div class="row">
-									 <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label >Start Date</label>
-                                                <input type="text" class="form-control" placeholder="strat">
-                                            </div>
-                                        </div>
-                                       <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label >End Date</label>
-                                                <input type="text" class="form-control" placeholder="strat">
-                                            </div>
-                                        </div>
-										<div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Remarks</label>
-                                                <textarea rows="4" class="form-control" placeholder="Remarks about your project" ></textarea>
-                                            </div>
-										
-                                        </div>
-                                       
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Project Address</label>
-                                                <textarea rows="2" class="form-control" placeholder="Complete address of your project" ></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-									
-									
-									
-							  <div class="col-md-6">
+								<div class="col-md-6">
 						   <div class="card class">
                             <div class="header">
-                                <h4 class="title">Contact Person</h4>
+                                <h4 class="title">Personal Details</h4>
 							</div>  
 
 								<div class="content">
@@ -353,20 +298,38 @@ box-shadow:none !important;
                                  <div class="row">
 								  <div class="col-md-12">
                                             <div class="form-group">
-                                               
-												<label>Name</label>
-                                                <input type="text" class="form-control" placeholder="Name" >
+                                               <label>First Name</label>
+                                                <input type="text" class="form-control" placeholder="First Name" >
+                                            </div>
+											
+											 <div class="form-group">
+                                              <label>Middle Name</label>
+                                                <input type="text" class="form-control" placeholder="Middle Name" >
+                                            </div>
+											
+											<div class="form-group">
+                                              <label>Last Name</label>
+                                                <input type="text" class="form-control" placeholder="Last Name" >
                                             </div>
 											
                                            <div class="form-group">
-												
-											<label>Contact No</label>
+											<label>Mobile No</label>
                                                 <input type="text" class="form-control" placeholder="Mobile Number">
-                                            
-											</div>
+                                           </div>
+										   
+										   <div class="form-group">
+											<label>Alternative No</label>
+                                                <input type="text" class="form-control" placeholder="Mobile Number">
+                                           </div>
+										   
 											<div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
+                                                <label for="exampleInputEmail">Email address</label>
                                                 <input type="email" class="form-control" placeholder="Email">
+                                            </div>
+											
+											<div class="form-group">
+                                                <label for="exampleInputEmail1">Residential address</label>
+                                                <input type="textarea" class="form-control" placeholder="Address">
                                             </div>
 											</div>
 
@@ -378,29 +341,44 @@ box-shadow:none !important;
 						  <div class="col-md-6">
 						   <div class="card class">
                             <div class="header">
-                                <h4 class="title">Project Client</h4>
+                                <h4 class="title">Login Details</h4>
 							</div>  
 
 								<div class="content">
                               
                                  <div class="row">
-								    <div class="col-md-12">
+								    <div class="col-md-12" >
                                             <div class="form-group">
                                                
-												<label>Name</label>
-                                                <input type="text" class="form-control" placeholder="Name" >
+												<label>User Name</label>
+                                                <input type="text" class="form-control" placeholder="User Name" >
                                             </div>
 											
                                            <div class="form-group">
 												
-											<label>Contact No</label>
-                                                <input type="text" class="form-control" placeholder="Mobile Number">
+											<label>Password</label>
+                                                <input type="text" class="form-control" placeholder="Password">
                                             
 											</div>
 											<div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email">
+                                                <label>Retype Password</label>
+                                                <input type="password" class="form-control" placeholder="Retype Password">
                                             </div>
+											
+											<div class="form-group">
+												<label>Select Role</label>
+											<select id="myselect" class="form-control" >
+											<option value="1">Admin</option>
+											<option value="2">Supervisor</option>
+											<option value="3">Contractor</option>
+											<option value="4">Jr Engg</option>
+											<option value="5" selected>Sr Engg</option>
+											</select>
+											
+											</div>
+													
+											
+											
 											</div>
 
                               </div> 
@@ -409,75 +387,13 @@ box-shadow:none !important;
 						  </div>
                           
 						  
-					  <div class="col-md-6">
-						   <div class="card class">
-                            <div class="header">
-                                <h4 class="title">Architect</h4>
-							</div>  
-
-								<div class="content">
-                              
-                                 <div class="row">
-								   <div class="col-md-12">
-                                            <div class="form-group">
-                                               
-												<label>Name</label>
-                                                <input type="text" class="form-control" placeholder="Name" >
-                                            </div>
-											
-                                           <div class="form-group">
-												
-											<label>Contact No</label>
-                                                <input type="text" class="form-control" placeholder="Mobile Number">
-                                            
-											</div>
-											<div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email">
-                                            </div>
-											</div>
-
-                              </div> 
-                            </div>							
-						  </div>
-						  </div>
-						  
-						   <div class="col-md-6">
-						   <div class="card class">
-                            <div class="header">
-                                <h4 class="title">Structural</h4>
-							</div>  
-
-								<div class="content">
-                              
-                                 <div class="row">
-								   <div class="col-md-12">
-                                            <div class="form-group">
-                                               
-												<label>Name</label>
-                                                <input type="text" class="form-control" placeholder="Name" >
-                                            </div>
-											
-                                           <div class="form-group">
-												
-											<label>Contact No</label>
-                                                <input type="text" class="form-control" placeholder="Mobile Number">
-                                            
-											</div>
-											<div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email">
-                                            </div>
-											</div>
-
-                              </div> 
-                            </div>							
-						  </div>
-						  </div>
-                          
+                          <div class="col-md-12">
+									<div class="content">
 									
-                                    <button type="submit" class="btn btn-info btn-fill pull-left">Submit</button>
-									<button type="submit" class="btn btn-danger btn-fill pull-right">Cancel</button>
+                                    <button type="submit" class="btn btn-info btn-fill pull-left col-md-4">Submit</button>
+									
+									<button type="submit" class="btn btn-danger btn-fill pull-right col-md-4">Cancel</button>
+									</div></div>
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -492,14 +408,14 @@ box-shadow:none !important;
 						
 						
 						
-						   <div class="card"  style="display: none;" id="divEditSearchProject">
+						   <div class="card"  style="display: none;" id="divEditSearchUser">
                             <div class="header">
-                                <h4 class="title">Project</h4>
-                                <p class="category">Search /Edit projects</p>
+                                <h4 class="title">User</h4>
+                                <p class="category">Search /Edit User</p>
                             </div>
                             <div class="content">
 	<div class="row">
-		<h2 class="text-center">List of Projects</h2>
+		<h2 class="text-center">List of Users</h2>
 	</div>
     
         <div class="row">
@@ -510,100 +426,71 @@ box-shadow:none !important;
 <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
     				<thead>
 						<tr>
-							<th>Project Name</th>
-							<th>Project Sector</th>
-							<th>Owned By</th>
-							<th>Client Name</th>
-							<th>Start Date</th>
-							<th>End Date</th>
-                                <th>Edit</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Role</th>
+							    <th>Edit</th>
                                  <th>Details</th>
-								 <th>Close</th>
 						</tr>
 					</thead>
 
 					<tfoot>
 						<tr>
-							<th>Project Name</th>
-							<th>Project Sector</th>
-							<th>Owned By</th>
-							<th>Client Name</th>
-							<th>Start Date</th>
-							<th>End Date</th>
-                             <th>Edit</th>
-                             <th>Details</th>
-							<th>Close</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Role</th>
+							    <th>Edit</th>
+                                 <th>Details</th>
 						</tr>
 					</tfoot>
 
 					<tbody>
 						<tr>
-							<td>Lodha</td>
-							<td>Sector 1</td>
-							<td>Vaibhav</td>
 							<td>John</td>
-							<td>2017/04/25</td>
-							<td>2018/04/25</td>
-                         <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
+							<td>Nicholas</td>
+							<td>Jr Engg</td>
+					<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-danger btn-xs" data-title="Details" data-toggle="modal" data-target="#delete" ><span class="fa fa-search"></span></button></p></td>
-<td><p data-placement="top" data-toggle="tooltip" title="Close"><button class="btn btn-danger btn-xs" data-title="Close" data-toggle="modal" data-target="#delete" ><span class="fa fa-close"></span></button></p></td>	
+
 	</tr>
 						
                             <tr>
-							<td>Lodha</td>
-							<td>Sector 1</td>
-							<td>Vaibhav</td>
 							<td>John</td>
-							<td>2017/04/25</td>
-							<td>2018/04/25</td>
-                          <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
+							<td>Nicholas</td>
+							<td>Jr Engg</td>
+					<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-danger btn-xs" data-title="Details" data-toggle="modal" data-target="#delete" ><span class="fa fa-search"></span></button></p></td>
-<td><p data-placement="top" data-toggle="tooltip" title="Close"><button class="btn btn-danger btn-xs" data-title="Close" data-toggle="modal" data-target="#delete" ><span class="fa fa-close"></span></button></p></td>	
-		</tr>
-                            <tr>
-							<td>Abby</td>
-							<td>ERP developer</td>
-							<td>Mumbai</td>
-							<td>10</td>
-							<td>2011/04/25</td>
-							<td>$550,800</td>
-                             <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-danger btn-xs" data-title="Details" data-toggle="modal" data-target="#delete" ><span class="fa fa-search"></span></button></p></td>
-<td><p data-placement="top" data-toggle="tooltip" title="Close"><button class="btn btn-danger btn-xs" data-title="Close" data-toggle="modal" data-target="#delete" ><span class="fa fa-close"></span></button></p></td>	
+
 	</tr>
-                            <tr>
-							<td>Lodha</td>
-							<td>Sector 1</td>
-							<td>Vaibhav</td>
+	
+	<tr>
 							<td>John</td>
-							<td>2017/04/25</td>
-							<td>2018/04/25</td>
-                         <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
+							<td>Nicholas</td>
+							<td>Jr Engg</td>
+					<td 	><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-danger btn-xs" data-title="Details" data-toggle="modal" data-target="#delete" ><span class="fa fa-search"></span></button></p></td>
-<td><p data-placement="top" data-toggle="tooltip" title="Close"><button class="btn btn-danger btn-xs" data-title="Close" data-toggle="modal" data-target="#delete" ><span class="fa fa-close"></span></button></p></td>	
+
 	</tr>
-                            <tr>
-							<td>Lodha</td>
-							<td>Sector 1</td>
-							<td>Vaibhav</td>
+	
+	<tr>
 							<td>John</td>
-							<td>2017/04/25</td>
-							<td>2018/04/25</td>
-                          <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
+							<td>Nicholas</td>
+							<td>Jr Engg</td>
+					<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-danger btn-xs" data-title="Details" data-toggle="modal" data-target="#delete" ><span class="fa fa-search"></span></button></p></td>
-<td><p data-placement="top" data-toggle="tooltip" title="Close"><button class="btn btn-danger btn-xs" data-title="Close" data-toggle="modal" data-target="#delete" ><span class="fa fa-close"></span></button></p></td>	
+
 	</tr>
-                            <tr>
-							<td>Lodha</td>
-							<td>Sector 1</td>
-							<td>Vaibhav</td>
+	
+	<tr>
 							<td>John</td>
-							<td>2017/04/25</td>
-							<td>2018/04/25</td>
-                           <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
+							<td>Nicholas</td>
+							<td>Jr Engg</td>
+					<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-edit"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-danger btn-xs" data-title="Details" data-toggle="modal" data-target="#delete" ><span class="fa fa-search"></span></button></p></td>
-<td><p data-placement="top" data-toggle="tooltip" title="Close"><button class="btn btn-danger btn-xs" data-title="Close" data-toggle="modal" data-target="#delete" ><span class="fa fa-close"></span></button></p></td>	
+
 	</tr>
+	
+	
                            
 					</tbody>
 				</table>
@@ -618,27 +505,153 @@ box-shadow:none !important;
     <div class="modal-content">
           <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title custom_align" id="Heading">Edit Your Project Detail</h4>
+        <h4 class="modal-title custom_align" id="Heading">Update Details for {{user name}}</h4>
       </div>
           <div class="modal-body">
-          <div class="form-group">
-        <input class="form-control " type="text" placeholder="Lodha">
+		  
+        <div class="col-md-12">
+		<br>
+		  <br>
+		  
+		  
+		   
+		   <div class="content">
+                             
+							  
+                                 <div class="row">
+								 <div class="text-center">
+								 
+								 <label>STATUS</label>
+											<select id="myselect" class="form-control" >
+											<option value="1" >Active</option>
+											<option value="2" selected>Inactive</option>
+											<option value="3">otherss</option>
+											
+											</select>
+											</div>
+							  
+											</div>
+		  </div>
+		 
+		  <br>
+					<div class="card class">
+                           <div class="content">
+                             
+							  
+                                 <div class="row">
+								    <div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>User Name</label>
+                                                <input type="text" class="form-control" placeholder="Name" >
+                                            </div>
+											</div>
+											
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Role</label>
+                                                <input type="text" class="form-control" placeholder="Name" >
+                                            </div>
+											</div>
+											
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>First Name</label>
+                                                <input type="text" class="form-control" placeholder="Name" >
+                                            </div>
+											</div>
+											
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Tel No</label>
+                                                <input type="text" class="form-control" placeholder="Name" >
+                                            </div>
+											</div>
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Last Name</label>
+                                                <input type="text" class="form-control" placeholder="Name" >
+                                            </div>
+											</div>
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Email-id</label>
+                                                <input type="text" class="form-control" placeholder="Name" >
+                                            </div>
+											</div>
+											
+											
+
+                              </div> 
+                            </div>							
+						  </div>
+						  
+						  	<div class="card class">
+                           <div class="content">
+                              
+                                 <div class="row">
+								 <h4 class="text-center">Assigned Projects</h4>
+ <div class="col-md-12">
+            
+            
+<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    				<thead>
+						<tr>
+							<th>Project Name</th>
+							<th>Project Sector</th>
+							<th>Client</th>
+							    <th>Action</th>
+                               
+						</tr>
+					</thead>
+
+					
+
+					<tbody>
+						<tr>
+							<td>ERP</td>
+							<td>Something</td>
+							<td>Vaibhav</td>
+							<td>Action</td></tr>
+							
+							
+						<tr>
+							<td>ERP</td>
+							<td>Something</td>
+							<td>Vaibhav</td>
+							<td>Action</td></tr>
+							
+						<tr>
+							<td>ERP</td>
+							<td>Something</td>
+							<td>Vaibhav</td>
+							<td>Action</td></tr>
+					</tbody>
+				</table>
+
+	
+	</div>
+                              </div> 
+                            </div>							
+						  </div>
+						  
+						  
+						  
+						  </div>
+       </div>
+	   
+        <div class="modal-footer ">
+      <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="pe-7s-check"></span> Update</button>
+      </div>
+	   
         </div>
-        <div class="form-group">
+         
         
-        <input class="form-control " type="text" placeholder="Sector 1">
-        </div>
-        <div class="form-group">
-		<input class="form-control " type="text" placeholder="Vaibhav">
-        </div>
-		<div class="form-group">
-		<input class="form-control " type="text" placeholder="John">
-        </div>
-      </div>
-          <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="pe-7s-check"></span> Update</button>
-      </div>
-        </div>
     <!-- /.modal-content --> 
   </div>
       <!-- /.modal-dialog --> 
@@ -651,20 +664,168 @@ box-shadow:none !important;
     <div class="modal-content">
           <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title custom_align" id="Heading">Close this project</h4>
+        <h4 class="modal-title custom_align" id="Heading">Details about {{user name}}</h4>
       </div>
           <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to close this Project?</div>
-       <div class="form-group required">
-	   <label class="control-label">Comment</label>
-        <input class="form-control " type="text" placeholder="Comments before Closing project">
-        </div>
-      </div>
+		  
+        <div class="col-md-12">
+		<br>
+		  <br>
+		     <div class="content">
+                         <div class="row">
+							    <div class="text-center">
+												<label>STATUS</label>
+											 <input type="text" class="form-control" value="Active" readonly>
+											</div>
+											</div>
+		  </div>
+		  <br>
+					<div class="card class">
+                           <div class="content">
+                              
+                                 <div class="row">
+								    <div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>User Name</label>
+                                                <input type="text" class="form-control" value="Name" readonly>
+                                            </div>
+											</div>
+											
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Role</label>
+                                                <input type="text" class="form-control" value="Name" readonly >
+                                            </div>
+											</div>
+											
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>First Name</label>
+                                                <input type="text" class="form-control" value="Name" readonly>
+                                            </div>
+											</div>
+											
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Tel No</label>
+                                                <input type="text" class="form-control" value="Name" readonly>
+                                            </div>
+											</div>
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Last Name</label>
+                                                <input type="text" class="form-control" value="Nicholas" readonly>
+                                            </div>
+											</div>
+											<div class="col-md-6">
+                                            <div class="form-group">
+                                               
+												<label>Email-id</label>
+                                                <input type="text" class="form-control" value="aby@erp.com" readonly >
+                                            </div>
+											</div>
+											
+											
+
+                              </div> 
+                            </div>							
+						  </div>
+						  
+						  	<div class="card class">
+                           <div class="content">
+                              
+                                 <div class="row">
+								 <h4 class="text-center">Assigned Projects</h4>
+ <div class="col-md-12">
+            
+            
+<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    				<thead>
+						<tr>
+							<th>Project Name</th>
+							<th>Project Sector</th>
+							<th>Client</th>
+							    <th>Action</th>
+                               
+						</tr>
+					</thead>
+
+					
+
+					<tbody>
+						<tr>
+							<td>ERP</td>
+							<td>Something</td>
+							<td>Vaibhav</td>
+							<td>Action</td></tr>
+							
+							
+						<tr>
+							<td>ERP</td>
+							<td>Something</td>
+							<td>Vaibhav</td>
+							<td>Action</td></tr>
+							
+						<tr>
+							<td>ERP</td>
+							<td>Something</td>
+							<td>Vaibhav</td>
+							<td>Action</td></tr>
+					</tbody>
+				</table>
+
+	
+	</div>
+                              </div> 
+                            </div>							
+						  </div>
+						  
+						  
+						  <div class="card class">
+						   <div class="content">
+                         <div class="row">
+							  
+										<div class="col-md-4">
+                                            <div class="form-group">
+                                            	<a href="">
+											<p>Raised Requisition</p>
+												</a>
+                                            </div>
+											</div>
+											
+											<div class="col-md-5">
+                                            <div class="form-group">
+                                              <a href="">
+											<p>Approved Requisition</p>
+												</a> 
+                                            </div>
+											</div>
+
+											<div class="col-md-3">
+                                            <div class="form-group">
+                                               <a href="">
+											<p>PO Raised</p>
+												</a>
+                                            </div>
+											</div>
+
+
+							  
+											</div>
+		  </div>
+						  </div>
+						  
+						  </div>
+       </div>
 	   
         <div class="modal-footer ">
-        <button type="button" class="btn btn-success" ><span class="fa fa-thumbs-up"></span> Yes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-thumbs-down"></span> No</button>
+      
+        <button type="button" class="btn btn-danger btn-lg" style="width: 100%;" data-dismiss="modal"><span class="pe-7s-close"></span>Close</button>
       </div>
         </div>
     <!-- /.modal-content --> 
@@ -868,38 +1029,32 @@ box-shadow:none !important;
 	<script type="text/javascript">
     	$(document).ready(function(){
 
-    	$("#projectMenu").click(function(){
-		$("#dropdownProject").toggle();
+    	$("#userMenu").click(function(){
+		$("#dropdownUser").toggle();
 		});
 		
-		$("#projectSide").click(function(){
-		$("#projectMain").show(500);
-		$("#divAddProject").hide();
-		$("#divEditSearchProject").hide();
-		$("#divClosedProject").hide();
+		$("#userSide").click(function(){
+		$("#userMain").show(500);
+		$("#divAddUser").hide();
+		$("#divEditSearchUser").hide();
+		
 		});
 		
-		$("#projectAdd").click(function(){
-		$("#divAddProject").show(500);
-		$("#projectMain").hide();
-		$("#divEditSearchProject").hide();
-		$("#divClosedProject").hide();
+		$("#userAdd").click(function(){
+		$("#divAddUser").show(500);
+		$("#userMain").hide();
+		$("#divEditSearchUser").hide();
+		
 		});
 		
-		$("#projectSearch").click(function(){
-		$("#divEditSearchProject").show(500);
-		$("#projectMain").hide();
-		$("#divAddProject").hide();
-		$("#divClosedProject").hide();
+		$("#userSearch").click(function(){
+		$("#divEditSearchUser").show(500);
+		$("#userMain").hide();
+		$("#divAddUser").hide();
+		
 		});
 		
 		
-		$("#ClosedProject").click(function(){
-		$("#divClosedProject").show(500);
-		$("#projectMain").hide();
-		$("#divAddProject").hide();
-		$("#divEditSearchProject").hide();
-		});
 		
 		
 		

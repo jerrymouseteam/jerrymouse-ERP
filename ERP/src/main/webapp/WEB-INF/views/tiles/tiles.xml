@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+
+
+
+	<!-- WithoutLayout Definition -->
+	<definition name="withoutLayout-definition"
+		template="/WEB-INF/views/tiles/layouts/withoutLayout.jsp">
+
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<!-- Login Page -->
+	<definition name="login" extends="withoutLayout-definition">
+
+		<put-attribute name="body" value="/WEB-INF/views/pages/login.jsp" />
+	</definition>
+
+
+	<!-- Base Definition -->
+	<definition name="erp-definition"
+		template="/WEB-INF/views/tiles/layouts/ERPLayout.jsp">
+
+		<put-attribute name="header"
+			value="/WEB-INF/views/tiles/template/ERPHeader.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/views/tiles/template/ERPLeftMenu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/tiles/template/ERPFooter.jsp" />
+	</definition>
+
+
+
+
+	<definition name="dashBoard" extends="erp-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/home.jsp" />
+	</definition>
+
+	<definition name="registration" extends="erp-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/user.jsp" />
+	</definition>
+
+	<definition name="editUser" extends="erp-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/editUser.jsp" />
+	</definition>
+
+<definition name="registerProject" extends="erp-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/addProject.jsp" />
+	</definition>
+	<definition name="editProjectList" extends="erp-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/editProject.jsp" />
+	</definition>
+	<definition name="closedProjectList" extends="erp-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/closeProject.jsp" />
+	</definition>
+
+
+
+
+</tiles-definitions>

@@ -119,14 +119,14 @@ box-shadow:none !important;
                         <p>Home</p>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="#">
                         <i class="pe-7s-user"></i>
-         <p id="userSide" >Users <b id="userMenu" class="caret" ></b></p>
+         <p id="userSide" >Users <b class="caret" ></b></p>
                     </a>
                 </li>
-					<div id="dropdownUser" align="left" style="display: none; color:black">
-				<li>
+					<div id="dropdownUser" align="left" >
+				<li class="active">
                     <a href="#">
                    <p id="userAdd" style="color: burlywood;">Register User</p>
                     </a>
@@ -259,7 +259,7 @@ box-shadow:none !important;
             <div class="container-fluid">
                           <div class="row">
                     <div class="col-md-12">
-                        <div class="card " id="userMain">
+                        <div class="card " style="display: none;"  id="userMain">
                             <div class="header">
                                 <h4 class="title">Users</h4>
                                 <p class="category">Manage your account user here</p>
@@ -280,7 +280,7 @@ box-shadow:none !important;
                             </div>
                         </div>
 						
-					  <div class="card"  style="display: none;" id="divAddUser">
+					  <div class="card"  id="divAddUser">
                             <div class="header">
                                 <h4 class="title">Users</h4>
                                 <p class="category">Enter details of new Users</p>
@@ -389,10 +389,10 @@ box-shadow:none !important;
 						  
                           <div class="col-md-12">
 									<div class="content">
+									<button type="submit" class="btn btn-danger btn-fill pull-left col-md-4">Cancel</button>
+                                    <button type="submit" class="btn btn-info btn-fill pull-right col-md-4">Submit</button>
 									
-                                    <button type="submit" class="btn btn-info btn-fill pull-left col-md-4">Submit</button>
 									
-									<button type="submit" class="btn btn-danger btn-fill pull-right col-md-4">Cancel</button>
 									</div></div>
                                     <div class="clearfix"></div>
                                 </form>
@@ -617,20 +617,23 @@ box-shadow:none !important;
 							<td>ERP</td>
 							<td>Something</td>
 							<td>Vaibhav</td>
-							<td>Action</td></tr>
+							<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editInner" ><span class="fa fa-edit"></span></button></p></td>
+							</tr>
 							
 							
 						<tr>
 							<td>ERP</td>
 							<td>Something</td>
 							<td>Vaibhav</td>
-							<td>Action</td></tr>
+							<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editInner" ><span class="fa fa-edit"></span></button></p></td>
+							</tr>
 							
 						<tr>
 							<td>ERP</td>
 							<td>Something</td>
 							<td>Vaibhav</td>
-							<td>Action</td></tr>
+							<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editInner" ><span class="fa fa-edit"></span></button></p></td>
+							</tr>
 					</tbody>
 				</table>
 
@@ -750,8 +753,7 @@ box-shadow:none !important;
 							<th>Project Name</th>
 							<th>Project Sector</th>
 							<th>Client</th>
-							    <th>Action</th>
-                               
+							   
 						</tr>
 					</thead>
 
@@ -762,20 +764,19 @@ box-shadow:none !important;
 							<td>ERP</td>
 							<td>Something</td>
 							<td>Vaibhav</td>
-							<td>Action</td></tr>
-							
-							
-						<tr>
-							<td>ERP</td>
-							<td>Something</td>
-							<td>Vaibhav</td>
-							<td>Action</td></tr>
+							</tr>
 							
 						<tr>
 							<td>ERP</td>
 							<td>Something</td>
 							<td>Vaibhav</td>
-							<td>Action</td></tr>
+							</tr>
+							
+						<tr>
+							<td>ERP</td>
+							<td>Something</td>
+							<td>Vaibhav</td>
+							</tr>
 					</tbody>
 				</table>
 
@@ -835,7 +836,51 @@ box-shadow:none !important;
     </div>
 						
 						
-						
+		
+
+
+
+<!-- code for  chota edit --> 
+<div class="modal fade" id="editInner" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title custom_align" id="Heading">Edit Assigned Project</h4>
+      </div>
+          <div class="modal-body">
+          <div class="form-group">
+		  <label>Project Name</label>
+        <input class="form-control " type="text" value="ERP" >
+        </div>
+        <div class="form-group">
+		<label>Project Sector</label>
+        <input class="form-control " type="text" value="something" >
+        </div>
+        <div class="form-group">
+		<label>Project Client</label>
+		<input class="form-control " type="text" value="Vaibhav">
+        </div>
+		
+      </div>
+          <div class="modal-footer ">
+        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="pe-7s-check"></span> Update</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+
+
+
+
+
+
+
+
+
+		
 						
 						
 						
@@ -1029,17 +1074,22 @@ box-shadow:none !important;
 	<script type="text/javascript">
     	$(document).ready(function(){
 
-    	$("#userMenu").click(function(){
+    	$("#userSide").click(function(){
 		$("#dropdownUser").toggle();
 		});
 		
-		$("#userSide").click(function(){
+		 $('ul div li').click(function(){
+    $('div li').removeClass("active");
+    $(this).addClass("active");
+});	
+
+		/*$("#userSide").click(function(){
 		$("#userMain").show(500);
 		$("#divAddUser").hide();
 		$("#divEditSearchUser").hide();
 		
 		});
-		
+		*/
 		$("#userAdd").click(function(){
 		$("#divAddUser").show(500);
 		$("#userMain").hide();

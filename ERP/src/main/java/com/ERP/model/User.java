@@ -212,12 +212,10 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", middleName="
-				+ middleName + ", lastName=" + lastName + ", mobileNumber="
-				+ mobileNumber + ", alternateNumber=" + alternateNumber
-				+ ", email=" + email + ", address=" + address + ", ssoId="
-				+ ssoId + ", password=" + password + ", retypePassword="
-				+ retypePassword + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
+				+ ", mobileNumber=" + mobileNumber + ", alternateNumber=" + alternateNumber + ", email=" + email
+				+ ", address=" + address + ", ssoId=" + ssoId + ", password=" + password + ", retypePassword="
+				+ retypePassword + ", userProfiles=" + userProfiles + "]";
 	}
 
 	
