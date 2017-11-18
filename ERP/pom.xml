@@ -34,11 +34,6 @@
 			<version>${jackson.library}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
-			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>${jackson.library}</version>
-		</dependency>
 
 		<!-- Spring -->
 		<dependency>

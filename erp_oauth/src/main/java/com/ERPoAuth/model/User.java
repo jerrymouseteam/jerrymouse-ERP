@@ -15,10 +15,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "APP_USER")
+@NamedQueries({
+		@NamedQuery(name = "findUserByContact", query = "FROM User u WHERE u.mobileNumber=:number"),
+		@NamedQuery(name = "findUserByEmail", query = "FROM User u WHERE u.email=:email") })
 public class User implements Serializable {
 
 	/**
@@ -72,20 +77,21 @@ public class User implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
-	
-	/*@NotEmpty
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
-	private Set<Project> project = new HashSet<Project>();
-	
 
-	public Set<Project> getProject() {
-		return project;
-	}
-
-	public void setProject(Set<Project> project) {
-		this.project = project;
-	}*/
+	/*
+	 * @NotEmpty
+	 * 
+	 * @ManyToMany(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name =
+	 * "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
+	 * private Set<Project> project = new HashSet<Project>();
+	 * 
+	 * 
+	 * public Set<Project> getProject() { return project; }
+	 * 
+	 * public void setProject(Set<Project> project) { this.project = project; }
+	 */
 
 	public Integer getId() {
 		return id;
@@ -183,8 +189,6 @@ public class User implements Serializable {
 		this.alternateNumber = alternateNumber;
 	}
 
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -220,7 +224,4 @@ public class User implements Serializable {
 				+ retypePassword + "]";
 	}
 
-	
-
-	
 }

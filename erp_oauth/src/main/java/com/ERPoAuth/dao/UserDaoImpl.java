@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -74,5 +75,21 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 			return user;
 		}
 		return null;
+	}
+
+	@Override
+	public User findUserByContactNumber(String contactNumber) {
+		Query query = getSession().getNamedQuery("findUserByContact")
+				.setString("number", contactNumber);
+
+		return (User) query.uniqueResult();
+	}
+
+	@Override
+	public User findUserByEmailId(String email) {
+		Query query = getSession().getNamedQuery("findUserByEmail").setString(
+				"email", email);
+
+		return (User) query.uniqueResult();
 	}
 }

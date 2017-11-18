@@ -1,29 +1,16 @@
 package com.ERP.controller;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.codec.binary.Base64;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
@@ -59,7 +46,6 @@ import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
 import com.ERP.model.User;
 import com.ERP.model.UserProfile;
-import com.ERP.model.UserProfileType;
 import com.ERP.service.UserProfileService;
 import com.ERP.service.UserService;
 import com.ERP.service.UserServiceImpl;
@@ -67,7 +53,7 @@ import com.ERP.service.UserServiceImpl;
 @Controller
 @RequestMapping("/")
 @SessionAttributes("roles")
-public class AppController {
+public class UserController {
 
 	@Autowired
 	UserService userService;
@@ -180,8 +166,8 @@ public class AppController {
 		mv.setViewName("projectERP");
 		// mv.setView( view.PATH_VARIABLES);
 
-		//return mv;
-		
+		// return mv;
+
 		return "redirect:/dashBoard";
 	}
 
@@ -229,96 +215,86 @@ public class AppController {
 	 * This method will provide the medium to add a new user.
 	 */
 	@RequestMapping(value = { "/registerUser" }, method = RequestMethod.GET)
-	public String newUser(@ModelAttribute("userForm")User user, BindingResult result,
-			ModelMap model) {
+	public String newUser(@ModelAttribute("userForm") User user,
+			BindingResult result, ModelMap model) {
 
 		model.addAttribute("success", "");
-		
-		
+
 		return "registration";
 	}
-	
+
 	@RequestMapping(value = { "/registerProject" }, method = RequestMethod.GET)
-	public String registerProject(@ModelAttribute("projectForm")Project project, BindingResult result,
-			ModelMap model) {
+	public String registerProject(
+			@ModelAttribute("projectForm") Project project,
+			BindingResult result, ModelMap model) {
 
 		model.addAttribute("success", "");
-		
-		
+
 		return "registerProject";
 	}
-	
+
 	@RequestMapping(value = { "/addProject" }, method = RequestMethod.POST)
-	public String addProject(@ModelAttribute("projectForm")Project project, BindingResult result,
-			ModelMap model) {
+	public String addProject(@ModelAttribute("projectForm") Project project,
+			BindingResult result, ModelMap model) {
 
 		model.addAttribute("success", "");
 		System.out.println("\nTesting create Project API----------" + project);
-		
-		
+
 		return "registerProject";
 	}
-	
-	
-	
+
 	@RequestMapping(value = { "/editProjectList" }, method = RequestMethod.GET)
-	public String editProjectList(@ModelAttribute("projectForm")Project project, BindingResult result,
-			ModelMap model) {
+	public String editProjectList(
+			@ModelAttribute("projectForm") Project project,
+			BindingResult result, ModelMap model) {
 
 		model.addAttribute("success", "");
-		
-		
+
 		return "editProjectList";
 	}
-	
+
 	@RequestMapping(value = { "/closedProjectList" }, method = RequestMethod.GET)
-	public String closedProjectList(@ModelAttribute("projectForm")Project project, BindingResult result,
-			ModelMap model) {
+	public String closedProjectList(
+			@ModelAttribute("projectForm") Project project,
+			BindingResult result, ModelMap model) {
 
 		model.addAttribute("success", "");
-		
-		
+
 		return "closedProjectList";
 	}
-	
-	
-	
+
 	@RequestMapping(value = { "/dashBoard" }, method = RequestMethod.GET)
 	public String dashBoard() {
 
-		
-		
-		
 		return "dashBoard";
 	}
-	
+
 	/**
 	 * This method will be called on form submission, handling POST request for
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userForm")User user, BindingResult result,
-			ModelMap model) {
-		
-		
-		System.out.println("AppController -- saveUser -- User : "+user);
-		System.out.println("AppController -- saveUser -- User : "+user.getUserProfiles());
+	public String saveUser(@ModelAttribute("userForm") User user,
+			BindingResult result, ModelMap model) {
+
+		System.out.println("AppController -- saveUser -- User : " + user);
+		System.out.println("AppController -- saveUser -- User : "
+				+ user.getUserProfiles());
 		AuthTokenInfo tokenInfo = sendTokenRequest();
-		
-		user.setRetypePassword(user.getPassword());
-		/*if (result.hasErrors()) {
+
+		if (result.hasErrors()) {
 			return "registration";
-		}*/
+		}
 
 		System.out.println("\nTesting create User API----------" + user);
 		System.out.println("\nTesting create User API----------" + user);
-		/*RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
+		ResponseEntity<User> response = null;
 		try {
-			ResponseEntity<User> response = restTemplate.postForEntity(
-					ErpConstants.REST_SERVICE_URI + "/user/create/"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), request, User.class);
+			response = restTemplate.postForEntity(ErpConstants.REST_SERVICE_URI
+					+ "/user/create/" + ErpConstants.QPM_ACCESS_TOKEN
+					+ tokenInfo.getAccess_token(), request, User.class);
 		} catch (HttpClientErrorException excep) {
 			if (HttpStatus.CONFLICT.equals(excep.getStatusCode())) {
 				FieldError ssoError = new FieldError("user", "ssoId",
@@ -328,56 +304,50 @@ public class AppController {
 				result.addError(ssoError);
 				return "registration";
 			}
-		}*/
-		/*
-		 * System.out.println(" What is the response code " +
-		 * response.getStatusCode() + " ## " + user.getSsoId());
-		 */
-
-		/*
-		 * Preferred way to achieve uniqueness of field [sso] should be
-		 * implementing custom @Unique annotation and applying it on field [sso]
-		 * of Model class [User].
+		} /*
+		 * catch (ConflictException conflictException) { if
+		 * (conflictException.getMessage().equals("UserName Conflict")) {
 		 * 
-		 * Below mentioned peace of code [if block] is to demonstrate that you
-		 * can fill custom errors outside the validation framework as well while
-		 * still using internationalized messages.
-		 */
-		/*
-		 * if (response.getStatusCode().equals(HttpStatus.CONFLICT)) {
 		 * FieldError ssoError = new FieldError("user", "ssoId",
-		 * messageSource.getMessage("non.unique.ssoId", new String[] {
-		 * user.getSsoId() }, Locale.getDefault())); result.addError(ssoError);
-		 * return "registration"; }
+		 * messageSource.getMessage( "A User with name " + user.getSsoId() +
+		 * " already exist", new String[] { user.getSsoId() },
+		 * Locale.getDefault())); result.addError(ssoError);
+		 * 
+		 * } if (conflictException.getMessage().equals("MobileNumber Conflict"))
+		 * {
+		 * 
+		 * FieldError ssoError = new FieldError("user", "mobileNumber",
+		 * messageSource.getMessage( "A User with name " + user.getSsoId() +
+		 * " already exist", new String[] { user.getSsoId() },
+		 * Locale.getDefault())); result.addError(ssoError);
+		 * 
+		 * } if (conflictException.getMessage().equals("Email Conflict")) {
+		 * 
+		 * FieldError ssoError = new FieldError("user", "email",
+		 * messageSource.getMessage( "A User with name " + user.getSsoId() +
+		 * " already exist", new String[] { user.getSsoId() },
+		 * Locale.getDefault())); result.addError(ssoError);
+		 * 
+		 * }
 		 */
 
-		/* userService.saveUser(user); */
+		// return "registration";
+
+		System.out.println(" What is the response code "
+				+ response.getStatusCode() + " ## " + user.getSsoId());
 
 		model.addAttribute("success", "User " + user.getFirstName() + " "
 				+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
-		user.setId(null);
-		user.setFirstName("");
-		user.setMiddleName("");
-		user.setLastName("");
-		user.setMobileNumber("");
-		user.setAlternateNumber("");
-		user.setEmail("");
-		user.setAddress("");
-		user.setPassword("");
-		user.setSsoId("");
-		user.setRetypePassword("");
-		user.setUserProfiles(null);
-		
+		// return "success";
 		return "registration";
 	}
-	
-	
+
 	@RequestMapping(value = { "/editUserList" }, method = RequestMethod.GET)
 	public String editUserList(ModelMap model) {
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting getUser API----------");
-		
+
 		User user = new User();
 		System.out.println(user);
 
@@ -387,7 +357,6 @@ public class AppController {
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "editUser";
 	}
-
 
 	/**
 	 * This method will provide the medium to update an existing user.
@@ -600,10 +569,9 @@ public class AppController {
 		return "aaa";
 
 	}
-	
-	public User setClearUserData()
-	{
-		User user=new User();
+
+	public User setClearUserData() {
+		User user = new User();
 		user.setId(null);
 		user.setFirstName("");
 		user.setMiddleName("");
@@ -617,7 +585,7 @@ public class AppController {
 		user.setUserProfiles(null);
 
 		return user;
-		
+
 	}
 
 }

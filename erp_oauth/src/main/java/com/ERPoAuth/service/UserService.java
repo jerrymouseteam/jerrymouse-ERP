@@ -22,4 +22,8 @@ public interface UserService {
 
 	User check(String emailId);
 
+	boolean isExistingContactNumber(String contactNumber);
+
+	boolean isExistingEmailId(String email);
+
 }

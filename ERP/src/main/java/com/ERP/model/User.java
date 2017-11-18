@@ -49,7 +49,7 @@ public class User implements Serializable {
 	private String alternateNumber;
 
 	@NotEmpty
-	@Column(name = "email", nullable = false)
+	@Column(name = "EMAIL", nullable = false)
 	private String email;
 
 	@NotEmpty
@@ -72,20 +72,21 @@ public class User implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
-	
-	/*@NotEmpty
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
-	private Set<Project> project = new HashSet<Project>();
-	
-*//*
-	public Set<Project> getProject() {
-		return project;
-	}
 
-	public void setProject(Set<Project> project) {
-		this.project = project;
-	}*/
+	/*
+	 * @NotEmpty
+	 * 
+	 * @ManyToMany(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name =
+	 * "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
+	 * private Set<Project> project = new HashSet<Project>();
+	 * 
+	 * 
+	 * public Set<Project> getProject() { return project; }
+	 * 
+	 * public void setProject(Set<Project> project) { this.project = project; }
+	 */
 
 	public Integer getId() {
 		return id;
@@ -183,8 +184,6 @@ public class User implements Serializable {
 		this.alternateNumber = alternateNumber;
 	}
 
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -212,13 +211,12 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", mobileNumber=" + mobileNumber + ", alternateNumber=" + alternateNumber + ", email=" + email
-				+ ", address=" + address + ", ssoId=" + ssoId + ", password=" + password + ", retypePassword="
-				+ retypePassword + ", userProfiles=" + userProfiles + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", middleName="
+				+ middleName + ", lastName=" + lastName + ", mobileNumber="
+				+ mobileNumber + ", alternateNumber=" + alternateNumber
+				+ ", email=" + email + ", address=" + address + ", ssoId="
+				+ ssoId + ", password=" + password + ", retypePassword="
+				+ retypePassword + "]";
 	}
 
-	
-
-	
 }
