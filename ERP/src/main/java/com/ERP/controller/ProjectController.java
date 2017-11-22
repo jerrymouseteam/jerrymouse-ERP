@@ -1,6 +1,8 @@
 package com.ERP.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -215,13 +217,16 @@ public class ProjectController {
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registration";
 	}
+	
+	
+
 
 	/**
 	 * This method will be called on form submission, handling POST request for
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/addproject" }, method = RequestMethod.POST)
-	public ModelAndView addProject(@Valid Project project,
+	public ModelAndView addProject(@ModelAttribute("projectForm") Project project,
 			BindingResult result, ModelAndView model) {
 		System.out.println("\nTesting create project API--------addddd--"
 				+ project);
@@ -358,6 +363,35 @@ public class ProjectController {
 
 		return "redirect:/list";
 	}
+	
+	
+	@RequestMapping(value = { "/editProjectList" }, method = RequestMethod.GET)
+	public String editProjectList(@ModelAttribute("projectForm") Project project, BindingResult result,
+			ModelMap model) {
+
+		model.addAttribute("success", "");
+
+		return "editProjectList";
+	}
+	
+	@RequestMapping(value = { "/editProject" }, method = RequestMethod.POST)
+	public String editProject(@ModelAttribute("projectForm") Project project, BindingResult result, ModelMap model,
+			HttpServletRequest rq, HttpServletResponse resp) {
+
+		System.out.println("\n Request " + rq.getPathInfo());
+		System.out.println("AppController -- editProject -- project : " + project);
+
+		return "redirect:/editProjectList";
+	}
+
+	@RequestMapping(value = { "/closedProjectList" }, method = RequestMethod.GET)
+	public String closedProjectList(@ModelAttribute("projectForm") Project project, BindingResult result,
+			ModelMap model) {
+
+		model.addAttribute("success", "");
+
+		return "closedProjectList";
+	}
 
 	/**
 	 * This method will provide UserProfile list to views
@@ -421,5 +455,55 @@ public class ProjectController {
 				.getContext().getAuthentication();
 		return authenticationTrustResolver.isAnonymous(authentication);
 	}
+	
+	@ModelAttribute("getEditProjectListDetails")
+	public List<Project> getEditProjectListDetails() {
+
+		List<Project> projectList = new ArrayList<>();
+		
+		Project p1=new Project();
+		p1.setProjectName("Suchi Heights");
+		p1.setSubDivisionName("Private Sector");
+		p1.setStartDate(new Date());
+		p1.setEndDate(new Date());
+		p1.setProjectAddress("");
+		p1.setRemarks("");
+		p1.setContactPersonName("John");
+		p1.setContactPersonEmail("");
+		p1.setContactPersonEmail("");
+		p1.setProjectClientName("Lodha");
+		p1.setProjectClientPhone("");
+		p1.setProjectClientEmail("");
+		p1.setStructuralName("");
+		p1.setStructuralPhone("");
+		p1.setStructuralEmail("");
+		
+		
+		Project p2=new Project();
+		p2.setProjectName("Raheja Heights");
+		p2.setSubDivisionName("Private Sector");
+		p2.setStartDate(new Date());
+		p2.setEndDate(new Date());
+		p2.setProjectAddress("");
+		p2.setRemarks("");
+		p2.setContactPersonName("Harshad");
+		p2.setContactPersonEmail("");
+		p2.setContactPersonEmail("");
+		p2.setProjectClientName("Raheja");
+		p2.setProjectClientPhone("");
+		p2.setProjectClientEmail("");
+		p2.setStructuralName("");
+		p2.setStructuralPhone("");
+		p2.setStructuralEmail("");
+		
+		
+		
+		
+		
+		projectList.add(p1);
+		projectList.add(p2);
+		return projectList;
+	}
+	
 
 }

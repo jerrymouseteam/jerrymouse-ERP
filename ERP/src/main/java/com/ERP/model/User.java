@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -73,20 +74,20 @@ public class User implements Serializable {
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
-	/*
-	 * @NotEmpty
-	 * 
-	 * @ManyToMany(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name =
-	 * "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
-	 * private Set<Project> project = new HashSet<Project>();
-	 * 
-	 * 
-	 * public Set<Project> getProject() { return project; }
-	 * 
-	 * public void setProject(Set<Project> project) { this.project = project; }
-	 */
+	@Transient
+//	  @NotEmpty
+//	  
+//	  @ManyToMany(fetch = FetchType.LAZY)
+//	  
+//	  @JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name =
+//	  "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
+	  private Set<Project> project = new HashSet<Project>();
+	  
+	  
+	  public Set<Project> getProject() { return project; }
+	  
+	  public void setProject(Set<Project> project) { this.project = project; }
+	 
 
 	public Integer getId() {
 		return id;

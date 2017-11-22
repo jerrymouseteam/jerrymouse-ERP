@@ -48,17 +48,35 @@
 		<put-attribute name="body" value="/WEB-INF/views/pages/editUser.jsp" />
 	</definition>
 
-<definition name="registerProject" extends="erp-definition">
-		<put-attribute name="body" value="/WEB-INF/views/pages/addProject.jsp" />
+	<definition name="registerProject" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/addProject.jsp" />
 	</definition>
 	<definition name="editProjectList" extends="erp-definition">
-		<put-attribute name="body" value="/WEB-INF/views/pages/editProject.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/editProject.jsp" />
 	</definition>
 	<definition name="closedProjectList" extends="erp-definition">
-		<put-attribute name="body" value="/WEB-INF/views/pages/closeProject.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/closeProject.jsp" />
 	</definition>
 
 
+	<!-- Requistion -->
 
+	<definition name="raisedRequistion" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/raisedRequistion.jsp" />
+	</definition>
+	<definition name="editRequistion" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/editRequistion.jsp" />
+	</definition>
+	<definition name="deleteRequistion" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/deleteRequistion.jsp" />
+	</definition>
 
+	<!-- Requistion -->
+	
 </tiles-definitions>

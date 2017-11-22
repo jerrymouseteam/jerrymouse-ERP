@@ -57,37 +57,104 @@
 								</tfoot>
 
 								<tbody>
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Edit">
-												<button class="btn btn-primary btn-xs" data-title="Edit"
-													data-toggle="modal" data-target="#edit">
-													<span class="fa fa-edit"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Details">
-												<button class="btn btn-danger btn-xs" data-title="Details"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-search"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Close">
-												<button class="btn btn-danger btn-xs" data-title="Close"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-close"></span>
-												</button>
-											</p></td>
-									</tr>
 
-									<tr>
+									<c:forEach items="${getEditProjectListDetails}" var="project"
+										varStatus="val">
+
+										<tr>
+											<td>${project.projectName}</td>
+											<td>${project.subDivisionName}</td>
+											<td>${project.contactPersonName}</td>
+											<td>${project.projectClientName}</td>
+											<td>${project.startDate}</td>
+											<td>${project.endDate}</td>
+											<td><input type="hidden" id="${val.index}_project_id"
+												name="${val.index}_project_id" value="${project.project_id}" />
+
+												<input type="hidden" id="${val.index}_projectName"
+												name="${val.index}_projectName"
+												value="${project.projectName}" /> <input type="hidden"
+												id="${val.index}_subDivisionName"
+												name="${val.index}_subDivisionName"
+												value="${project.subDivisionName}" /> <input type="hidden"
+												id="${val.index}_startDate" name="${val.index}_startDate"
+												value="${project.startDate}" /> <input type="hidden"
+												id="${val.index}_endDate" name="${val.index}_endDate"
+												value="${project.endDate}" /> <input type="hidden"
+												id="${val.index}_projectAddress"
+												name="${val.index}_projectAddress"
+												value="${project.projectAddress}" /> <input type="hidden"
+												id="${val.index}_remarks" name="${val.index}_remarks"
+												value="${project.remarks}" /> <input type="hidden"
+												id="${val.index}_contactPersonName"
+												name="${val.index}_contactPersonName"
+												value="${project.contactPersonName}" /> <input
+												type="hidden" id="${val.index}_contactPersonEmail"
+												name="${val.index}_contactPersonEmail"
+												value="${project.contactPersonEmail}" /> <input
+												type="hidden" id="${val.index}_contactPersonPhone"
+												name="${val.index}_contactPersonPhone"
+												value="${project.contactPersonPhone}" /> <input
+												type="hidden" id="${val.index}_projectClientName"
+												name="${val.index}_projectClientName"
+												value="${project.projectClientName}" /> <input
+												type="hidden" id="${val.index}_projectClientEmail"
+												name="${val.index}_projectClientEmail"
+												value="${project.projectClientEmail}" /> <input
+												type="hidden" id="${val.index}_projectClientPhone"
+												name="${val.index}_projectClientPhone"
+												value="${project.projectClientPhone}" /> <input
+												type="hidden" id="${val.index}_architectName"
+												name="${val.index}_architectName"
+												value="${project.architectName}" /> <input type="hidden"
+												id="${val.index}_architectEmail"
+												name="${val.index}_architectEmail"
+												value="${project.architectEmail}" /> <input type="hidden"
+												id="${val.index}_architectPhone"
+												name="${val.index}_architectPhone"
+												value="${project.architectPhone}" /> <input type="hidden"
+												id="${val.index}_structuralName"
+												name="${val.index}_structuralName"
+												value="${project.structuralName}" /> <input type="hidden"
+												id="${val.index}_structuralEmail"
+												name="${val.index}_structuralEmail"
+												value="${project.structuralEmail}" /> <input type="hidden"
+												id="${val.index}_structuralPhone"
+												name="${val.index}_structuralPhone"
+												value="${project.structuralPhone}" />
+
+
+
+
+
+												<p data-placement="top" data-toggle="tooltip" title="Edit">
+													<button class="btn btn-primary btn-xs" data-title="Edit"
+														data-toggle="modal" data-target="#edit"
+														onclick="editProjectDetails('${val.index}');">
+														<span class="fa fa-edit"></span>
+													</button>
+												</p></td>
+											<td><p data-placement="top" data-toggle="tooltip"
+													title="Details">
+													<button class="btn btn-danger btn-xs" data-title="Details"
+														data-toggle="modal" data-target="#delete">
+														<span class="fa fa-search"></span>
+													</button>
+												</p></td>
+											<td><p data-placement="top" data-toggle="tooltip"
+													title="Close">
+													<button class="btn btn-danger btn-xs" data-title="Close"
+														data-toggle="modal" data-target="#delete">
+														<span class="fa fa-close"></span>
+													</button>
+												</p></td>
+										</tr>
+
+
+									</c:forEach>
+
+
+									<!-- <tr>
 										<td>Lodha</td>
 										<td>Sector 1</td>
 										<td>Vaibhav</td>
@@ -115,123 +182,9 @@
 													<span class="fa fa-close"></span>
 												</button>
 											</p></td>
-									</tr>
-									<tr>
-										<td>Abby</td>
-										<td>ERP developer</td>
-										<td>Mumbai</td>
-										<td>10</td>
-										<td>2011/04/25</td>
-										<td>$550,800</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Edit">
-												<button class="btn btn-primary btn-xs" data-title="Edit"
-													data-toggle="modal" data-target="#edit">
-													<span class="fa fa-edit"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Details">
-												<button class="btn btn-danger btn-xs" data-title="Details"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-search"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Close">
-												<button class="btn btn-danger btn-xs" data-title="Close"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-close"></span>
-												</button>
-											</p></td>
-									</tr>
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Edit">
-												<button class="btn btn-primary btn-xs" data-title="Edit"
-													data-toggle="modal" data-target="#edit">
-													<span class="fa fa-edit"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Details">
-												<button class="btn btn-danger btn-xs" data-title="Details"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-search"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Close">
-												<button class="btn btn-danger btn-xs" data-title="Close"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-close"></span>
-												</button>
-											</p></td>
-									</tr>
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Edit">
-												<button class="btn btn-primary btn-xs" data-title="Edit"
-													data-toggle="modal" data-target="#edit">
-													<span class="fa fa-edit"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Details">
-												<button class="btn btn-danger btn-xs" data-title="Details"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-search"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Close">
-												<button class="btn btn-danger btn-xs" data-title="Close"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-close"></span>
-												</button>
-											</p></td>
-									</tr>
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Edit">
-												<button class="btn btn-primary btn-xs" data-title="Edit"
-													data-toggle="modal" data-target="#edit">
-													<span class="fa fa-edit"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Details">
-												<button class="btn btn-danger btn-xs" data-title="Details"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-search"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Close">
-												<button class="btn btn-danger btn-xs" data-title="Close"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-close"></span>
-												</button>
-											</p></td>
-									</tr>
+									</tr> -->
+
+
 
 								</tbody>
 							</table>
@@ -245,33 +198,52 @@
 					aria-labelledby="edit" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">×</button>
-								<h4 class="modal-title custom_align" id="Heading">Edit Your
-									Project Detail</h4>
-							</div>
-							<div class="modal-body">
-								<div class="form-group">
-									<input class="form-control " type="text" placeholder="Lodha">
-								</div>
-								<div class="form-group">
+							<spring:url value="/editProject" var="editProjectActionUrl" />
 
-									<input class="form-control " type="text" placeholder="Sector 1">
+							<form:form method="post" modelAttribute="projectForm"
+								name="projectForm" action="${editProjectActionUrl}">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">×</button>
+									<h4 class="modal-title custom_align" id="Heading">Edit
+										Your Project Detail</h4>
 								</div>
-								<div class="form-group">
-									<input class="form-control " type="text" placeholder="Vaibhav">
+								<div class="modal-body">
+									<div class="form-group">
+
+
+
+										<form:input path="projectName" type="text"
+											class="form-control" id="projectName"
+											placeholder="Project name" />
+									</div>
+									<div class="form-group">
+
+
+										<form:input path="subDivisionName" type="text"
+											class="form-control" id="subDivisionName"
+											placeholder="Sector Name" />
+									</div>
+									<div class="form-group">
+
+										<form:input path="contactPersonName" type="text"
+											class="form-control" id="contactPersonName"
+											placeholder="Contact Person Name" />
+									</div>
+									<div class="form-group">
+
+										<form:input path="projectClientName" type="text"
+											class="form-control" id="projectClientName"
+											placeholder="Project Client Name" />
+									</div>
 								</div>
-								<div class="form-group">
-									<input class="form-control " type="text" placeholder="John">
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-warning btn-lg"
+										style="width: 100%;" onclick="submitFunction()">
+										<span class="pe-7s-check"></span> Update
+									</button>
 								</div>
-							</div>
-							<div class="modal-footer ">
-								<button type="button" class="btn btn-warning btn-lg"
-									style="width: 100%;">
-									<span class="pe-7s-check"></span> Update
-								</button>
-							</div>
+							</form:form>
 						</div>
 						<!-- /.modal-content -->
 					</div>
@@ -321,3 +293,34 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	function editProjectDetails(indexVal) {
+		
+		
+		
+		
+		var _project_id = document.getElementById(indexVal + "_project_id").value;
+		var _projectName = document.getElementById(indexVal + "_projectName").value;
+		var _subDivisionName = document.getElementById(indexVal + "_subDivisionName").value;
+		var _contactPersonName = document.getElementById(indexVal + "_contactPersonName").value;
+		var _projectClientName = document.getElementById(indexVal + "_projectClientName").value;
+		
+		
+		document.getElementById("projectName").value = _projectName;
+		document.getElementById("subDivisionName").value = _subDivisionName;
+		document.getElementById("contactPersonName").value = _contactPersonName;
+		document.getElementById("projectClientName").value = _projectClientName;
+		document.getElementById("project_id").value = _project_id;
+
+	}
+	
+	function submitFunction() {
+		
+	   
+        var x = document.getElementsByName('projectForm');
+        x[0].submit(); // Form submission
+
+
+	}
+</script>

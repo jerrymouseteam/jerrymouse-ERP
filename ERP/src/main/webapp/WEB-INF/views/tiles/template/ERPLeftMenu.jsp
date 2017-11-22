@@ -80,7 +80,31 @@
                    <p id="ClosedProject" style="color: burlywood;">Closed Project</p>
                     </a>
                 </li>
-</div>				
+</div>		
+
+<li>
+                    <a href="#">
+                        <i class="pe-7s-user"></i>
+                        <p id="ReqMenu">Requistion <b class="caret" ></b></p>
+                    </a>
+                </li>
+					<div id="dropdownReq" align="left" >
+				<li>
+                    <a href="raisedRequistion">
+                   <p style="color: burlywood;" id="addReqq">Raise Requistion</p>
+                    </a>
+                </li>
+				<li>
+                    <a href="editRequistion">
+                   <p style="color: burlywood;" id="viewEditReqq">View / Edit Requistion</p>
+                    </a>
+                </li>
+				<li>
+                    <a href="deleteRequistion">
+                   <p style="color: burlywood;" id="deleteReqq">Delete Requistion</p>
+                    </a>
+                </li>
+</div>			
 
                 <li>
                     <a href="#">

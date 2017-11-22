@@ -1,9 +1,12 @@
 package com.ERP.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -233,36 +236,8 @@ public class UserController {
 		return "registerProject";
 	}
 
-	@RequestMapping(value = { "/addProject" }, method = RequestMethod.POST)
-	public String addProject(@ModelAttribute("projectForm") Project project,
-			BindingResult result, ModelMap model) {
-
-		model.addAttribute("success", "");
-		System.out.println("\nTesting create Project API----------" + project);
-
-		return "registerProject";
-	}
-
-	@RequestMapping(value = { "/editProjectList" }, method = RequestMethod.GET)
-	public String editProjectList(
-			@ModelAttribute("projectForm") Project project,
-			BindingResult result, ModelMap model) {
-
-		model.addAttribute("success", "");
-
-		return "editProjectList";
-	}
-
-	@RequestMapping(value = { "/closedProjectList" }, method = RequestMethod.GET)
-	public String closedProjectList(
-			@ModelAttribute("projectForm") Project project,
-			BindingResult result, ModelMap model) {
-
-		model.addAttribute("success", "");
-
-		return "closedProjectList";
-	}
-
+	
+	
 	@RequestMapping(value = { "/dashBoard" }, method = RequestMethod.GET)
 	public String dashBoard() {
 
@@ -339,23 +314,46 @@ public class UserController {
 		model.addAttribute("success", "User " + user.getFirstName() + " "
 				+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
+		
+		user.setId(null);
+		user.setFirstName("");
+		user.setMiddleName("");
+		user.setLastName("");
+		user.setMobileNumber("");
+		user.setAlternateNumber("");
+		user.setEmail("");
+		user.setAddress("");
+		user.setPassword("");
+		user.setSsoId("");
+		user.setRetypePassword("");
+		user.setUserProfiles(null);
 		// return "success";
 		return "registration";
 	}
 
 	@RequestMapping(value = { "/editUserList" }, method = RequestMethod.GET)
-	public String editUserList(ModelMap model) {
+	public String editUserList(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model) {
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting getUser API----------");
 
-		User user = new User();
-		System.out.println(user);
+		User user1 = new User();
+		System.out.println(user1);
 
 		// User user = userService.findBySSO(ssoId);
-		model.addAttribute("user", user);
+		model.addAttribute("user", user1);
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "editUser";
+	}
+
+	@RequestMapping(value = { "/editUser" }, method = RequestMethod.POST)
+	public String editUser(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model,
+			HttpServletRequest rq, HttpServletResponse resp) {
+
+		System.out.println("\n Request " + rq.getPathInfo());
+		System.out.println("AppController -- editUser -- User : " + user);
+
+		return "redirect:/editUserList";
 	}
 
 	/**
@@ -588,4 +586,56 @@ public class UserController {
 
 	}
 
+	@ModelAttribute("getEditUserListDetails")
+	public List<User> getEditUserListDetails() {
+
+		Set<Project> projectSet1 = new HashSet<Project>();
+		Project p1 = new Project();
+		p1.setProjectName("projectSet1 EPR1");
+		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
+		p1.setStructuralName("projectSet1 EPR1 Sector 1");
+
+		Project p2 = new Project();
+		p2.setProjectName("projectSet1 EPR2");
+		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
+		p2.setStructuralName("projectSet1 EPR1 Sector 2");
+		projectSet1.add(p1);
+		projectSet1.add(p2);
+
+		Set<Project> projectSet2 = new HashSet<Project>();
+		Project p3 = new Project();
+		p3.setProjectName("projectSet1 EPR3");
+		p3.setProjectClientName("projectSet1 ERP CLIENT 3");
+		p3.setStructuralName("projectSet1 EPR1 Sector 3");
+		projectSet2.add(p3);
+
+		List<User> userList = new ArrayList<>();
+		User u1 = new User();
+		u1.setId(1);
+		u1.setFirstName("Harsahd");
+		u1.setMiddleName("P");
+		u1.setLastName("Gaikwad");
+		u1.setMobileNumber("123456789");
+		u1.setAlternateNumber("987654321");
+		u1.setEmail("Test@gmail.com");
+		u1.setAddress("TEst Address");
+		u1.setSsoId("Harshag");
+		u1.setProject(projectSet1);
+		User u2 = new User();
+		u2.setId(1);
+		u2.setFirstName("Vaibhav");
+		u2.setMiddleName("-");
+		u2.setLastName("Banavalikar");
+		u2.setMobileNumber("11111111");
+		u2.setAlternateNumber("22222222222");
+		u2.setEmail("vb@gmail.com");
+		u2.setAddress("VB Address");
+		u2.setSsoId("VB");
+		u2.setProject(projectSet2);
+
+		userList.add(u1);
+		userList.add(u2);
+
+		return userList;
+	}
 }

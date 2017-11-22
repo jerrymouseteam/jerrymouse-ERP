@@ -173,6 +173,33 @@ public class RequisitionController {
 		return requisitionList;
 	}
 
+	
+	/* Requistion Controller */
+
+	@RequestMapping(value = { "/raisedRequistion" }, method = RequestMethod.GET)
+	public String raisedRequistion() {
+
+		System.out.println("*********** INSIDE raisedRequistion *******************8");
+		
+		return "raisedRequistion";
+
+	}
+	@RequestMapping(value = { "/editRequistion" }, method = RequestMethod.GET)
+	public String editRequistion() {
+
+		System.out.println("*********** INSIDE editRequistion *******************8");
+		
+		return "editRequistion";
+
+	}
+	@RequestMapping(value = { "/deleteRequistion" }, method = RequestMethod.GET)
+	public String deleteRequistion() {
+
+		System.out.println("*********** INSIDE raisedRequistion *******************8");
+		
+		return "deleteRequistion";
+
+	}
 	/**
 	 * This method returns the principal[user-name] of logged-in user.
 	 */
