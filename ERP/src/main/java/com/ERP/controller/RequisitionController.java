@@ -34,7 +34,7 @@ import com.ERP.service.UserProfileService;
 import com.ERP.util.AuthTokenAccess;
 
 @Controller
-@RequestMapping("/requisition")
+@RequestMapping("/")
 @SessionAttributes("roles")
 public class RequisitionController {
 
@@ -144,7 +144,7 @@ public class RequisitionController {
 	/**
 	 * This method will list all existing projects.
 	 */
-	@RequestMapping(value = "/listproject", method = RequestMethod.GET, produces = "application/json")
+	/*@RequestMapping(value = "/listproject", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	List<Requisition> listRequisition(ModelMap model) {
 		AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
@@ -171,7 +171,7 @@ public class RequisitionController {
 		}
 
 		return requisitionList;
-	}
+	}*/
 
 	
 	/* Requistion Controller */
