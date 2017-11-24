@@ -230,4 +230,14 @@ public class Requisition implements java.io.Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Requisition [reqNo=" + reqNo + ", project=" + project + ", dateGen=" + dateGen + ", delDt=" + delDt
+				+ ", expectedDt=" + expectedDt + ", reqSts=" + reqSts + ", authorizeSectEngg=" + authorizeSectEngg
+				+ ", requestedBy=" + requestedBy + ", justification=" + justification + ", itemLists=" + itemLists
+				+ "]";
+	}
+	
+	
+
 }

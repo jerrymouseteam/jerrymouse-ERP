@@ -1,6 +1,8 @@
 package com.ERP.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,9 +18,9 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -29,6 +31,7 @@ import com.ERP.constants.GradeType;
 import com.ERP.constants.MaterialType;
 import com.ERP.constants.UnitType;
 import com.ERP.model.AuthTokenInfo;
+import com.ERP.model.Project;
 import com.ERP.model.Requisition;
 import com.ERP.service.UserProfileService;
 import com.ERP.util.AuthTokenAccess;
@@ -177,7 +180,8 @@ public class RequisitionController {
 	/* Requistion Controller */
 
 	@RequestMapping(value = { "/raisedRequistion" }, method = RequestMethod.GET)
-	public String raisedRequistion() {
+	public String raisedRequistion(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
+			ModelMap model) {
 
 		System.out.println("*********** INSIDE raisedRequistion *******************8");
 		
@@ -185,7 +189,8 @@ public class RequisitionController {
 
 	}
 	@RequestMapping(value = { "/editRequistion" }, method = RequestMethod.GET)
-	public String editRequistion() {
+	public String editRequistion(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
+			ModelMap model) {
 
 		System.out.println("*********** INSIDE editRequistion *******************8");
 		
@@ -193,7 +198,8 @@ public class RequisitionController {
 
 	}
 	@RequestMapping(value = { "/deleteRequistion" }, method = RequestMethod.GET)
-	public String deleteRequistion() {
+	public String deleteRequistion(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
+			ModelMap model) {
 
 		System.out.println("*********** INSIDE raisedRequistion *******************8");
 		
@@ -215,5 +221,127 @@ public class RequisitionController {
 		}
 		return userName;
 	}
+	
+	@ModelAttribute("getEditRequisitionListDetails")
+	public List<Requisition> getEditRequisitionListDetails() {
+		
+		Project p1=new Project();
+		p1.setProjectName("Suchi Heights");
+		p1.setSubDivisionName("Private Sector");
+		p1.setStartDate(new Date());
+		p1.setEndDate(new Date());
+		p1.setProjectAddress("");
+		p1.setRemarks("");
+		p1.setContactPersonName("John");
+		p1.setContactPersonEmail("");
+		p1.setContactPersonEmail("");
+		p1.setProjectClientName("Lodha");
+		p1.setProjectClientPhone("");
+		p1.setProjectClientEmail("");
+		p1.setStructuralName("");
+		p1.setStructuralPhone("");
+		p1.setStructuralEmail("");
+		
+		Project p2=new Project();
+		p2.setProjectName("Raheja Heights");
+		p2.setSubDivisionName("Private Sector");
+		p2.setStartDate(new Date());
+		p2.setEndDate(new Date());
+		p2.setProjectAddress("");
+		p2.setRemarks("");
+		p2.setContactPersonName("Harshad");
+		p2.setContactPersonEmail("");
+		p2.setContactPersonEmail("");
+		p2.setProjectClientName("Raheja");
+		p2.setProjectClientPhone("");
+		p2.setProjectClientEmail("");
+		p2.setStructuralName("");
+		p2.setStructuralPhone("");
+		p2.setStructuralEmail("");
+		
+		
+		List<Requisition> requisitionList=new ArrayList<>();
+		
+		Requisition r1=new Requisition();
+		r1.setProject(p1);
+		r1.setRequestedBy("John");
+		r1.setJustification("Test Justification Message 1");
+		r1.setDateGen(new Date());
+		r1.setExpectedDt(new Date());
+		r1.setReqNo(1L);
+		r1.setReqSts("Approved");
+		
+		Requisition r2=new Requisition();
+		r2.setProject(p2);
+		r2.setRequestedBy("Harshad");
+		r2.setJustification("Test Justification Message 2");
+		r2.setDateGen(new Date());
+		r2.setExpectedDt(new Date());
+		r2.setReqNo(2L);
+		r2.setReqSts("Approved");
+		requisitionList.add(r1);
+		requisitionList.add(r2);
+		
+		
+				
+		
+		return requisitionList;
+	}
+	
+	
+	@ModelAttribute("getEditProjectListDetails")
+	public List<Project> getEditProjectListDetails() {
+
+		List<Project> projectList = new ArrayList<>();
+		
+		Project p1=new Project();
+		p1.setProjectName("Suchi Heights");
+		p1.setSubDivisionName("Private Sector");
+		p1.setStartDate(new Date());
+		p1.setEndDate(new Date());
+		p1.setProjectAddress("");
+		p1.setRemarks("");
+		p1.setContactPersonName("John");
+		p1.setContactPersonEmail("");
+		p1.setContactPersonEmail("");
+		p1.setProjectClientName("Lodha");
+		p1.setProjectClientPhone("");
+		p1.setProjectClientEmail("");
+		p1.setStructuralName("");
+		p1.setStructuralPhone("");
+		p1.setStructuralEmail("");
+		
+		
+		Project p2=new Project();
+		p2.setProjectName("Raheja Heights");
+		p2.setSubDivisionName("Private Sector");
+		p2.setStartDate(new Date());
+		p2.setEndDate(new Date());
+		p2.setProjectAddress("");
+		p2.setRemarks("");
+		p2.setContactPersonName("Harshad");
+		p2.setContactPersonEmail("");
+		p2.setContactPersonEmail("");
+		p2.setProjectClientName("Raheja");
+		p2.setProjectClientPhone("");
+		p2.setProjectClientEmail("");
+		p2.setStructuralName("");
+		p2.setStructuralPhone("");
+		p2.setStructuralEmail("");
+		
+		
+		
+		
+		
+		projectList.add(p1);
+		projectList.add(p2);
+		return projectList;
+	}
+	
+	
+	 /*"Requisition [reqNo=" + reqNo + ", project=" + project + ", dateGen=" + dateGen + ", delDt=" + delDt
+		+ ", expectedDt=" + expectedDt + ", reqSts=" + reqSts + ", authorizeSectEngg=" + authorizeSectEngg
+		+ ", requestedBy=" + requestedBy + ", justification=" + justification + ", itemLists=" + itemLists
+		+ "]";*/
 
 }

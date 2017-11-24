@@ -17,7 +17,10 @@
 						raised</p>
 				</div>
 				<div class="content">
-					<form>
+					<spring:url value="/newuser" var="userActionUrl" />
+
+					<form:form method="post" modelAttribute="requistionForm"
+						action="${userActionUrl}">
 						<div class="col-md-12">
 
 							<div class="content">
@@ -46,45 +49,51 @@
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>Expected Delivery</label> <input type="date"
-													class="form-control" placeholder="Expected Delivery"
-													value="">
+												<label>Expected Delivery</label> 
+									
+													
+													<form:input path="expectedDt" type="date" class="form-control"
+													id="expectedDt" placeholder="Expected Delivery" />
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Date of Generation</label> <input type="date"
-													class="form-control" placeholder="Date of Generation">
+												<label>Date of Generation</label> 
+												
+												
+													
+													<form:input path="dateGen" type="date" class="form-control"
+													id="dateGen" placeholder="Date of Generation"/>
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Requested By</label> <input type="text"
-													class="form-control" placeholder="Requested by">
+												<label>Requested By</label> 
+													
+													<form:input path="requestedBy" type="text" class="form-control"
+													id="requestedBy" placeholder="Requested by"/>
+													
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Project Name</label> <select id="myselect"
-													class="form-control">
-													<option value="1">Project 1</option>
-													<option value="2">Project 2</option>
-													<option value="3">Project 3</option>
-													<option value="4">Project 4</option>
-													<option value="5" selected>Project 5</option>
-												</select>
+												<label>Project Name</label> 
+												<form:select path="project" items="${getEditProjectListDetails}"
+													 itemValue="project_id" itemLabel="projectName" 
+													class="form-control" />
+											
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Justification for Request</label>
-												<textarea rows="4" cols="50" name="comment" form="usrform"
-													class="form-control" placeholder="Comments">
-											</textarea>
+												
+											
+											<form:textarea path="justification" rows="4" cols="50" class="form-control" placeholder="Comments" id="justification"/>
 
 											</div>
 										</div>
@@ -205,7 +214,7 @@
 						</div>
 
 
-					</form>
+					</form:form>
 				</div>
 			</div>
 			<!-- add req-->
