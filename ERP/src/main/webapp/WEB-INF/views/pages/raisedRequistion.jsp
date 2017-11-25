@@ -17,7 +17,7 @@
 						raised</p>
 				</div>
 				<div class="content">
-					<spring:url value="/newuser" var="userActionUrl" />
+					<spring:url value="/addrequisition" var="userActionUrl" />
 
 					<form:form method="post" modelAttribute="requistionForm"
 						action="${userActionUrl}">
@@ -34,15 +34,15 @@
 
 												<div class="col-md-2">
 													<input type="text" class="form-control" placeholder="CC"
-														value="22">
+														value="CC">
 												</div>
 												<div class="col-md-2">
 													<input type="text" class="form-control" placeholder="Num"
-														value="255">
+														value="${requistionForm.reqNo}" >
 												</div>
 												<div class="col-md-5">
 													<input type="date" class="form-control" placeholder="DATE"
-														value="">
+														value="${requisitionForm.dateGen}">
 												</div>
 											</div>
 										</div>
@@ -64,7 +64,7 @@
 												
 													
 													<form:input path="dateGen" type="date" class="form-control"
-													id="dateGen" placeholder="Date of Generation"/>
+													id="dateGen" placeholder="Date of Generation" value="${requisitionForm.dateGen}"/>
 											</div>
 										</div>
 
@@ -73,7 +73,7 @@
 												<label>Requested By</label> 
 													
 													<form:input path="requestedBy" type="text" class="form-control"
-													id="requestedBy" placeholder="Requested by"/>
+													id="requestedBy" placeholder="Requested by" value="${user.firstName}"/>
 													
 											</div>
 										</div>
@@ -81,7 +81,7 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Project Name</label> 
-												<form:select path="project" items="${getEditProjectListDetails}"
+												<form:select path="project" items="${user.project}"
 													 itemValue="project_id" itemLabel="projectName" 
 													class="form-control" />
 											

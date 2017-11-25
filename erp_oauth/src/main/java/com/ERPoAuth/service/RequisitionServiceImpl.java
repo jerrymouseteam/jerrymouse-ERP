@@ -1,5 +1,10 @@
 package com.ERPoAuth.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +26,16 @@ public class RequisitionServiceImpl implements RequisitionService {
 	@Override
 	public Requisition getPreFilledRequisitionFormDetails() {
 		Requisition requisition = new Requisition();
-		requisition.setReqNo(sequenceDao.getSequenceValue("requisition_seq")
-				.longValue());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			requisition.setReqNo(sequenceDao
+					.getSequenceValue("requisition_seq").longValue());
+			requisition.setDateGen(dateFormat.parse(dateFormat
+					.format(new Date())));
+		} catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
+
+		}
 		return requisition;
 	}
 

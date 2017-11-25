@@ -73,25 +73,24 @@ public class User implements Serializable {
 	@Column(name = "RETYPE_PASSWORD", nullable = false)
 	private String retypePassword;
 
-	@NotEmpty
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
-	/*
-	 * @NotEmpty
-	 * 
-	 * @ManyToMany(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name =
-	 * "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
-	 * private Set<Project> project = new HashSet<Project>();
-	 * 
-	 * 
-	 * public Set<Project> getProject() { return project; }
-	 * 
-	 * public void setProject(Set<Project> project) { this.project = project; }
-	 */
+	// @Transient
+	// @NotEmpty
+	//
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "APP_USER_PROJECT", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PROJECT_ID") })
+	private Set<Project> project = new HashSet<Project>();
+
+	public Set<Project> getProject() {
+		return project;
+	}
+
+	public void setProject(Set<Project> project) {
+		this.project = project;
+	}
 
 	public Integer getId() {
 		return id;

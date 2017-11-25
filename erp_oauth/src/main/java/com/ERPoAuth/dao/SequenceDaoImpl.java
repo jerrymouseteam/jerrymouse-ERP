@@ -1,8 +1,7 @@
 package com.ERPoAuth.dao;
 
-import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
+import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
 
 import com.ERPoAuth.model.Project;
@@ -15,10 +14,10 @@ public class SequenceDaoImpl extends AbstractDao<Integer, Project> implements
 
 	@Override
 	public Integer getSequenceValue(String seqName) {
-		Query query = (Query) getSession().createSQLQuery(
-				"select sequence(?1) from dual");
-		query.setParameter(1, seqName);
-		return (Integer) query.getSingleResult();
+		SQLQuery query = getSession().createSQLQuery(
+				"select sequence(:name) from dual");
+		query.setParameter("name", seqName);
+		return (Integer) query.uniqueResult();
 	}
 
 }
