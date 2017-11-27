@@ -1,5 +1,8 @@
 package com.ERP.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -207,26 +210,25 @@ public class ProjectController {
 	/**
 	 * This method will provide the medium to add a new user.
 	 */
-	@RequestMapping(value = { "/addproject" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/addProject" }, method = RequestMethod.GET)
 	public String newProject(ModelMap model) {
 
 		Project project = new Project();
+
 		System.out.println("project");
-		model.addAttribute("project", project);
+		model.addAttribute("projectForm", project);
 		model.addAttribute("edit", false);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "registration";
+		return "addProject";
 	}
-	
-	
-
 
 	/**
 	 * This method will be called on form submission, handling POST request for
 	 * saving user in database. It also validates the user input
 	 */
-	@RequestMapping(value = { "/addproject" }, method = RequestMethod.POST)
-	public ModelAndView addProject(@ModelAttribute("projectForm") Project project,
+	@RequestMapping(value = { "/addProject" }, method = RequestMethod.POST)
+	public ModelAndView addProject(
+			@Valid @ModelAttribute("projectForm") Project project,
 			BindingResult result, ModelAndView model) {
 		System.out.println("\nTesting create project API--------addddd--"
 				+ project);
@@ -235,9 +237,18 @@ public class ProjectController {
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			model.addObject("error", result.getAllErrors());
-			model.addObject("message", "project successfully added");
-			model.setViewName("projectERP");
+			model.addObject("message", "project not added successfully");
 			return model;
+		}
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		try {
+			project.setEndDate(dateFormat.parse(dateFormat.format(project
+					.getEndDate())));
+			project.setStartDate(dateFormat.parse(dateFormat.format(project
+					.getStartDate())));
+		} catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
 		}
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -251,14 +262,12 @@ public class ProjectController {
 					Project.class);
 		} catch (HttpClientErrorException excep) {
 			if (HttpStatus.CONFLICT.equals(excep.getStatusCode())) {
-				FieldError ssoError = new FieldError("projectName",
-						"project_id", messageSource.getMessage("projectName",
+				FieldError ssoError = new FieldError("projectForm",
+						"projectName", messageSource.getMessage("projectName",
 								new String[] { project.getProjectName()
 										.toString() }, Locale.getDefault()));
 				result.addError(ssoError);
 				model.addObject("message", result.getAllErrors());
-				model.setViewName("projectERP");
-
 				return model;
 			} else {
 				excep.printStackTrace();
@@ -267,9 +276,9 @@ public class ProjectController {
 		model.addObject("success", "Project " + project.getProjectName()
 				+ " registered successfully");
 		model.addObject("loggedinuser", getPrincipal());
-		// return "success";
 		model.addObject("message", "project successfully added");
-		model.setViewName("projectERP");
+		model.addObject("projectForm", new Project());
+		model.setViewName("addProject");
 
 		return model;
 	}
@@ -363,30 +372,33 @@ public class ProjectController {
 
 		return "redirect:/list";
 	}
-	
-	
+
 	@RequestMapping(value = { "/editProjectList" }, method = RequestMethod.GET)
-	public String editProjectList(@ModelAttribute("projectForm") Project project, BindingResult result,
-			ModelMap model) {
+	public String editProjectList(
+			@ModelAttribute("projectForm") Project project,
+			BindingResult result, ModelMap model) {
 
 		model.addAttribute("success", "");
 
 		return "editProjectList";
 	}
-	
+
 	@RequestMapping(value = { "/editProject" }, method = RequestMethod.POST)
-	public String editProject(@ModelAttribute("projectForm") Project project, BindingResult result, ModelMap model,
-			HttpServletRequest rq, HttpServletResponse resp) {
+	public String editProject(@ModelAttribute("projectForm") Project project,
+			BindingResult result, ModelMap model, HttpServletRequest rq,
+			HttpServletResponse resp) {
 
 		System.out.println("\n Request " + rq.getPathInfo());
-		System.out.println("AppController -- editProject -- project : " + project);
+		System.out.println("AppController -- editProject -- project : "
+				+ project);
 
 		return "redirect:/editProjectList";
 	}
 
 	@RequestMapping(value = { "/closedProjectList" }, method = RequestMethod.GET)
-	public String closedProjectList(@ModelAttribute("projectForm") Project project, BindingResult result,
-			ModelMap model) {
+	public String closedProjectList(
+			@ModelAttribute("projectForm") Project project,
+			BindingResult result, ModelMap model) {
 
 		model.addAttribute("success", "");
 
@@ -455,13 +467,13 @@ public class ProjectController {
 				.getContext().getAuthentication();
 		return authenticationTrustResolver.isAnonymous(authentication);
 	}
-	
+
 	@ModelAttribute("getEditProjectListDetails")
 	public List<Project> getEditProjectListDetails() {
 
 		List<Project> projectList = new ArrayList<>();
-		
-		Project p1=new Project();
+
+		Project p1 = new Project();
 		p1.setProjectName("Suchi Heights");
 		p1.setSubDivisionName("Private Sector");
 		p1.setStartDate(new Date());
@@ -477,9 +489,8 @@ public class ProjectController {
 		p1.setStructuralName("");
 		p1.setStructuralPhone("");
 		p1.setStructuralEmail("");
-		
-		
-		Project p2=new Project();
+
+		Project p2 = new Project();
 		p2.setProjectName("Raheja Heights");
 		p2.setSubDivisionName("Private Sector");
 		p2.setStartDate(new Date());
@@ -495,15 +506,10 @@ public class ProjectController {
 		p2.setStructuralName("");
 		p2.setStructuralPhone("");
 		p2.setStructuralEmail("");
-		
-		
-		
-		
-		
+
 		projectList.add(p1);
 		projectList.add(p2);
 		return projectList;
 	}
-	
 
 }

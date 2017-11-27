@@ -66,8 +66,8 @@
 		
 	<div id="dropdownProject"  align="left" >
 				<li >
-                    <a href="registerProject">
-                   <p id="projectAdd" style="color: burlywood;">Add Project</p>
+                    <a href="addProject">
+                   <p id="addProject" style="color: burlywood;">Add Project</p>
                     </a>
                 </li>
 				<li>

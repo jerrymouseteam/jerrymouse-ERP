@@ -48,7 +48,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/pages/editUser.jsp" />
 	</definition>
 
-	<definition name="registerProject" extends="erp-definition">
+	<definition name="addProject" extends="erp-definition">
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/addProject.jsp" />
 	</definition>
