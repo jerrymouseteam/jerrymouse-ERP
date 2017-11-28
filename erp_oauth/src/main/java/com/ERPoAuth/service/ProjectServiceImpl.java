@@ -35,12 +35,8 @@ public class ProjectServiceImpl implements ProjectService {
 	 * proper values within transaction. It will be updated in db once
 	 * transaction ends.
 	 */
-	public void updateProject(Project project) {
-		Project entity = dao.findByProjectid(project.getProject_id());
-		if (entity != null) {
-			// please add setter methods here :)
-
-		}
+	public Project updateProject(Project project) {
+		return dao.updateProject(project);
 	}
 
 	public void closeProject(String projectName) {

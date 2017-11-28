@@ -218,9 +218,14 @@ public class UserController {
 	 * This method will provide the medium to add a new user.
 	 */
 	@RequestMapping(value = { "/registerUser" }, method = RequestMethod.GET)
-	public String newUser(@ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model) {
+	public String newUser(ModelMap model) {
 
+		User user = new User();
+
+		System.out.println("User register get");
+		model.addAttribute("userForm", user);
+		model.addAttribute("edit", false);
+		model.addAttribute("loggedinuser", getPrincipal());
 		model.addAttribute("success", "");
 
 		return "registration";
@@ -236,8 +241,6 @@ public class UserController {
 		return "registerProject";
 	}
 
-	
-	
 	@RequestMapping(value = { "/dashBoard" }, method = RequestMethod.GET)
 	public String dashBoard() {
 
@@ -249,7 +252,7 @@ public class UserController {
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("userForm") User user,
+	public String saveUser(@Valid @ModelAttribute("userForm") User user,
 			BindingResult result, ModelMap model) {
 
 		System.out.println("AppController -- saveUser -- User : " + user);
@@ -314,7 +317,7 @@ public class UserController {
 		model.addAttribute("success", "User " + user.getFirstName() + " "
 				+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
-		
+
 		user.setId(null);
 		user.setFirstName("");
 		user.setMiddleName("");
@@ -332,7 +335,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUserList" }, method = RequestMethod.GET)
-	public String editUserList(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model) {
+	public String editUserList(@ModelAttribute("userForm") User user,
+			BindingResult result, ModelMap model) {
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting getUser API----------");
 
@@ -347,8 +351,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.POST)
-	public String editUser(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model,
-			HttpServletRequest rq, HttpServletResponse resp) {
+	public String editUser(@ModelAttribute("userForm") User user,
+			BindingResult result, ModelMap model, HttpServletRequest rq,
+			HttpServletResponse resp) {
 
 		System.out.println("\n Request " + rq.getPathInfo());
 		System.out.println("AppController -- editUser -- User : " + user);

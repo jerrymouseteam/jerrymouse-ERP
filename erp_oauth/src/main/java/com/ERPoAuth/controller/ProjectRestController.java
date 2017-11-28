@@ -3,7 +3,6 @@ package com.ERPoAuth.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +26,16 @@ public class ProjectRestController {
 	// -------------------Retrieve All
 	// Projects--------------------------------------------------------
 
-	@RequestMapping(value = "/project/", method = RequestMethod.GET)
+	@RequestMapping(value = "/project/list", method = RequestMethod.GET)
 	public ResponseEntity<List<Project>> listAllprojects() {
-		List<Project> Projects = projectService.findAllProjectss();
-		System.out.println(" Projects in web service " + Projects);
-		if (Projects.isEmpty()) {
+		List<Project> projectList = projectService.findAllProjectss();
+		// System.out.println(" Projects in web service " + projectList);
+		if (projectList.isEmpty()) {
 			return new ResponseEntity<List<Project>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Project>>(Projects, HttpStatus.OK);
+		return new ResponseEntity<List<Project>>(projectList, HttpStatus.OK);
 	}
+
 	@RequestMapping(value = "/project/closed/", method = RequestMethod.GET)
 	public ResponseEntity<List<Project>> listAllClosedprojects() {
 		List<Project> Projects = projectService.findClosedProjectss();
@@ -45,16 +45,19 @@ public class ProjectRestController {
 		}
 		return new ResponseEntity<List<Project>>(Projects, HttpStatus.OK);
 	}
+
 	// -------------------Retrieve Single
 	// Project--------------------------------------------------------
 
 	@RequestMapping(value = "/project/{projectName}", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Project> getProject(@PathVariable("projectName") String projectName) {
+	public ResponseEntity<Project> getProject(
+			@PathVariable("projectName") String projectName) {
 		System.out.println("Fetching Project with id " + projectName);
 		Project Project = projectService.findByProjectname(projectName);
 		if (Project == null) {
-			System.out.println("Project with projectId " + projectName + " not found");
+			System.out.println("Project with projectId " + projectName
+					+ " not found");
 			return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Project>(Project, HttpStatus.OK);
@@ -62,11 +65,13 @@ public class ProjectRestController {
 
 	@RequestMapping(value = "/project/projectName/{projectName}", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Project> getByProjectname(@PathVariable String projectName) {
+	public ResponseEntity<Project> getByProjectname(
+			@PathVariable String projectName) {
 		System.out.println("Fetching Project with projectName " + projectName);
 		Project Project = projectService.findByProjectname(projectName);
 		if (Project == null) {
-			System.out.println("Project with projectName " + projectName + " not found");
+			System.out.println("Project with projectName " + projectName
+					+ " not found");
 			return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Project>(Project, HttpStatus.OK);
@@ -76,11 +81,13 @@ public class ProjectRestController {
 	// Project--------------------------------------------------------
 
 	@RequestMapping(value = "/project/create/", method = RequestMethod.POST)
-	public ResponseEntity<Project> createProject(@RequestBody Project project, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Project> createProject(@RequestBody Project project,
+			UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating Project " + project);
 
 		if (projectService.findByProjectname(project.getProjectName()) != null) {
-			System.out.println("A Project with name " + project.getProjectName() + " already exist");
+			System.out.println("A Project with name "
+					+ project.getProjectName() + " already exist");
 			return new ResponseEntity<Project>(HttpStatus.CONFLICT);
 		}
 		try {
@@ -99,22 +106,21 @@ public class ProjectRestController {
 	// ------------------- Update a Project
 	// --------------------------------------------------------
 
-	@RequestMapping(value = "/project/{projectName}", method = RequestMethod.PUT)
-	public ResponseEntity<Project> updateProject(@PathVariable("projectName") String projectName,
-			@RequestBody Project Project) {
-		System.out.println("Updating Project " + projectName);
+	@RequestMapping(value = "/project/{projectId}", method = RequestMethod.PUT)
+	public ResponseEntity<Project> updateProject(
+			@PathVariable("projectId") Integer projectId,
+			@RequestBody Project project) {
+		System.out.println("Updating Project with Id : " + projectId);
 
-		Project currentProject = projectService.findByProjectname(projectName);
-
-		if (currentProject == null) {
-			System.out.println("Project with id " + projectName + " not found");
+		if (projectService.findByProjectId(projectId) == null) {
+			System.out.println("Project with id " + projectId + " not found");
 			return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
 		}
 
 		// add setter methods
 
-		projectService.updateProject(currentProject);
-		return new ResponseEntity<Project>(currentProject, HttpStatus.OK);
+		Project assosiatedProject = projectService.updateProject(project);
+		return new ResponseEntity<Project>(assosiatedProject, HttpStatus.OK);
 	}
 
 	// ------------------- Delete a Project
@@ -122,11 +128,13 @@ public class ProjectRestController {
 
 	@RequestMapping(value = "/Project/delete/{projectId}", method = RequestMethod.POST)
 	public ResponseEntity<Project> closeProject(@PathVariable String projectName) {
-		System.out.println("Fetching & Closing Project with projectName " + projectName);
+		System.out.println("Fetching & Closing Project with projectName "
+				+ projectName);
 
 		Project project = projectService.findByProjectname(projectName);
 		if (project == null) {
-			System.out.println("Unable to close. Project with projectId " + projectName + " not found");
+			System.out.println("Unable to close. Project with projectId "
+					+ projectName + " not found");
 			return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
 		}
 

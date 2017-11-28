@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -30,41 +31,42 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotEmpty
+	@NotEmpty(message = "First Name cannot be empty")
 	@Column(name = "FIRST_NAME", nullable = false)
 	private String firstName;
 
 	@Column(name = "MIDDLE_NAME", nullable = true)
 	private String middleName;
 
-	@NotEmpty
+	@NotEmpty(message = "Last Name cannot be empty")
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
 
-	@NotEmpty
+	@NotEmpty(message = "Mobile number cannot be empty")
 	@Column(name = "MOBILE_NUMBER", nullable = false)
 	private String mobileNumber;
 
 	@Column(name = "ALTERNATE_NUMBER", nullable = true)
 	private String alternateNumber;
 
-	@NotEmpty
+	@Email(message = "Enter a valid email id")
+	@NotEmpty(message = "Email Id cannot be empty")
 	@Column(name = "EMAIL", nullable = false)
 	private String email;
 
-	@NotEmpty
+	@NotEmpty(message = "Address cannot be empty")
 	@Column(name = "ADDRESS", nullable = false)
 	private String address;
 
-	@NotEmpty
+	@NotEmpty(message = "User Id cannot be empty")
 	@Column(name = "SSO_ID", unique = true, nullable = false)
 	private String ssoId;
 
-	@NotEmpty
+	@NotEmpty(message = "Password cannot be empty")
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
 
-	@NotEmpty
+	@NotEmpty(message = "Retype Password cannot be empty")
 	@Column(name = "RETYPE_PASSWORD", nullable = false)
 	private String retypePassword;
 

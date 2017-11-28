@@ -5,7 +5,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<style type="text/css">
+.errorTrial {
+border-color: red;
+}
+</style>
 
 <div class="container-fluid">
 	<div class="row">
@@ -62,7 +66,9 @@
 													class="form-control" placeholder="First Name"> -->
 												<form:input path="firstName" type="text"
 													class="form-control" id="firstName"
-													placeholder="First Name" />
+													placeholder="First Name" 
+													cssErrorClass="form-control errorTrial"/>
+												<form:errors path="firstName" />
 											</div>
 
 											<div class="form-group">
@@ -71,7 +77,9 @@
 													class="form-control" placeholder="Middle Name"> -->
 												<form:input path="middleName" type="text"
 													class="form-control" id="middleName"
-													placeholder="Middle Name" />
+													placeholder="Middle Name" 
+													cssErrorClass="form-control errorTrial"/>
+												<form:errors path="middleName" />
 											</div>
 
 											<div class="form-group">
@@ -80,7 +88,9 @@
 													class="form-control" placeholder="Last Name"> -->
 
 												<form:input path="lastName" type="text" class="form-control"
-													id="lastName" placeholder="Last Name" />
+													id="lastName" placeholder="Last Name" 
+													cssErrorClass="form-control errorTrial"/>
+												<form:errors path="lastName" />
 											</div>
 
 											<div class="form-group">
@@ -89,7 +99,9 @@
 													class="form-control" placeholder="Mobile Number"> -->
 												<form:input path="mobileNumber" type="text"
 													class="form-control" id="mobileNumber"
-													placeholder="Mobile Number" />
+													placeholder="Mobile Number" 
+													cssErrorClass="form-control errorTrial"/>
+												<form:errors path="mobileNumber" />
 											</div>
 
 											<div class="form-group">
@@ -98,7 +110,9 @@
 													class="form-control" placeholder="Mobile Number"> -->
 												<form:input path="alternateNumber" type="text"
 													class="form-control" id="alternateNumber"
-													placeholder="Mobile Number" />
+													placeholder="Mobile Number"  
+													cssErrorClass="form-control errorTrial"/>
+												<form:errors path="alternateNumber" />
 											</div>
 
 											<div class="form-group">
@@ -106,7 +120,9 @@
 												<!-- <input
 													type="email" class="form-control" placeholder="Email"> -->
 												<form:input path="email" type="text" class="form-control"
-													id="email" placeholder="Email" />
+													id="email" placeholder="Email" 
+													cssErrorClass="form-control errorTrial" />
+												<form:errors path="email" />
 											</div>
 
 											<div class="form-group">
@@ -114,7 +130,9 @@
 												<!-- <input type="textarea" class="form-control"
 													placeholder="Address"> -->
 												<form:input path="address" type="textarea"
-													class="form-control" id="address" placeholder="Address" />
+													class="form-control" id="address" placeholder="Address"
+													cssErrorClass="form-control errorTrial"  />
+												<form:errors path="address" />
 											</div>
 										</div>
 
@@ -134,12 +152,11 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-
 												<label>User Name</label>
-												<!-- <input type="text"
-													class="form-control" placeholder="User Name"> -->
 												<form:input path="ssoId" type="text" class="form-control"
-													id="ssoId" placeholder="User Name" />
+													id="ssoId" placeholder="User Name" 
+													cssErrorClass="form-control errorTrial" />
+												<form:errors path="ssoId" />
 											</div>
 
 											<div class="form-group">
@@ -149,8 +166,9 @@
 													class="form-control" placeholder="Password"> -->
 
 												<form:input path="password" type="password"
-													class="form-control" id="password" placeholder="Password" />
-
+													class="form-control" id="password" placeholder="Password"
+													cssErrorClass="form-control errorTrial"  />
+												<form:errors path="password" />
 											</div>
 											<div class="form-group">
 												<label>Retype Password</label>
@@ -158,74 +176,36 @@
 													class="form-control" placeholder="Retype Password"> -->
 												<form:input path="retypePassword" type="password"
 													class="form-control" id="retypePassword"
-													placeholder="Retype Password" />
+													placeholder="Retype Password" 
+													cssErrorClass="form-control errorTrial" />
+												<form:errors path="retypePassword" />
 											</div>
 
 											<div class="form-group">
 												<label>Select Role</label>
-												<!-- <select id="myselect"
-													class="form-control">
-													<option value="1">Admin</option>
-													<option value="2">Supervisor</option>
-													<option value="3">Contractor</option>
-													<option value="4">Jr Engg</option>
-													<option value="5" selected>Sr Engg</option>
-												</select> -->
-
-
-
+												
 												<form:select path="userProfiles" items="${roles}"
 													multiple="true" itemValue="id" itemLabel="type"
 													class="form-control" />
 
-
 											</div>
-
-
-
 										</div>
-
 									</div>
 								</div>
 							</div>
 						</div>
-
-
 						<div class="col-md-12">
 							<div class="content">
 								<button type="submit"
 									class="btn btn-danger btn-fill pull-left col-md-4">Cancel</button>
 								<button type="submit"
 									class="btn btn-info btn-fill pull-right col-md-4">Submit</button>
-
-
 							</div>
 						</div>
 						<div class="clearfix"></div>
 					</form:form>
 				</div>
 			</div>
-
-
-
-
-
-
-
-
-
-
-			
-
-
-
-
-
-
-
-
-
-
 		</div>
 	</div>
 </div>

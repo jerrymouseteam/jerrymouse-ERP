@@ -12,7 +12,7 @@ public interface ProjectService {
 
 	void saveProject(Project project);
 
-	void updateProject(Project project);
+	Project updateProject(Project project);
 
 	void closeProject(String projectName);
 

@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -384,14 +383,28 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = { "/editProject" }, method = RequestMethod.POST)
-	public String editProject(@ModelAttribute("projectForm") Project project,
+	public String editProject(
+			@Valid @ModelAttribute("projectForm") Project project,
 			BindingResult result, ModelMap model, HttpServletRequest rq,
 			HttpServletResponse resp) {
 
 		System.out.println("\n Request " + rq.getPathInfo());
 		System.out.println("AppController -- editProject -- project : "
 				+ project);
+		AuthTokenInfo tokenInfo = sendTokenRequest();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<Project> request = new HttpEntity<Project>(project,
+				getHeaders());
 
+		try {
+			restTemplate.put(ErpConstants.REST_SERVICE_URI + "/project/"
+					+ project.getProject_id() + ErpConstants.QPM_ACCESS_TOKEN
+					+ tokenInfo.getAccess_token(), request);
+		} catch (HttpClientErrorException excep) {
+			if (HttpStatus.NOT_FOUND.equals(excep.getStatusCode())) {
+
+			}
+		}
 		return "redirect:/editProjectList";
 	}
 
@@ -471,45 +484,25 @@ public class ProjectController {
 	@ModelAttribute("getEditProjectListDetails")
 	public List<Project> getEditProjectListDetails() {
 
+		AuthTokenInfo tokenInfo = sendTokenRequest();
 		List<Project> projectList = new ArrayList<>();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 
-		Project p1 = new Project();
-		p1.setProjectName("Suchi Heights");
-		p1.setSubDivisionName("Private Sector");
-		p1.setStartDate(new Date());
-		p1.setEndDate(new Date());
-		p1.setProjectAddress("");
-		p1.setRemarks("");
-		p1.setContactPersonName("John");
-		p1.setContactPersonEmail("");
-		p1.setContactPersonEmail("");
-		p1.setProjectClientName("Lodha");
-		p1.setProjectClientPhone("");
-		p1.setProjectClientEmail("");
-		p1.setStructuralName("");
-		p1.setStructuralPhone("");
-		p1.setStructuralEmail("");
-
-		Project p2 = new Project();
-		p2.setProjectName("Raheja Heights");
-		p2.setSubDivisionName("Private Sector");
-		p2.setStartDate(new Date());
-		p2.setEndDate(new Date());
-		p2.setProjectAddress("");
-		p2.setRemarks("");
-		p2.setContactPersonName("Harshad");
-		p2.setContactPersonEmail("");
-		p2.setContactPersonEmail("");
-		p2.setProjectClientName("Raheja");
-		p2.setProjectClientPhone("");
-		p2.setProjectClientEmail("");
-		p2.setStructuralName("");
-		p2.setStructuralPhone("");
-		p2.setStructuralEmail("");
-
-		projectList.add(p1);
-		projectList.add(p2);
+		try {
+			ResponseEntity<List> response = restTemplate.exchange(
+					ErpConstants.REST_SERVICE_URI + "/project/list"
+							+ ErpConstants.QPM_ACCESS_TOKEN
+							+ tokenInfo.getAccess_token(), HttpMethod.GET,
+					request, List.class);
+			projectList = response.getBody();
+		} catch (HttpClientErrorException excep) {
+			if (HttpStatus.NO_CONTENT.equals(excep.getStatusCode())) {
+				return new ArrayList<Project>();
+			}
+		}
+		System.out.println("projectList:  "
+				+ Arrays.deepToString(projectList.toArray()));
 		return projectList;
 	}
-
 }
