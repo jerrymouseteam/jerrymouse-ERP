@@ -342,10 +342,15 @@ public class UserController {
 
 		User user1 = new User();
 		System.out.println(user1);
+		
+		List<User> list=getEditUserListDetails();
 
 		// User user = userService.findBySSO(ssoId);
 		model.addAttribute("user", user1);
-		model.addAttribute("edit", true);
+		model.addAttribute("getEditUserListDetails", list);
+		
+		model.addAttribute("editUserStage", "editUserList");
+		model.addAttribute("editUserList", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "editUser";
 	}
@@ -364,32 +369,109 @@ public class UserController {
 	/**
 	 * This method will provide the medium to update an existing user.
 	 */
-	@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.GET)
-	public String editUser(@PathVariable String ssoId, ModelMap model) {
-		AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting getUser API----------");
-		RestTemplate restTemplate = new RestTemplate();
-		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		ResponseEntity<User> response = restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/user/ssoid/" + ssoId
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.GET, request,
-				User.class);
-		User user = response.getBody();
-		System.out.println(user);
-
-		// User user = userService.findBySSO(ssoId);
+	@RequestMapping(value = { "/editUserTest/{ssoId}" }, method = RequestMethod.GET)
+	public String editUserTest(@PathVariable String ssoId, ModelMap model,@ModelAttribute("userForm") User user) {
+		//AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting editUserTest API---------- ssoId :: "+ssoId);
+		
+		 user=getEditUserDetails();
 		model.addAttribute("user", user);
-		model.addAttribute("edit", true);
+		model.addAttribute("editUserStage", "getUserDetails");
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "registration";
+		return "editUser";
 	}
+	
+	@RequestMapping(value = { "/editUserDetails/{ssoId}" }, method = RequestMethod.GET)
+	public String editUserDetails(@PathVariable String ssoId, ModelMap model) {
+		//AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting editUserTest API---------- ssoId :: "+ssoId);
+		
+		// user=getEditUserDetails();
+		User user=getEditUserDetails();
+		System.out.println("*********** "+user);
+		model.addAttribute("userForm", user);
+		model.addAttribute("editUserStage", "editUserDetails");
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "editUser";
+	}
+	
+	@RequestMapping(value = { "/updateUserDetails" }, method = RequestMethod.POST)
+	public String updateUserDetails(ModelMap model,@ModelAttribute("userForm") User user) {
+		//AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("*********************************************************");
+		System.out.println("\nTesting updateUserDetails API---------- user :: "+user);
+		System.out.println("*********************************************************");
+		
+		return "redirect:/editUserList";
+	}
+	
+	
+	
+	@RequestMapping(value = { "/getUserProjectDetails/{ssoId}" }, method = RequestMethod.GET)
+	public String getUserProjectDetails(@PathVariable String ssoId, ModelMap model) {
+		//AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting getUserProjectDetails API---------- ssoId :: "+ssoId);
+		
+		// user=getEditUserDetails();
+		
+		Project p2 = new Project();
+		p2.setProject_id(2);
+		p2.setProjectName("projectSet1 EPR2");
+		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
+		p2.setStructuralName("projectSet1 EPR1 Sector 2");
+		
+		model.addAttribute("proejctForm", p2);
+		model.addAttribute("editUserStage", "getUserProjectDetails");
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "editUser";
+	}
+	
+	
+	
+	@RequestMapping(value = { "/updateUserProjectDetails" }, method = RequestMethod.POST)
+	public String updateUserProjectDetails( ModelMap model,@ModelAttribute("proejctForm") Project project) {
+		
+		System.out.println("\nTesting updateUserProjectDetails API---------- Project :: "+project);
+		
+		model.addAttribute("proejctForm", project);
+		model.addAttribute("ssoId", 1);
+		model.addAttribute("editUserStage", "getUserProjectDetails");
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "redirect:/editUserList";
+	}
+	
+	
 
+	@RequestMapping(value = { "/getUserProjectListDetails/{ssoId}" }, method = RequestMethod.GET)
+	public String getUserProjectListDetails(@PathVariable String ssoId, ModelMap model,@ModelAttribute("userForm") User user) {
+		//AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting editUserTest API---------- ssoId :: "+ssoId);
+		
+		 user=getEditUserDetails();
+		model.addAttribute("user", user);
+		model.addAttribute("editUserStage", "getUserProjectListDetails");
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "editUser";
+	}
+	
+	
+	@RequestMapping(value = { "/editUserProject" }, method = RequestMethod.POST)
+	public String editUserProject(@ModelAttribute("userForm") User user,
+			BindingResult result, ModelMap model, HttpServletRequest rq,
+			HttpServletResponse resp) {
+
+		System.out.println("\n editUserProject Request " + rq.getPathInfo());
+		System.out.println("AppController -- editUserProject -- User : " + user);
+
+		return "redirect:/editUserList";
+	}
+	
+	
 	/**
 	 * This method will be called on form submission, handling POST request for
 	 * updating user in database. It also validates the user input
 	 */
-	@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/editUser/{ssoId}" }, method = RequestMethod.POST)
 	public String updateUser(@Valid User user, BindingResult result,
 			ModelMap model, @PathVariable String ssoId) {
 
@@ -591,7 +673,7 @@ public class UserController {
 
 	}
 
-	@ModelAttribute("getEditUserListDetails")
+	//@ModelAttribute("getEditUserListDetails")
 	public List<User> getEditUserListDetails() {
 
 		Set<Project> projectSet1 = new HashSet<Project>();
@@ -643,4 +725,91 @@ public class UserController {
 
 		return userList;
 	}
+	
+	//@ModelAttribute("getEditUserDetails")
+	public User getEditUserDetails() {
+
+		Set<Project> projectSet1 = new HashSet<Project>();
+		Project p1 = new Project();
+		p1.setProject_id(1);
+		p1.setProjectName("projectSet1 EPR1");
+		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
+		p1.setStructuralName("projectSet1 EPR1 Sector 1");
+
+		Project p2 = new Project();
+		p2.setProject_id(2);
+		p2.setProjectName("projectSet1 EPR2");
+		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
+		p2.setStructuralName("projectSet1 EPR1 Sector 2");
+		projectSet1.add(p1);
+		projectSet1.add(p2);
+
+		Set<Project> projectSet2 = new HashSet<Project>();
+		Project p3 = new Project();
+		p3.setProjectName("projectSet1 EPR3");
+		p3.setProjectClientName("projectSet1 ERP CLIENT 3");
+		p3.setStructuralName("projectSet1 EPR1 Sector 3");
+		projectSet2.add(p3);
+
+		
+		User u1 = new User();
+		u1.setId(1);
+		u1.setFirstName("Harsahd");
+		u1.setMiddleName("P");
+		u1.setLastName("Gaikwad");
+		u1.setMobileNumber("123456789");
+		u1.setAlternateNumber("987654321");
+		u1.setEmail("Test@gmail.com");
+		u1.setAddress("TEst Address");
+		u1.setSsoId("Harshag");
+		u1.setProject(projectSet1);
+		//u1.setProject(projectSet2);
+		
+
+		return u1;
+	}
+	
+	public User getEditUserDetails2() {
+
+		Set<Project> projectSet1 = new HashSet<Project>();
+		Project p1 = new Project();
+		p1.setProject_id(1);
+		p1.setProjectName("projectSet1 EPR1");
+		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
+		p1.setStructuralName("projectSet1 EPR1 Sector 1");
+
+		Project p2 = new Project();
+		p2.setProject_id(2);
+		p2.setProjectName("projectSet1 EPR2");
+		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
+		p2.setStructuralName("projectSet1 EPR1 Sector 2");
+		projectSet1.add(p1);
+		projectSet1.add(p2);
+
+		Set<Project> projectSet2 = new HashSet<Project>();
+		Project p3 = new Project();
+		p3.setProjectName("projectSet1 EPR3");
+		p3.setProjectClientName("projectSet1 ERP CLIENT 3");
+		p3.setStructuralName("projectSet1 EPR1 Sector 3");
+		projectSet2.add(p3);
+
+		
+		User u1 = new User();
+		u1.setId(1);
+		u1.setFirstName("Harsahd");
+		u1.setMiddleName("P");
+		u1.setLastName("Gaikwad");
+		u1.setMobileNumber("123456789");
+		u1.setAlternateNumber("987654321");
+		u1.setEmail("Test@gmail.com");
+		u1.setAddress("TEst Address");
+		u1.setSsoId("Harshag");
+		u1.setProject(projectSet1);
+		//u1.setProject(projectSet2);
+		
+
+		return u1;
+	}
+	
+	
 }

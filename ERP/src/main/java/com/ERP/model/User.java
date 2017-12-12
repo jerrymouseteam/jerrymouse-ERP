@@ -189,7 +189,19 @@ public class User implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((alternateNumber == null) ? 0 : alternateNumber.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
+		result = prime * result + ((mobileNumber == null) ? 0 : mobileNumber.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((project == null) ? 0 : project.hashCode());
+		result = prime * result + ((retypePassword == null) ? 0 : retypePassword.hashCode());
 		result = prime * result + ((ssoId == null) ? 0 : ssoId.hashCode());
+		result = prime * result + ((userProfiles == null) ? 0 : userProfiles.hashCode());
 		return result;
 	}
 
@@ -202,22 +214,82 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (alternateNumber == null) {
+			if (other.alternateNumber != null)
+				return false;
+		} else if (!alternateNumber.equals(other.alternateNumber))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (middleName == null) {
+			if (other.middleName != null)
+				return false;
+		} else if (!middleName.equals(other.middleName))
+			return false;
+		if (mobileNumber == null) {
+			if (other.mobileNumber != null)
+				return false;
+		} else if (!mobileNumber.equals(other.mobileNumber))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (project == null) {
+			if (other.project != null)
+				return false;
+		} else if (!project.equals(other.project))
+			return false;
+		if (retypePassword == null) {
+			if (other.retypePassword != null)
+				return false;
+		} else if (!retypePassword.equals(other.retypePassword))
+			return false;
 		if (ssoId == null) {
 			if (other.ssoId != null)
 				return false;
 		} else if (!ssoId.equals(other.ssoId))
+			return false;
+		if (userProfiles == null) {
+			if (other.userProfiles != null)
+				return false;
+		} else if (!userProfiles.equals(other.userProfiles))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", middleName="
-				+ middleName + ", lastName=" + lastName + ", mobileNumber="
-				+ mobileNumber + ", alternateNumber=" + alternateNumber
-				+ ", email=" + email + ", address=" + address + ", ssoId="
-				+ ssoId + ", password=" + password + ", retypePassword="
-				+ retypePassword + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
+				+ ", mobileNumber=" + mobileNumber + ", alternateNumber=" + alternateNumber + ", email=" + email
+				+ ", address=" + address + ", ssoId=" + ssoId + ", password=" + password + ", retypePassword="
+				+ retypePassword + ", userProfiles=" + userProfiles + ", project=" + project + "]";
 	}
+
+	
 
 }

@@ -48,10 +48,10 @@
 							</p>
 					</a></li>
 					<div id="dropdownUser" align="left">
-						<li ><a href="registerUser">
+						<li ><a href="<%=request.getContextPath()%>/registerUser">
 								<p id="userAdd" style="color: burlywood;">Register User</p>
 						</a></li>
-						<li><a href="editUserList">
+						<li><a href="<%=request.getContextPath()%>/editUserList">
 								<p id="userSearch" style="color: burlywood;">Search / Edit
 									User</p>
 						</a></li>
@@ -66,17 +66,17 @@
 		
 	<div id="dropdownProject"  align="left" >
 				<li >
-                    <a href="addProject">
+                    <a href="<%=request.getContextPath()%>/addProject">
                    <p id="addProject" style="color: burlywood;">Add Project</p>
                     </a>
                 </li>
 				<li>
-                    <a href="editProjectList">
+                    <a href="<%=request.getContextPath()%>/editProjectList">
                    <p id="projectSearch" style="color: burlywood;">Search / Edit Project</p>
                     </a>
                 </li>
 				<li>
-                    <a href="closedProjectList">
+                    <a href="<%=request.getContextPath()%>/closedProjectList">
                    <p id="ClosedProject" style="color: burlywood;">Closed Project</p>
                     </a>
                 </li>
