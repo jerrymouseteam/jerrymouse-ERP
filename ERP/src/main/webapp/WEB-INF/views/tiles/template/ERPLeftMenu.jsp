@@ -90,17 +90,17 @@
                 </li>
 					<div id="dropdownReq" align="left" >
 				<li>
-                    <a href="addrequisition">
+                    <a href="<%=request.getContextPath()%>/addrequisition">
                    <p style="color: burlywood;" id="addReqq">Raise Requistion</p>
                     </a>
                 </li>
 				<li>
-                    <a href="editRequistion">
+                    <a href="<%=request.getContextPath()%>/editRequistion">
                    <p style="color: burlywood;" id="viewEditReqq">View / Edit Requistion</p>
                     </a>
                 </li>
 				<li>
-                    <a href="deleteRequistion">
+                    <a href="<%=request.getContextPath()%>/deleteRequistion">
                    <p style="color: burlywood;" id="deleteReqq">Delete Requistion</p>
                     </a>
                 </li>
