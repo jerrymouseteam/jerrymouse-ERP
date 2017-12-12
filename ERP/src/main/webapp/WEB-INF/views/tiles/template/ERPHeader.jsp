@@ -75,7 +75,7 @@
 									<li class="divider"></li>
 									<li><a href="#">Separated link</a></li>
 								</ul></li>
-							<li><a href="logout">
+							<li><a href="<%=request.getContextPath()%>/logout">
 									<p>Log out</p>
 							</a></li>
 							<li class="separator hidden-lg hidden-md"></li>
