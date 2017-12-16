@@ -52,7 +52,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/addProject.jsp" />
 	</definition>
-	<definition name="editProjectList" extends="erp-definition">
+	<definition name="editProject" extends="erp-definition">
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/editProject.jsp" />
 	</definition>

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -306,6 +307,52 @@ public class ProjectController {
 		model.addAttribute("message", "project successfully added");
 		return "projectERP";
 	}
+	
+	@RequestMapping(value = { "/viewProjectDetails/{project_id}" }, method = RequestMethod.GET)
+	public String viewProjectDetails(@PathVariable String project_id, ModelMap model) {
+		//AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("**************************************************************************");
+		System.out.println("\nTesting viewProjectDetails API---------- ssoId :: "+project_id);
+		
+		// user=getEditUserDetails();
+		Project project=getEditProjectViewDetails();
+		System.out.println("*********** "+project);
+		model.addAttribute("projectForm", project);
+		model.addAttribute("editProjectStage", "editViewProjectDetails");
+		model.addAttribute("loggedinuser", getPrincipal());
+		System.out.println("**************************************************************************");
+		return "editProject";
+	}
+	
+	@RequestMapping(value = { "/editProjectDetails/{project_id}" }, method = RequestMethod.GET)
+	public String editProjectDetails(@PathVariable String project_id, ModelMap model) {
+		//AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("**************************************************************************");
+		System.out.println("\nTesting editProjectDetails API---------- project_id :: "+project_id);
+		
+		// user=getEditUserDetails();
+		Project project=getEditProjectViewDetails();
+		System.out.println("*********** "+project);
+		model.addAttribute("projectForm", project);
+		model.addAttribute("editProjectStage", "editProjectDetails");
+		model.addAttribute("loggedinuser", getPrincipal());
+		System.out.println("**************************************************************************");
+		return "editProject";
+	}
+	
+	
+	
+	@RequestMapping(value = { "/updateProjectDetails" }, method = RequestMethod.POST)
+	public String updateProjectDetails(
+			@Valid @ModelAttribute("projectForm") Project project,
+			BindingResult result) {
+
+		System.out.println("**************************************************************************");
+		System.out.println("\nTesting updateProjectDetails API---------- project :: "+project);
+		System.out.println("**************************************************************************");
+		return "redirect:/editProjectList";
+	}
+	
 
 	/**
 	 * This method will be called on form submission, handling POST request for
@@ -377,9 +424,10 @@ public class ProjectController {
 			@ModelAttribute("projectForm") Project project,
 			BindingResult result, ModelMap model) {
 
-		model.addAttribute("success", "");
+		
+		model.addAttribute("editProjectStage", "editProjectList");
 
-		return "editProjectList";
+		return "editProject";
 	}
 
 	@RequestMapping(value = { "/editProject" }, method = RequestMethod.POST)
@@ -405,7 +453,7 @@ public class ProjectController {
 
 			}
 		}
-		return "redirect:/editProjectList";
+		return "editProject";
 	}
 
 	@RequestMapping(value = { "/closedProjectList" }, method = RequestMethod.GET)
@@ -505,4 +553,49 @@ public class ProjectController {
 				+ Arrays.deepToString(projectList.toArray()));
 		return projectList;
 	}
+	@ModelAttribute("getClosedProjectList")
+	public List<Project> getClosedProjectList() {
+
+		List<Project> pList = new ArrayList<Project>();
+		Project p1 = new Project();
+		p1.setProject_id(1);
+		p1.setProjectName("projectSet1 EPR1");
+		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
+		p1.setStructuralName("projectSet1 EPR1 Sector 1");
+		p1.setStartDate(new Date());
+		p1.setEndDate(new Date());
+
+		Project p2 = new Project();
+		p2.setProject_id(2);
+		p2.setProjectName("projectSet2 EPR2");
+		p2.setProjectClientName("projectSet2 ERP CLIENT 2");
+		p2.setStructuralName("projectSet2 EPR2 Sector 2");
+		p2.setStartDate(new Date());
+		p2.setEndDate(new Date());
+
+		pList.add(p1);
+		pList.add(p2);
+
+		return pList;
+	}
+	
+public Project getEditProjectViewDetails()
+{
+	Project p1 = new Project();
+	p1.setProject_id(1);
+	p1.setProjectName("projectSet1 EPR1");
+	p1.setProjectClientName("projectSet1 ERP CLIENT 1");
+	p1.setStructuralName("projectSet1 EPR1 Sector 1");
+	p1.setStartDate(new Date());
+	p1.setEndDate(new Date());
+	p1.setArchitectEmail("Test@gmai.com");
+	p1.setArchitectPhone("123456789");
+	p1.setArchitectName("Architecture -- Test");
+	p1.setArchitectPhone("222-222222");
+	p1.setContactPersonEmail("test@gmail.com");
+	
+	
+	return p1;
+
+}
 }

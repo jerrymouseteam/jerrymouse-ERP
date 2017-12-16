@@ -54,7 +54,27 @@
 								</tfoot>
 
 								<tbody>
-									<tr>
+								<c:forEach items="${getClosedProjectList}" var="project"
+										varStatus="val">
+
+										<tr>
+
+											<td>${project.projectName}</td>
+											<td>${project.projectClientName}</td>
+											<td>${project.structuralName}</td>
+											<td>${project.structuralName}</td>
+											<td>${project.startDate}</td>
+											<td>${project.endDate}</td>
+											<td><p data-placement="top" data-toggle="tooltip"
+													title="Reopen">
+													<button class="btn btn-danger btn-xs" data-title="Reopen"
+														data-toggle="modal" data-target="#reopen">
+														<span class="fa fa-history"></span>
+													</button>
+												</p></td>
+										</tr>
+									</c:forEach>
+									<!-- <tr>
 										<td>Lodha</td>
 										<td>Sector 1</td>
 										<td>Vaibhav</td>
@@ -69,83 +89,9 @@
 													<span class="fa fa-history"></span>
 												</button>
 											</p></td>
-									</tr>
+									</tr> -->
 
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Reopen">
-												<button class="btn btn-danger btn-xs" data-title="Reopen"
-													data-toggle="modal" data-target="#reopen">
-													<span class="fa fa-history"></span>
-												</button>
-											</p></td>
-									<tr>
-										<td>Abby</td>
-										<td>ERP developer</td>
-										<td>Mumbai</td>
-										<td>10</td>
-										<td>2011/04/25</td>
-										<td>$550,800</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Reopen">
-												<button class="btn btn-danger btn-xs" data-title="Reopen"
-													data-toggle="modal" data-target="#reopen">
-													<span class="fa fa-history"></span>
-												</button>
-											</p></td>
-									</tr>
-
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Reopen">
-												<button class="btn btn-danger btn-xs" data-title="Reopen"
-													data-toggle="modal" data-target="#reopen">
-													<span class="fa fa-history"></span>
-												</button>
-											</p></td>
-									</tr>
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Reopen">
-												<button class="btn btn-danger btn-xs" data-title="Reopen"
-													data-toggle="modal" data-target="#reopen">
-													<span class="fa fa-history"></span>
-												</button>
-											</p></td>
-									</tr>
-									<tr>
-										<td>Lodha</td>
-										<td>Sector 1</td>
-										<td>Vaibhav</td>
-										<td>John</td>
-										<td>2017/04/25</td>
-										<td>2018/04/25</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Reopen">
-												<button class="btn btn-danger btn-xs" data-title="Reopen"
-													data-toggle="modal" data-target="#reopen">
-													<span class="fa fa-history"></span>
-												</button>
-											</p></td>
-									</tr>
+									
 								</tbody>
 							</table>
 
