@@ -22,6 +22,8 @@ public interface UserService {
 
 	User check(String emailId);
 
+	User mergeUser(User user);
+
 	boolean isExistingContactNumber(String contactNumber);
 
 	boolean isExistingEmailId(String email);

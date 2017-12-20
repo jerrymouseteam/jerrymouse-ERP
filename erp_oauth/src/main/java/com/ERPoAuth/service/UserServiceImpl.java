@@ -96,4 +96,11 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Override
+	public User mergeUser(User user) {
+
+		User mergedUser = dao.mergeUser(user);
+		return mergedUser;
+	}
+
 }

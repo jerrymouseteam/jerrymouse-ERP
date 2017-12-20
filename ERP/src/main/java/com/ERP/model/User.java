@@ -70,6 +70,9 @@ public class User implements Serializable {
 	@Column(name = "RETYPE_PASSWORD", nullable = false)
 	private String retypePassword;
 
+	@Column(name = "USER_STATUS")
+	private String userStatus;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
@@ -185,23 +188,39 @@ public class User implements Serializable {
 		this.alternateNumber = alternateNumber;
 	}
 
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((alternateNumber == null) ? 0 : alternateNumber.hashCode());
+		result = prime * result
+				+ ((alternateNumber == null) ? 0 : alternateNumber.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result
+				+ ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
-		result = prime * result + ((mobileNumber == null) ? 0 : mobileNumber.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result
+				+ ((middleName == null) ? 0 : middleName.hashCode());
+		result = prime * result
+				+ ((mobileNumber == null) ? 0 : mobileNumber.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((project == null) ? 0 : project.hashCode());
-		result = prime * result + ((retypePassword == null) ? 0 : retypePassword.hashCode());
+		result = prime * result
+				+ ((retypePassword == null) ? 0 : retypePassword.hashCode());
 		result = prime * result + ((ssoId == null) ? 0 : ssoId.hashCode());
-		result = prime * result + ((userProfiles == null) ? 0 : userProfiles.hashCode());
+		result = prime * result
+				+ ((userProfiles == null) ? 0 : userProfiles.hashCode());
 		return result;
 	}
 
@@ -284,12 +303,13 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", mobileNumber=" + mobileNumber + ", alternateNumber=" + alternateNumber + ", email=" + email
-				+ ", address=" + address + ", ssoId=" + ssoId + ", password=" + password + ", retypePassword="
-				+ retypePassword + ", userProfiles=" + userProfiles + ", project=" + project + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", middleName="
+				+ middleName + ", lastName=" + lastName + ", mobileNumber="
+				+ mobileNumber + ", alternateNumber=" + alternateNumber
+				+ ", email=" + email + ", address=" + address + ", ssoId="
+				+ ssoId + ", password=" + password + ", retypePassword="
+				+ retypePassword + ", userProfiles=" + userProfiles
+				+ ", project=" + project + "]";
 	}
-
-	
 
 }

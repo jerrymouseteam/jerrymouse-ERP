@@ -10,6 +10,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.ERP.constants.UserStatus;
 import com.ERPoAuth.model.User;
 
 @Repository("userDao")
@@ -38,20 +39,13 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	public List<User> findAllUsers() {
-		Criteria criteria = createEntityCriteria().addOrder(
-				Order.asc("firstName"));
+		Criteria criteria = createEntityCriteria().add(
+				Restrictions.eq("userStatus", UserStatus.Active.toString()))
+				.addOrder(Order.asc("firstName"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
 		List<User> users = (List<User>) criteria.list();
 
-		// No need to fetch userProfiles since we are not showing them on list
-		// page. Let them lazy load.
-		// Uncomment below lines for eagerly fetching of userProfiles if you
-		// want.
-		/*
-		 * for(User user : users){ Hibernate.initialize(user.getUserProfiles());
-		 * }
-		 */
 		return users;
 	}
 
@@ -91,5 +85,12 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 				"email", email);
 
 		return (User) query.uniqueResult();
+	}
+
+	@Override
+	public User mergeUser(User user) {
+
+		User mergedUser = (User) getSession().merge(user);
+		return mergedUser;
 	}
 }

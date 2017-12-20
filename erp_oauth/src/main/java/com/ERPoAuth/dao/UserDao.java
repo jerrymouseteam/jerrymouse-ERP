@@ -22,4 +22,6 @@ public interface UserDao {
 
 	User findUserByEmailId(String email);
 
+	User mergeUser(User user);
+
 }

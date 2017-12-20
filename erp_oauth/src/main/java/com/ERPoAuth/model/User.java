@@ -73,6 +73,9 @@ public class User implements Serializable {
 	@Column(name = "RETYPE_PASSWORD", nullable = false)
 	private String retypePassword;
 
+	@Column(name = "USER_STATUS")
+	private String userStatus;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
@@ -186,6 +189,14 @@ public class User implements Serializable {
 
 	public void setAlternateNumber(String alternateNumber) {
 		this.alternateNumber = alternateNumber;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 
 	@Override

@@ -108,25 +108,13 @@ public class UserRestController {
 	// ------------------- Update a User
 	// --------------------------------------------------------
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<User> updateUser(@PathVariable("id") int id,
+	@RequestMapping(value = "/user/{ssoId}", method = RequestMethod.PUT)
+	public ResponseEntity<User> updateUser(@PathVariable("ssoId") String ssoId,
 			@RequestBody User user) {
-		System.out.println("Updating User " + id);
+		System.out.println("Updating User " + ssoId);
 
-		User currentUser = userService.findById(id);
-
-		if (currentUser == null) {
-			System.out.println("User with id " + id + " not found");
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-
-		currentUser.setFirstName(user.getFirstName());
-		currentUser.setLastName(user.getLastName());
-		currentUser.setEmail(user.getEmail());
-		currentUser.setUserProfiles(user.getUserProfiles());
-
-		userService.updateUser(currentUser);
-		return new ResponseEntity<User>(currentUser, HttpStatus.OK);
+		User mergedUser = userService.mergeUser(user);
+		return new ResponseEntity<User>(mergedUser, HttpStatus.OK);
 	}
 
 	// ------------------- Delete a User

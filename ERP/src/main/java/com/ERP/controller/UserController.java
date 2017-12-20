@@ -2,11 +2,9 @@ package com.ERP.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -45,6 +44,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.ERP.constants.ErpConstants;
+import com.ERP.constants.UserStatus;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
 import com.ERP.model.User;
@@ -267,6 +267,8 @@ public class UserController {
 		System.out.println("\nTesting create User API----------" + user);
 		System.out.println("\nTesting create User API----------" + user);
 		RestTemplate restTemplate = new RestTemplate();
+
+		user.setUserStatus(UserStatus.Active.toString());
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		ResponseEntity<User> response = null;
 		try {
@@ -282,34 +284,7 @@ public class UserController {
 				result.addError(ssoError);
 				return "registration";
 			}
-		} /*
-		 * catch (ConflictException conflictException) { if
-		 * (conflictException.getMessage().equals("UserName Conflict")) {
-		 * 
-		 * FieldError ssoError = new FieldError("user", "ssoId",
-		 * messageSource.getMessage( "A User with name " + user.getSsoId() +
-		 * " already exist", new String[] { user.getSsoId() },
-		 * Locale.getDefault())); result.addError(ssoError);
-		 * 
-		 * } if (conflictException.getMessage().equals("MobileNumber Conflict"))
-		 * {
-		 * 
-		 * FieldError ssoError = new FieldError("user", "mobileNumber",
-		 * messageSource.getMessage( "A User with name " + user.getSsoId() +
-		 * " already exist", new String[] { user.getSsoId() },
-		 * Locale.getDefault())); result.addError(ssoError);
-		 * 
-		 * } if (conflictException.getMessage().equals("Email Conflict")) {
-		 * 
-		 * FieldError ssoError = new FieldError("user", "email",
-		 * messageSource.getMessage( "A User with name " + user.getSsoId() +
-		 * " already exist", new String[] { user.getSsoId() },
-		 * Locale.getDefault())); result.addError(ssoError);
-		 * 
-		 * }
-		 */
-
-		// return "registration";
+		}
 
 		System.out.println(" What is the response code "
 				+ response.getStatusCode() + " ## " + user.getSsoId());
@@ -317,19 +292,11 @@ public class UserController {
 		model.addAttribute("success", "User " + user.getFirstName() + " "
 				+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
+		User user1 = new User();
+		model.addAttribute("userForm", user1);
+		model.addAttribute("edit", false);
+		model.addAttribute("success", "");
 
-		user.setId(null);
-		user.setFirstName("");
-		user.setMiddleName("");
-		user.setLastName("");
-		user.setMobileNumber("");
-		user.setAlternateNumber("");
-		user.setEmail("");
-		user.setAddress("");
-		user.setPassword("");
-		user.setSsoId("");
-		user.setRetypePassword("");
-		user.setUserProfiles(null);
 		// return "success";
 		return "registration";
 	}
@@ -342,13 +309,13 @@ public class UserController {
 
 		User user1 = new User();
 		System.out.println(user1);
-		
-		List<User> list=getEditUserListDetails();
+
+		List<User> list = getEditUserListDetails();
 
 		// User user = userService.findBySSO(ssoId);
 		model.addAttribute("user", user1);
 		model.addAttribute("getEditUserListDetails", list);
-		
+
 		model.addAttribute("editUserStage", "editUserList");
 		model.addAttribute("editUserList", true);
 		model.addAttribute("loggedinuser", getPrincipal());
@@ -366,107 +333,128 @@ public class UserController {
 		return "redirect:/editUserList";
 	}
 
-	/**
-	 * This method will provide the medium to update an existing user.
-	 */
-	@RequestMapping(value = { "/editUserTest/{ssoId}" }, method = RequestMethod.GET)
-	public String editUserTest(@PathVariable String ssoId, ModelMap model,@ModelAttribute("userForm") User user) {
-		//AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting editUserTest API---------- ssoId :: "+ssoId);
-		
-		 user=getEditUserDetails();
-		model.addAttribute("user", user);
-		model.addAttribute("editUserStage", "getUserDetails");
-		model.addAttribute("loggedinuser", getPrincipal());
-		return "editUser";
-	}
-	
+	@Transactional
 	@RequestMapping(value = { "/editUserDetails/{ssoId}" }, method = RequestMethod.GET)
 	public String editUserDetails(@PathVariable String ssoId, ModelMap model) {
-		//AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting editUserTest API---------- ssoId :: "+ssoId);
-		
-		// user=getEditUserDetails();
-		User user=getEditUserDetails();
-		System.out.println("*********** "+user);
+		// AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting editUserTest API---------- ssoId :: "
+				+ ssoId);
+
+		User user = userService.findBySSO(ssoId);
+
+		System.out.println("*********** " + user);
 		model.addAttribute("userForm", user);
 		model.addAttribute("editUserStage", "editUserDetails");
 		model.addAttribute("loggedinuser", getPrincipal());
+		List<String> userStatusList = new ArrayList<String>();
+		userStatusList.add(UserStatus.Active.toString());
+		userStatusList.add(UserStatus.Inactive.toString());
+		model.addAttribute("userStatusList", userStatusList);
 		return "editUser";
 	}
-	
+
 	@RequestMapping(value = { "/updateUserDetails" }, method = RequestMethod.POST)
-	public String updateUserDetails(ModelMap model,@ModelAttribute("userForm") User user) {
-		//AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("*********************************************************");
-		System.out.println("\nTesting updateUserDetails API---------- user :: "+user);
-		System.out.println("*********************************************************");
-		
+	public String updateUserDetails(ModelMap model,
+			@ModelAttribute("userForm") User user) {
+		System.out
+				.println("*********************************************************");
+		System.out.println("\nTesting updateUserDetails API---------- user :: "
+				+ user);
+		System.out
+				.println("*********************************************************");
+
+		AuthTokenInfo tokenInfo = sendTokenRequest();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
+		try {
+			restTemplate.put(
+					ErpConstants.REST_SERVICE_URI + "/user/" + user.getSsoId()
+							+ ErpConstants.QPM_ACCESS_TOKEN
+							+ tokenInfo.getAccess_token(), request, User.class);
+		} catch (HttpClientErrorException excep) {/*
+												 * if
+												 * (HttpStatus.CONFLICT.equals
+												 * (excep.getStatusCode())) {
+												 * FieldError ssoError = new
+												 * FieldError("user", "ssoId",
+												 * messageSource
+												 * .getMessage("non.unique.ssoId"
+												 * , new String[] {
+												 * user.getSsoId() },
+												 * Locale.getDefault()));
+												 * result.addError(ssoError);
+												 * return "registration"; }
+												 */
+		}
+
 		return "redirect:/editUserList";
 	}
-	
-	
-	
+
 	@RequestMapping(value = { "/getUserProjectDetails/{ssoId}" }, method = RequestMethod.GET)
-	public String getUserProjectDetails(@PathVariable String ssoId, ModelMap model) {
-		//AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting getUserProjectDetails API---------- ssoId :: "+ssoId);
-		
+	public String getUserProjectDetails(@PathVariable String ssoId,
+			ModelMap model) {
+		// AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out
+				.println("\nTesting getUserProjectDetails API---------- ssoId :: "
+						+ ssoId);
+
 		// user=getEditUserDetails();
-		
+
 		Project p2 = new Project();
 		p2.setProject_id(2);
 		p2.setProjectName("projectSet1 EPR2");
 		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
 		p2.setStructuralName("projectSet1 EPR1 Sector 2");
-		
+
 		model.addAttribute("proejctForm", p2);
 		model.addAttribute("editUserStage", "getUserProjectDetails");
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "editUser";
 	}
-	
-	
-	
+
 	@RequestMapping(value = { "/updateUserProjectDetails" }, method = RequestMethod.POST)
-	public String updateUserProjectDetails( ModelMap model,@ModelAttribute("proejctForm") Project project) {
-		
-		System.out.println("\nTesting updateUserProjectDetails API---------- Project :: "+project);
-		
+	public String updateUserProjectDetails(ModelMap model,
+			@ModelAttribute("proejctForm") Project project) {
+
+		System.out
+				.println("\nTesting updateUserProjectDetails API---------- Project :: "
+						+ project);
+
 		model.addAttribute("proejctForm", project);
 		model.addAttribute("ssoId", 1);
 		model.addAttribute("editUserStage", "getUserProjectDetails");
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "redirect:/editUserList";
 	}
-	
-	
 
+	@Transactional
 	@RequestMapping(value = { "/getUserProjectListDetails/{ssoId}" }, method = RequestMethod.GET)
-	public String getUserProjectListDetails(@PathVariable String ssoId, ModelMap model,@ModelAttribute("userForm") User user) {
-		//AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting editUserTest API---------- ssoId :: "+ssoId);
-		
-		 user=getEditUserDetails();
-		model.addAttribute("user", user);
+	public String getUserProjectListDetails(@PathVariable String ssoId,
+			ModelMap model) {
+		// AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting editUserTest API---------- ssoId :: "
+				+ ssoId);
+
+		User user = userService.findBySSO(ssoId);
+
+		model.addAttribute("userDetails", user);
 		model.addAttribute("editUserStage", "getUserProjectListDetails");
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "editUser";
 	}
-	
-	
+
 	@RequestMapping(value = { "/editUserProject" }, method = RequestMethod.POST)
 	public String editUserProject(@ModelAttribute("userForm") User user,
 			BindingResult result, ModelMap model, HttpServletRequest rq,
 			HttpServletResponse resp) {
 
 		System.out.println("\n editUserProject Request " + rq.getPathInfo());
-		System.out.println("AppController -- editUserProject -- User : " + user);
+		System.out
+				.println("AppController -- editUserProject -- User : " + user);
 
 		return "redirect:/editUserList";
 	}
-	
-	
+
 	/**
 	 * This method will be called on form submission, handling POST request for
 	 * updating user in database. It also validates the user input
@@ -673,143 +661,58 @@ public class UserController {
 
 	}
 
-	//@ModelAttribute("getEditUserListDetails")
+	// @ModelAttribute("getEditUserListDetails")
 	public List<User> getEditUserListDetails() {
 
-		Set<Project> projectSet1 = new HashSet<Project>();
-		Project p1 = new Project();
-		p1.setProjectName("projectSet1 EPR1");
-		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
-		p1.setStructuralName("projectSet1 EPR1 Sector 1");
-
-		Project p2 = new Project();
-		p2.setProjectName("projectSet1 EPR2");
-		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
-		p2.setStructuralName("projectSet1 EPR1 Sector 2");
-		projectSet1.add(p1);
-		projectSet1.add(p2);
-
-		Set<Project> projectSet2 = new HashSet<Project>();
-		Project p3 = new Project();
-		p3.setProjectName("projectSet1 EPR3");
-		p3.setProjectClientName("projectSet1 ERP CLIENT 3");
-		p3.setStructuralName("projectSet1 EPR1 Sector 3");
-		projectSet2.add(p3);
-
+		AuthTokenInfo tokenInfo = sendTokenRequest();
 		List<User> userList = new ArrayList<>();
-		User u1 = new User();
-		u1.setId(1);
-		u1.setFirstName("Harsahd");
-		u1.setMiddleName("P");
-		u1.setLastName("Gaikwad");
-		u1.setMobileNumber("123456789");
-		u1.setAlternateNumber("987654321");
-		u1.setEmail("Test@gmail.com");
-		u1.setAddress("TEst Address");
-		u1.setSsoId("Harshag");
-		u1.setProject(projectSet1);
-		User u2 = new User();
-		u2.setId(1);
-		u2.setFirstName("Vaibhav");
-		u2.setMiddleName("-");
-		u2.setLastName("Banavalikar");
-		u2.setMobileNumber("11111111");
-		u2.setAlternateNumber("22222222222");
-		u2.setEmail("vb@gmail.com");
-		u2.setAddress("VB Address");
-		u2.setSsoId("VB");
-		u2.setProject(projectSet2);
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 
-		userList.add(u1);
-		userList.add(u2);
+		try {
+			ResponseEntity<List> response = restTemplate.exchange(
+					ErpConstants.REST_SERVICE_URI + "/user/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
+							+ tokenInfo.getAccess_token(), HttpMethod.GET,
+					request, List.class);
+			userList = response.getBody();
+		} catch (HttpClientErrorException excep) {
+			if (HttpStatus.NO_CONTENT.equals(excep.getStatusCode())) {
+				return new ArrayList<User>();
+			}
+		}
 
 		return userList;
 	}
-	
-	//@ModelAttribute("getEditUserDetails")
-	public User getEditUserDetails() {
 
-		Set<Project> projectSet1 = new HashSet<Project>();
-		Project p1 = new Project();
-		p1.setProject_id(1);
-		p1.setProjectName("projectSet1 EPR1");
-		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
-		p1.setStructuralName("projectSet1 EPR1 Sector 1");
+	/*
+	 * // @ModelAttribute("getEditUserDetails") public User getEditUserDetails()
+	 * {
+	 * 
+	 * Set<Project> projectSet1 = new HashSet<Project>(); Project p1 = new
+	 * Project(); p1.setProject_id(1); p1.setProjectName("projectSet1 EPR1");
+	 * p1.setProjectClientName("projectSet1 ERP CLIENT 1");
+	 * p1.setStructuralName("projectSet1 EPR1 Sector 1");
+	 * 
+	 * Project p2 = new Project(); p2.setProject_id(2);
+	 * p2.setProjectName("projectSet1 EPR2");
+	 * p2.setProjectClientName("projectSet1 ERP CLIENT 2");
+	 * p2.setStructuralName("projectSet1 EPR1 Sector 2"); projectSet1.add(p1);
+	 * projectSet1.add(p2);
+	 * 
+	 * Set<Project> projectSet2 = new HashSet<Project>(); Project p3 = new
+	 * Project(); p3.setProjectName("projectSet1 EPR3");
+	 * p3.setProjectClientName("projectSet1 ERP CLIENT 3");
+	 * p3.setStructuralName("projectSet1 EPR1 Sector 3"); projectSet2.add(p3);
+	 * 
+	 * User u1 = new User(); u1.setId(1); u1.setFirstName("Harsahd");
+	 * u1.setMiddleName("P"); u1.setLastName("Gaikwad");
+	 * u1.setMobileNumber("123456789"); u1.setAlternateNumber("987654321");
+	 * u1.setEmail("Test@gmail.com"); u1.setAddress("TEst Address");
+	 * u1.setSsoId("Harshag"); u1.setProject(projectSet1); //
+	 * u1.setProject(projectSet2);
+	 * 
+	 * return u1; }
+	 */
 
-		Project p2 = new Project();
-		p2.setProject_id(2);
-		p2.setProjectName("projectSet1 EPR2");
-		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
-		p2.setStructuralName("projectSet1 EPR1 Sector 2");
-		projectSet1.add(p1);
-		projectSet1.add(p2);
-
-		Set<Project> projectSet2 = new HashSet<Project>();
-		Project p3 = new Project();
-		p3.setProjectName("projectSet1 EPR3");
-		p3.setProjectClientName("projectSet1 ERP CLIENT 3");
-		p3.setStructuralName("projectSet1 EPR1 Sector 3");
-		projectSet2.add(p3);
-
-		
-		User u1 = new User();
-		u1.setId(1);
-		u1.setFirstName("Harsahd");
-		u1.setMiddleName("P");
-		u1.setLastName("Gaikwad");
-		u1.setMobileNumber("123456789");
-		u1.setAlternateNumber("987654321");
-		u1.setEmail("Test@gmail.com");
-		u1.setAddress("TEst Address");
-		u1.setSsoId("Harshag");
-		u1.setProject(projectSet1);
-		//u1.setProject(projectSet2);
-		
-
-		return u1;
-	}
-	
-	public User getEditUserDetails2() {
-
-		Set<Project> projectSet1 = new HashSet<Project>();
-		Project p1 = new Project();
-		p1.setProject_id(1);
-		p1.setProjectName("projectSet1 EPR1");
-		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
-		p1.setStructuralName("projectSet1 EPR1 Sector 1");
-
-		Project p2 = new Project();
-		p2.setProject_id(2);
-		p2.setProjectName("projectSet1 EPR2");
-		p2.setProjectClientName("projectSet1 ERP CLIENT 2");
-		p2.setStructuralName("projectSet1 EPR1 Sector 2");
-		projectSet1.add(p1);
-		projectSet1.add(p2);
-
-		Set<Project> projectSet2 = new HashSet<Project>();
-		Project p3 = new Project();
-		p3.setProjectName("projectSet1 EPR3");
-		p3.setProjectClientName("projectSet1 ERP CLIENT 3");
-		p3.setStructuralName("projectSet1 EPR1 Sector 3");
-		projectSet2.add(p3);
-
-		
-		User u1 = new User();
-		u1.setId(1);
-		u1.setFirstName("Harsahd");
-		u1.setMiddleName("P");
-		u1.setLastName("Gaikwad");
-		u1.setMobileNumber("123456789");
-		u1.setAlternateNumber("987654321");
-		u1.setEmail("Test@gmail.com");
-		u1.setAddress("TEst Address");
-		u1.setSsoId("Harshag");
-		u1.setProject(projectSet1);
-		//u1.setProject(projectSet2);
-		
-
-		return u1;
-	}
-	
-	
 }

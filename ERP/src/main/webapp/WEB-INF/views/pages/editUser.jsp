@@ -192,10 +192,6 @@
 
 
 			<c:if test="${editUserStage == 'editUserDetails'}">
-
-
-
-
 				<div class="card">
 
 					<spring:url value="/updateUserDetails" var="updateUserDetailsURL" />
@@ -212,181 +208,194 @@
 
 								<div class="col-md-12">
 									<br> <br>
-
-
-
 									<div class="content">
-
-
 										<div class="row">
 											<div class="text-center">
-
-												<label>STATUS</label> <select id="myselect"
+												<label>STATUS</label>
+												<!--  <select id="myselect"
 													class="form-control">
 													<option value="1">Active</option>
 													<option value="2" selected>Inactive</option>
 													<option value="3">otherss</option>
-
-												</select>
+												</select> -->
+												<form:select path="userStatus" class="form-control">
+													<form:options items="${userStatusList}" />
+												</form:select>
 											</div>
-
 										</div>
 									</div>
-
 									<br>
 									<div class="card class">
 										<div class="content">
-
-
 											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-
-														<label>User Name</label>
-														<form:input path="ssoId" type="text" class="form-control"
-															id="ssoId" placeholder="User Name" />
-													</div>
-												</div>
-
-												<div class="col-md-6">
-													<div class="form-group">
-
-														<label>Role</label> <input type="text"
-															class="form-control" placeholder="Name">
-													</div>
-												</div>
-
-												<div class="col-md-6">
-													<div class="form-group">
-
-														<label>First Name</label>
-
-														<form:input path="firstName" type="text"
-															class="form-control" id="firstName"
-															placeholder="First Name" />
-													</div>
-												</div>
-
-												<div class="col-md-6">
-													<div class="form-group">
-
-														<label>Tel No</label>
-														<form:input path="mobileNumber" type="text"
-															class="form-control" id="mobileNumber"
-															placeholder="Mobile Number" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-
-														<label>Last Name</label>
-
-														<form:input path="lastName" type="text"
-															class="form-control" id="lastName"
-															placeholder="Last Name" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-
-														<label>Email-id</label>
-														<form:input path="email" type="text" class="form-control"
-															id="email" placeholder="Email" />
-													</div>
-												</div>
-
-
-
-											</div>
-										</div>
-									</div>
-
-									<div class="card class">
-										<div class="content">
-
-											<div class="row">
-												<h4 class="text-center">Assigned Projects</h4>
 												<div class="col-md-12">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>First Name</label>
+															<form:input path="firstName" type="text"
+																class="form-control" id="firstName"
+																placeholder="First Name"
+																cssErrorClass="form-control errorTrial" />
+															<form:errors path="firstName" />
+														</div>
+
+														<div class="form-group">
+															<label>Middle Name</label>
+															<!-- <input type="text"
+													class="form-control" placeholder="Middle Name"> -->
+															<form:input path="middleName" type="text"
+																class="form-control" id="middleName"
+																placeholder="Middle Name"
+																cssErrorClass="form-control errorTrial" />
+															<form:errors path="middleName" />
+														</div>
+
+														<div class="form-group">
+															<label>Last Name</label>
+															<!-- <input type="text"
+													class="form-control" placeholder="Last Name"> -->
+
+															<form:input path="lastName" type="text"
+																class="form-control" id="lastName"
+																placeholder="Last Name"
+																cssErrorClass="form-control errorTrial" />
+															<form:errors path="lastName" />
+														</div>
+
+														<div class="form-group">
+															<label>Mobile No</label>
+															<!-- <input type="text"
+													class="form-control" placeholder="Mobile Number"> -->
+															<form:input path="mobileNumber" type="text"
+																class="form-control" id="mobileNumber"
+																placeholder="Mobile Number"
+																cssErrorClass="form-control errorTrial" />
+															<form:errors path="mobileNumber" />
+														</div>
+
+														<div class="form-group">
+															<label>Alternative No</label>
+															<!-- <input type="text"
+													class="form-control" placeholder="Mobile Number"> -->
+															<form:input path="alternateNumber" type="text"
+																class="form-control" id="alternateNumber"
+																placeholder="Mobile Number"
+																cssErrorClass="form-control errorTrial" />
+															<form:errors path="alternateNumber" />
+														</div>
+
+														<div class="form-group">
+															<label for="exampleInputEmail">Email address</label>
+															<!-- <input
+													type="email" class="form-control" placeholder="Email"> -->
+															<form:input path="email" type="text" class="form-control"
+																id="email" placeholder="Email"
+																cssErrorClass="form-control errorTrial" />
+															<form:errors path="email" />
+														</div>
+
+														<div class="form-group">
+															<label for="exampleInputEmail1">Residential
+																address</label>
+															<!-- <input type="textarea" class="form-control"
+													placeholder="Address"> -->
+															<form:input path="address" type="textarea"
+																class="form-control" id="address" placeholder="Address"
+																cssErrorClass="form-control errorTrial" />
+															<form:errors path="address" />
+														</div>
+
+													</div>
 
 
-													<table id="datatable"
-														class="table table-striped table-bordered" cellspacing="0"
-														width="100%">
-														<thead>
-															<tr>
-																<th>Project Name</th>
-																<th>Project Sector</th>
-																<th>Client</th>
-																<th>Action</th>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>User Name</label>
+															<form:input path="ssoId" type="text" class="form-control"
+																id="ssoId" placeholder="User Name"
+																cssErrorClass="form-control errorTrial" readonly="true" />
+															<form:errors path="ssoId" />
+														</div>
 
-															</tr>
-														</thead>
+														<form:hidden path="id" />
+														<form:hidden path="password" />
+														<form:hidden path="retypePassword" />
 
+														<div class="form-group">
+															<label>Select Role</label>
 
+															<form:select path="userProfiles" items="${roles}"
+																multiple="true" itemValue="id" itemLabel="type"
+																class="form-control" />
 
-														<tbody>
+														</div>
 
-															<c:forEach items="${userForm.project}" var="project"
-																varStatus="val">
-
-																<tr>
-
-																	<td>${project.projectName}</td>
-																	<td>${project.projectClientName}</td>
-																	<td>${project.structuralName}</td>
-																	<td>
-
-																		<p data-placement="top" data-toggle="tooltip"
-																			title="Edit">
-
-
-																			<a class="btn btn-primary btn-xs"
-																				href="<%=request.getContextPath()%>/getUserProjectDetails/${project.project_id}"><span
-																				class="fa fa-edit"></span></a>
-																		</p>
-																	</td>
-																</tr>
-															</c:forEach>
-
-
-
-
-
-														</tbody>
-													</table>
-
-
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-
-
 
 								</div>
 							</div>
+							<div class="card class">
+								<div class="content">
 
-							<div class="card">
-								<!-- <button type="button" class="btn btn-warning btn-lg" onclick="submitFunction2();"
+									<div class="row">
+										<h4 class="text-center">Assigned Projects</h4>
+										<div class="col-md-12">
+
+
+											<table id="datatable"
+												class="table table-striped table-bordered" cellspacing="0"
+												width="100%">
+												<thead>
+													<tr>
+														<th>Project Name</th>
+														<th>Project Sector</th>
+														<th>Client</th>
+														<th>Action</th>
+
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${userForm.project}" var="project"
+														varStatus="val">
+														<tr>
+															<td>${project.projectName}</td>
+															<td>${project.projectClientName}</td>
+															<td>${project.structuralName}</td>
+															<td>
+																<p data-placement="top" data-toggle="tooltip"
+																	title="Edit">
+																	<a class="btn btn-primary btn-xs"
+																		href="<%=request.getContextPath()%>/getUserProjectDetails/${project.project_id}"><span
+																		class="fa fa-edit"></span></a>
+																</p>
+															</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<!-- <button type="button" class="btn btn-warning btn-lg" onclick="submitFunction2();"
 									style="width: 100%;">
 									<span class="pe-7s-check"></span> Update
 								</button> -->
 
-								<form:button class="btn btn-warning btn-lg"
-									onclick="submitFunction2();" style="width: 100%;">
-									<span class="pe-7s-check"></span> Update</form:button>
-							</div>
-
+							<form:button class="btn btn-warning btn-lg"
+								onclick="submitFunction2();" style="width: 100%;">
+								<span class="pe-7s-check"></span> Update</form:button>
 						</div>
 
 					</form:form>
 				</div>
-
 			</c:if>
-
-
-
-
 
 			<c:if test="${editUserStage == 'getUserProjectListDetails'}">
 
@@ -400,129 +409,189 @@
 							<p class="category">Search /Edit User</p>
 						</div>
 
-
 						<div class="row">
-							<h2 class="text-center">Details about ${user.ssoId}</h2>
-						</div>
-
-						<div class="row">
-
 							<div class="col-md-12">
-
-
-
-
-
-
-								<br> <br>
-								<div class="content">
-									<div class="row">
-										<div class="text-center">
-											<label>STATUS</label> <input type="text" class="form-control"
-												value="Active" readonly>
-										</div>
-									</div>
-								</div>
-								<br>
-								<div class="card class">
+								<form:form modelAttribute="userDetails" name="detailsForm">
 									<div class="content">
 
 										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-
-													<label>User Name</label> <input type="text"
-														class="form-control" value="${user.ssoId}" readonly>
-												</div>
-											</div>
-
-											<div class="col-md-6">
-												<div class="form-group">
-
-													<label>Role</label> <input type="text" class="form-control"
-														value="Name" readonly>
-												</div>
-											</div>
-
-											<div class="col-md-6">
-												<div class="form-group">
-
-													<label>First Name</label> <input type="text"
-														class="form-control" value="${user.firstName}" readonly>
-												</div>
-											</div>
-
-											<div class="col-md-6">
-												<div class="form-group">
-
-													<label>Tel No</label> <input type="text"
-														class="form-control" value="${user.mobileNumber}" readonly>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-
-													<label>Last Name</label> <input type="text"
-														class="form-control" value="${user.lastName}" readonly>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-
-													<label>Email-id</label> <input type="text"
-														class="form-control" value="${user.email}" readonly>
-												</div>
-											</div>
-
-
-
+											<h2 class="text-center">Details for ${ssoId}</h2>
 										</div>
-									</div>
-								</div>
-
-								<div class="card class">
-									<div class="content">
 
 										<div class="row">
-											<h4 class="text-center">Assigned Projects</h4>
+
 											<div class="col-md-12">
+												<br> <br>
+												<div class="content">
+													<div class="row">
+														<div class="text-center">
+															<label>STATUS</label>
+															<form:input path="userStatus" readonly="true"
+																class="form-control" />
+														</div>
+													</div>
+												</div>
+												<br>
+												<div class="card class">
+													<div class="content">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label>First Name</label>
+																		<!-- <input type="text"
+													class="form-control" placeholder="First Name"> -->
+																		<form:input path="firstName" type="text"
+																			class="form-control" id="firstName"
+																			placeholder="First Name"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
+
+																	<div class="form-group">
+																		<label>Middle Name</label>
+																		<!-- <input type="text"
+													class="form-control" placeholder="Middle Name"> -->
+																		<form:input path="middleName" type="text"
+																			class="form-control" id="middleName"
+																			placeholder="Middle Name"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
+
+																	<div class="form-group">
+																		<label>Last Name</label>
+																		<!-- <input type="text"
+													class="form-control" placeholder="Last Name"> -->
+
+																		<form:input path="lastName" type="text"
+																			class="form-control" id="lastName"
+																			placeholder="Last Name"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
+
+																	<div class="form-group">
+																		<label>Mobile No</label>
+																		<!-- <input type="text"
+													class="form-control" placeholder="Mobile Number"> -->
+																		<form:input path="mobileNumber" type="text"
+																			class="form-control" id="mobileNumber"
+																			placeholder="Mobile Number"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
+
+																	<div class="form-group">
+																		<label>Alternative No</label>
+																		<!-- <input type="text"
+													class="form-control" placeholder="Mobile Number"> -->
+																		<form:input path="alternateNumber" type="text"
+																			class="form-control" id="alternateNumber"
+																			placeholder="Mobile Number"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
+
+																	<div class="form-group">
+																		<label for="exampleInputEmail">Email address</label>
+																		<!-- <input
+													type="email" class="form-control" placeholder="Email"> -->
+																		<form:input path="email" type="text"
+																			class="form-control" id="email" placeholder="Email"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
+
+																	<div class="form-group">
+																		<label for="exampleInputEmail1">Residential
+																			address</label>
+																		<!-- <input type="textarea" class="form-control"
+													placeholder="Address"> -->
+																		<form:input path="address" type="textarea"
+																			class="form-control" id="address"
+																			placeholder="Address"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
+
+																</div>
 
 
-												<table id="datatable"
-													class="table table-striped table-bordered" cellspacing="0"
-													width="100%">
-													<thead>
-														<tr>
-															<th>Project Name</th>
-															<th>Project Sector</th>
-															<th>Client</th>
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label>User Name</label>
+																		<form:input path="ssoId" type="text"
+																			class="form-control" id="ssoId"
+																			placeholder="User Name"
+																			cssErrorClass="form-control errorTrial"
+																			readonly="true" />
+																	</div>
 
-														</tr>
-													</thead>
+																	<div class="form-group">
+																		<label>Select Role</label>
 
+																		<form:select path="userProfiles" items="${roles}"
+																			multiple="true" itemValue="id" itemLabel="type"
+																			class="form-control" readonly="true" />
 
+																	</div>
 
-													<tbody>
-														<c:forEach items="${user.project}" var="project"
-															varStatus="val">
-
-															<tr>
-
-																<td>${project.projectName}</td>
-																<td>${project.projectClientName}</td>
-																<td>${project.structuralName}</td>
-															</tr>
-														</c:forEach>
-
-
-													</tbody>
-												</table>
-
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
 
 											</div>
 										</div>
+										<div class="card class">
+											<div class="content">
+
+												<div class="row">
+													<h4 class="text-center">Assigned Projects</h4>
+													<div class="col-md-12">
+
+
+														<table id="datatable"
+															class="table table-striped table-bordered"
+															cellspacing="0" width="100%">
+															<thead>
+																<tr>
+																	<th>Project Name</th>
+																	<th>Project Sector</th>
+																	<th>Client</th>
+																	<th>Action</th>
+
+																</tr>
+															</thead>
+															<tbody>
+																<c:forEach items="${userForm.project}" var="project"
+																	varStatus="val">
+																	<tr>
+																		<td>${project.projectName}</td>
+																		<td>${project.projectClientName}</td>
+																		<td>${project.structuralName}</td>
+																		<td>
+																			<p data-placement="top" data-toggle="tooltip"
+																				title="Edit">
+																				<a class="btn btn-primary btn-xs"
+																					href="<%=request.getContextPath()%>/getUserProjectDetails/${project.project_id}"><span
+																					class="fa fa-edit"></span></a>
+																			</p>
+																		</td>
+																	</tr>
+																</c:forEach>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
-								</div>
+									<div class="card"></div>
+
+								</form:form>
 
 
 								<div class="card class">
@@ -552,58 +621,31 @@
 													</a>
 												</div>
 											</div>
-
-
-
 										</div>
 									</div>
 								</div>
-
-
-
-
-
-
-
-
 							</div>
 						</div>
 					</div>
-
-
-
-
-
 				</div>
 			</c:if>
-
-
 		</div>
-
-
 	</div>
-
-
 </div>
 
 
 <script type="text/javascript">
-	
 	function submitFunction() {
-		
 
 		var x = document.getElementsByName('updateUserProjectDetailsForm');
 		x[0].submit(); // Form submission
 
 	}
-	 
-	 function submitFunction2() {
-			
 
-			var x = document.getElementsByName('updateUserDetailsForm');
-			x[0].submit(); // Form submission
+	function submitFunction2() {
 
-		}
-	 
-	 
+		var x = document.getElementsByName('updateUserDetailsForm');
+		x[0].submit(); // Form submission
+
+	}
 </script>
