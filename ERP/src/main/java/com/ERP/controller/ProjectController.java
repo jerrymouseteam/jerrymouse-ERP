@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -43,9 +42,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ERP.constants.ErpConstants;
+import com.ERP.constants.ProjectStatus;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
-import com.ERP.model.User;
 import com.ERP.model.UserProfile;
 import com.ERP.service.UserProfileService;
 
@@ -114,27 +113,13 @@ public class ProjectController {
 			tokenInfo.setExpires_in((Integer) map.get("expires_in"));
 			tokenInfo.setScope((String) map.get("scope"));
 			System.out.println(tokenInfo);
-			// System.out.println("access_token ="+map.get("access_token")+",
-			// token_type="+map.get("token_type")+",
-			// refresh_token="+map.get("refresh_token")
-			// +", expires_in="+map.get("expires_in")+",
-			// scope="+map.get("scope"));;
+
 		} else {
 			System.out.println("No user exist----------");
 
 		}
 		return tokenInfo;
 	}
-
-	/*
-	 * @RequestMapping(value = { "/project" }, method = RequestMethod.GET)
-	 * public String vprojrctDashboard(ModelMap model) {
-	 * 
-	 * Project project = new Project(); System.out.println("project");
-	 * model.addAttribute("project", project); model.addAttribute("edit",
-	 * false); model.addAttribute("loggedinuser", getPrincipal()); return
-	 * "projectERP"; }
-	 */
 
 	/**
 	 * This method will list all existing projects.
@@ -159,42 +144,6 @@ public class ProjectController {
 					.getBody();
 			System.out.println(projectssMap + " 3###############projectssMap");
 			if (projectssMap != null) {
-
-				// model.addAttribute("users", usersMap);
-				model.addAttribute("loggedinuser", getPrincipal());
-			} else {
-				System.out.println("No user exist----------");
-			}
-
-		} catch (Exception excep) {
-			excep.printStackTrace();
-		}
-
-		return projectssMap;
-	}
-
-	@RequestMapping(value = "/closedproject", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	List closedProject(ModelMap model) {
-		AuthTokenInfo tokenInfo = sendTokenRequest();
-		List<LinkedHashMap<String, Object>> projectssMap = null;
-		System.out
-				.println("\nTesting listAll Project API-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$----------");
-		RestTemplate restTemplate = new RestTemplate();
-
-		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		try {
-			ResponseEntity<List> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI + "/project/closed/"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, List.class);
-			projectssMap = (List<LinkedHashMap<String, Object>>) response
-					.getBody();
-			System.out.println(projectssMap + " 3###############projectssMap");
-			if (projectssMap != null) {
-
-				// model.addAttribute("users", usersMap);
 				model.addAttribute("loggedinuser", getPrincipal());
 			} else {
 				System.out.println("No user exist----------");
@@ -241,6 +190,7 @@ public class ProjectController {
 			return model;
 		}
 
+		project.setProjectStatus(ProjectStatus.Open.getProjectStatus());
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		try {
 			project.setEndDate(dateFormat.parse(dateFormat.format(project
@@ -283,140 +233,113 @@ public class ProjectController {
 		return model;
 	}
 
-	/**
-	 * This method will provide the medium to update an existing user.
-	 */
-	@RequestMapping(value = { "/edit-project-{projectId}" }, method = RequestMethod.GET)
-	public String editUser(@PathVariable int projectId, ModelMap model) {
+	@RequestMapping(value = { "/viewProjectDetails/{projectId}" }, method = RequestMethod.GET)
+	public String viewProjectDetails(
+			@PathVariable("projectId") Integer projectId, ModelMap model) {
+		// AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out
+				.println("**************************************************************************");
+		System.out
+				.println("\nTesting viewProjectDetails API---------- ssoId :: "
+						+ projectId);
+
+		Project project = null;
+
 		AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting getUser API----------");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		ResponseEntity<Project> response = restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/project/" + projectId
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.GET, request,
-				Project.class);
-		Project project = response.getBody();
-		System.out.println(project);
 
-		// User user = userService.findBySSO(ssoId);
-		model.addAttribute("project", project);
-		model.addAttribute("edit", true);
-		model.addAttribute("loggedinuser", getPrincipal());
-		model.addAttribute("message", "project successfully added");
-		return "projectERP";
-	}
-	
-	@RequestMapping(value = { "/viewProjectDetails/{project_id}" }, method = RequestMethod.GET)
-	public String viewProjectDetails(@PathVariable String project_id, ModelMap model) {
-		//AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("**************************************************************************");
-		System.out.println("\nTesting viewProjectDetails API---------- ssoId :: "+project_id);
-		
-		// user=getEditUserDetails();
-		Project project=getEditProjectViewDetails();
-		System.out.println("*********** "+project);
+		try {
+			ResponseEntity<Project> response = restTemplate.exchange(
+					ErpConstants.REST_SERVICE_URI + "/project/" + projectId
+							+ ErpConstants.QPM_ACCESS_TOKEN
+							+ tokenInfo.getAccess_token(), HttpMethod.GET,
+					request, Project.class);
+			project = (Project) response.getBody();
+			System.out.println(project + " 3###############projectssMap");
+
+		} catch (Exception excep) {
+			excep.printStackTrace();
+		}
+
+		System.out.println("*********** " + project);
 		model.addAttribute("projectForm", project);
 		model.addAttribute("editProjectStage", "editViewProjectDetails");
 		model.addAttribute("loggedinuser", getPrincipal());
-		System.out.println("**************************************************************************");
+		System.out
+				.println("**************************************************************************");
 		return "editProject";
 	}
-	
-	@RequestMapping(value = { "/editProjectDetails/{project_id}" }, method = RequestMethod.GET)
-	public String editProjectDetails(@PathVariable String project_id, ModelMap model) {
-		//AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("**************************************************************************");
-		System.out.println("\nTesting editProjectDetails API---------- project_id :: "+project_id);
-		
-		// user=getEditUserDetails();
-		Project project=getEditProjectViewDetails();
-		System.out.println("*********** "+project);
+
+	@RequestMapping(value = { "/editProjectDetails/{projectId}" }, method = RequestMethod.GET)
+	public String editProjectDetails(
+			@PathVariable("projectId") String projectId, ModelMap model) {
+		// AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out
+				.println("**************************************************************************");
+		System.out
+				.println("\nTesting editProjectDetails API---------- project_id :: "
+						+ projectId);
+
+		Project project = null;
+
+		AuthTokenInfo tokenInfo = sendTokenRequest();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
+
+		try {
+			ResponseEntity<Project> response = restTemplate.exchange(
+					ErpConstants.REST_SERVICE_URI + "/project/" + projectId
+							+ ErpConstants.QPM_ACCESS_TOKEN
+							+ tokenInfo.getAccess_token(), HttpMethod.GET,
+					request, Project.class);
+			project = (Project) response.getBody();
+			System.out.println(project + " 3###############projectssMap");
+
+		} catch (Exception excep) {
+			excep.printStackTrace();
+		}
+
+		System.out.println("*********** " + project);
 		model.addAttribute("projectForm", project);
 		model.addAttribute("editProjectStage", "editProjectDetails");
 		model.addAttribute("loggedinuser", getPrincipal());
-		System.out.println("**************************************************************************");
+		List<String> projectStatusList = new ArrayList<String>();
+		projectStatusList.add(ProjectStatus.Open.getProjectStatus());
+		projectStatusList.add(ProjectStatus.Closed.getProjectStatus());
+		model.addAttribute("projectStatusList", projectStatusList);
+
+		System.out
+				.println("**************************************************************************");
 		return "editProject";
 	}
-	
-	
-	
+
 	@RequestMapping(value = { "/updateProjectDetails" }, method = RequestMethod.POST)
 	public String updateProjectDetails(
 			@Valid @ModelAttribute("projectForm") Project project,
 			BindingResult result) {
 
-		System.out.println("**************************************************************************");
-		System.out.println("\nTesting updateProjectDetails API---------- project :: "+project);
-		System.out.println("**************************************************************************");
-		return "redirect:/editProjectList";
-	}
-	
-
-	/**
-	 * This method will be called on form submission, handling POST request for
-	 * updating user in database. It also validates the user input
-	 */
-	@RequestMapping(value = { "/edit-project-{projectId}" }, method = RequestMethod.POST)
-	public String updateUser(@Valid Project project, BindingResult result,
-			ModelMap model, @PathVariable int projectId) {
+		System.out
+				.println("**************************************************************************");
+		System.out
+				.println("\nTesting updateProjectDetails API---------- project :: "
+						+ project);
+		System.out
+				.println("**************************************************************************");
 
 		AuthTokenInfo tokenInfo = sendTokenRequest();
-
-		if (result.hasErrors()) {
-			return "registration";
-		}
-
-		/*
-		 * //Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in
-		 * UI which is a unique key to a User.
-		 * if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
-		 * FieldError ssoError =new
-		 * FieldError("user","ssoId",messageSource.getMessage
-		 * ("non.unique.ssoId", new String[]{user.getSsoId()},
-		 * Locale.getDefault())); result.addError(ssoError); return
-		 * "registration"; }
-		 */
-
-		// userService.updateUser(user);
-
-		System.out.println("\nTesting update Project API----------" + project);
 		RestTemplate restTemplate = new RestTemplate();
-
 		HttpEntity<Object> request = new HttpEntity<Object>(project,
 				getHeaders());
-		ResponseEntity<User> response = restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/user/"
-						+ project.getProject_id()
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.PUT, request,
-				User.class);
-		System.out.println(response.getBody());
+		try {
+			restTemplate.put(ErpConstants.REST_SERVICE_URI + "/project/"
+					+ project.getProject_id() + ErpConstants.QPM_ACCESS_TOKEN
+					+ tokenInfo.getAccess_token(), request, Project.class);
+		} catch (HttpClientErrorException excep) {
+			excep.printStackTrace();
+		}
 
-		model.addAttribute("success", "Project " + project.getProjectName()
-				+ " updated successfully");
-		model.addAttribute("loggedinuser", getPrincipal());
-		return "registrationsuccess";
-	}
-
-	/**
-	 * This method will delete an user by it's SSOID value.
-	 */
-	@RequestMapping(value = { "/delete-project-{projectId}" }, method = RequestMethod.GET)
-	public String deleteUser(@PathVariable int projectId) {
-		// userService.deleteUserBySSO(ssoId);
-		AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting delete User API----------");
-		RestTemplate restTemplate = new RestTemplate();
-		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/user/delete/" + projectId
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.DELETE,
-				request, User.class);
-
-		return "redirect:/list";
+		return "redirect:/editProjectList";
 	}
 
 	@RequestMapping(value = { "/editProjectList" }, method = RequestMethod.GET)
@@ -424,7 +347,6 @@ public class ProjectController {
 			@ModelAttribute("projectForm") Project project,
 			BindingResult result, ModelMap model) {
 
-		
 		model.addAttribute("editProjectStage", "editProjectList");
 
 		return "editProject";
@@ -519,16 +441,6 @@ public class ProjectController {
 		return userName;
 	}
 
-	/**
-	 * This method returns true if users is already authenticated [logged-in],
-	 * else false.
-	 */
-	private boolean isCurrentAuthenticationAnonymous() {
-		final Authentication authentication = SecurityContextHolder
-				.getContext().getAuthentication();
-		return authenticationTrustResolver.isAnonymous(authentication);
-	}
-
 	@ModelAttribute("getEditProjectListDetails")
 	public List<Project> getEditProjectListDetails() {
 
@@ -553,49 +465,32 @@ public class ProjectController {
 				+ Arrays.deepToString(projectList.toArray()));
 		return projectList;
 	}
+
 	@ModelAttribute("getClosedProjectList")
 	public List<Project> getClosedProjectList() {
 
-		List<Project> pList = new ArrayList<Project>();
-		Project p1 = new Project();
-		p1.setProject_id(1);
-		p1.setProjectName("projectSet1 EPR1");
-		p1.setProjectClientName("projectSet1 ERP CLIENT 1");
-		p1.setStructuralName("projectSet1 EPR1 Sector 1");
-		p1.setStartDate(new Date());
-		p1.setEndDate(new Date());
+		AuthTokenInfo tokenInfo = sendTokenRequest();
+		List<Project> projectList = null;
+		System.out
+				.println("\nTesting listAll Project API-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$----------");
+		RestTemplate restTemplate = new RestTemplate();
 
-		Project p2 = new Project();
-		p2.setProject_id(2);
-		p2.setProjectName("projectSet2 EPR2");
-		p2.setProjectClientName("projectSet2 ERP CLIENT 2");
-		p2.setStructuralName("projectSet2 EPR2 Sector 2");
-		p2.setStartDate(new Date());
-		p2.setEndDate(new Date());
+		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
+		try {
+			ResponseEntity<List> response = restTemplate.exchange(
+					ErpConstants.REST_SERVICE_URI + "/project/closed/"
+							+ ErpConstants.QPM_ACCESS_TOKEN
+							+ tokenInfo.getAccess_token(), HttpMethod.GET,
+					request, List.class);
+			projectList = (List) response.getBody();
+			System.out.println(projectList + " 3###############projectList");
 
-		pList.add(p1);
-		pList.add(p2);
+		} catch (Exception excep) {
+			excep.printStackTrace();
+		}
 
-		return pList;
+		return projectList;
+
 	}
-	
-public Project getEditProjectViewDetails()
-{
-	Project p1 = new Project();
-	p1.setProject_id(1);
-	p1.setProjectName("projectSet1 EPR1");
-	p1.setProjectClientName("projectSet1 ERP CLIENT 1");
-	p1.setStructuralName("projectSet1 EPR1 Sector 1");
-	p1.setStartDate(new Date());
-	p1.setEndDate(new Date());
-	p1.setArchitectEmail("Test@gmai.com");
-	p1.setArchitectPhone("123456789");
-	p1.setArchitectName("Architecture -- Test");
-	p1.setArchitectPhone("222-222222");
-	p1.setContactPersonEmail("test@gmail.com");
-	
-	
-	return p1;
 
-}
 }

@@ -123,6 +123,9 @@ public class Project implements Serializable {
 	@Column(name = "STRUCTURAL_PHONE", nullable = false)
 	private String structuralPhone;
 
+	@Column(name = "PROJECT_STATUS")
+	private String projectStatus;
+
 	public String getProjectName() {
 		return projectName;
 	}
@@ -265,6 +268,14 @@ public class Project implements Serializable {
 
 	public void setStructuralPhone(String structuralPhone) {
 		this.structuralPhone = structuralPhone;
+	}
+
+	public String getProjectStatus() {
+		return projectStatus;
+	}
+
+	public void setProjectStatus(String projectStatus) {
+		this.projectStatus = projectStatus;
 	}
 
 	@Override

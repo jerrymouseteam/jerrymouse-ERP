@@ -16,103 +16,104 @@
 					<h4 class="title">Project</h4>
 					<p class="category">Search /Edit projects</p>
 				</div>
-			
+
 				<c:if test="${editProjectStage == 'editProjectList'}">
-				<div class="content">
-					<div class="row">
-						<h2 class="text-center">List of Projects</h2>
-					</div>
+					<div class="content">
+						<div class="row">
+							<h2 class="text-center">List of Projects</h2>
+						</div>
 
-					<div class="row">
+						<div class="row">
 
-						<div class="col-md-12">
+							<div class="col-md-12">
 
 
-							<table id="datatable" class="table table-striped table-bordered"
-								cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>Project Name</th>
-										<th>Project Sector</th>
-										<th>Owned By</th>
-										<th>Client Name</th>
-										<th>Start Date</th>
-										<th>End Date</th>
-										<th>Edit</th>
-										<th>Details</th>
-										<th>Close</th>
-									</tr>
-								</thead>
-
-								<tfoot>
-									<tr>
-										<th>Project Name</th>
-										<th>Project Sector</th>
-										<th>Owned By</th>
-										<th>Client Name</th>
-										<th>Start Date</th>
-										<th>End Date</th>
-										<th>Edit</th>
-										<th>Details</th>
-										<th>Close</th>
-									</tr>
-								</tfoot>
-
-								<tbody>
-
-									<c:forEach items="${getEditProjectListDetails}" var="project"
-										varStatus="val">
-
+								<table id="datatable" class="table table-striped table-bordered"
+									cellspacing="0" width="100%">
+									<thead>
 										<tr>
-											<td>${project.projectName}</td>
-											<td>${project.subDivisionName}</td>
-											<td>${project.contactPersonName}</td>
-											<td>${project.projectClientName}</td>
-											<td>${project.startDate}</td>
-											<td>${project.endDate}</td>
-											<td>
+											<th>Project Name</th>
+											<th>Project Sector</th>
+											<th>Owned By</th>
+											<th>Client Name</th>
+											<th>Start Date</th>
+											<th>End Date</th>
+											<th>Edit</th>
+											<th>Details</th>
+											<th>Close</th>
+										</tr>
+									</thead>
 
-												
-													
-													
-													<p data-placement="top" data-toggle="tooltip"
-														title="Edit">
+									<tfoot>
+										<tr>
+											<th>Project Name</th>
+											<th>Project Sector</th>
+											<th>Owned By</th>
+											<th>Client Name</th>
+											<th>Start Date</th>
+											<th>End Date</th>
+											<th>Edit</th>
+											<th>Details</th>
+											<th>Close</th>
+										</tr>
+									</tfoot>
+
+									<tbody>
+
+										<c:forEach items="${getEditProjectListDetails}" var="project"
+											varStatus="val">
+
+											<tr>
+												<td>${project.projectName}</td>
+												<td>${project.subDivisionName}</td>
+												<td>${project.contactPersonName}</td>
+												<td>${project.projectClientName}</td>
+												<td>${project.startDate}</td>
+												<td>${project.endDate}</td>
+												<td>
+
+
+
+
+													<p data-placement="top" data-toggle="tooltip" title="Edit">
 														<a class="btn btn-primary btn-xs"
-															href="<%=request.getContextPath()%>/editProjectDetails/${project.project_id}"><span class="fa fa-edit"></span></a>
+															href="<%=request.getContextPath()%>/editProjectDetails/${project.project_id}"><span
+															class="fa fa-edit"></span></a>
 
 													</p>
-												
-													
-													
+
+
+
 												</td>
-											<td>
-												
-												<p data-placement="top" data-toggle="tooltip"
+												<td>
+
+													<p data-placement="top" data-toggle="tooltip"
 														title="Details">
 														<a class="btn btn-primary btn-xs"
-															href="<%=request.getContextPath()%>/viewProjectDetails/${project.project_id}"><span class="fa fa-search"></span></a>
+															href="<%=request.getContextPath()%>/viewProjectDetails/${project.project_id}"><span
+															class="fa fa-search"></span></a>
 
 													</p>
-												
-												
+
+
 												</td>
-											<td><p data-placement="top" data-toggle="tooltip"
-													title="Close">
-													<button class="btn btn-danger btn-xs" data-title="Close"
-														data-toggle="modal" data-target="#delete">
-														<span class="fa fa-close"></span>
-													</button>
-												</p></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+												<td><p data-placement="top" data-toggle="tooltip"
+														title="Close">
+														<button class="btn btn-danger btn-xs" data-title="Close"
+															data-toggle="modal" data-target="#delete">
+															<span class="fa fa-close"></span>
+														</button>
+													</p></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-				</div>
 				</c:if>
 
-				
+
 
 
 				<div class="modal fade" id="delete" tabindex="-1" role="dialog"
@@ -154,23 +155,34 @@
 				</div>
 
 				<c:if test="${editProjectStage == 'editProjectDetails'}">
-			
-				<div class="content">
-					<div class="row">
-						<h2 class="text-center">Edit Your Project Detail</h2>
-					</div>
 
-					<div class="row">
+					<div class="content">
+						<div class="row">
+							<h2 class="text-center">Edit Your Project Detail</h2>
+						</div>
 
-						<div class="col-md-12">
-						
-					
-						
-						<spring:url value="/updateProjectDetails" var="updateProjectDetailsActionURL" />
+						<div class="row">
 
-							<form:form method="post" modelAttribute="projectForm"
-								name="updateProjectDetailsForm" action="${updateProjectDetailsActionURL}">
-								
+							<div class="col-md-12">
+
+
+
+								<spring:url value="/updateProjectDetails"
+									var="updateProjectDetailsActionURL" />
+
+								<form:form method="post" modelAttribute="projectForm"
+									name="updateProjectDetailsForm"
+									action="${updateProjectDetailsActionURL}">
+									<div class="content">
+										<div class="row">
+											<div class="text-center">
+												<label>STATUS</label>
+												<form:select path="projectStatus" class="form-control">
+													<form:options items="${projectStatusList}" />
+												</form:select>
+											</div>
+										</div>
+									</div>
 
 									<div class="row">
 										<div class="col-md-6">
@@ -437,38 +449,42 @@
 									</div>
 
 
-								<!-- </div> -->
-								<div class="modal-footer ">
-									<button type="button" class="btn btn-warning btn-lg"
-										style="width: 100%;" onclick="submitFunction()">
-										<span class="pe-7s-check"></span> Update
-									</button>
-								</div>
-							</form:form>
-						
-						
+									<!-- </div> -->
+									<div class="modal-footer ">
+										<button type="button" class="btn btn-warning btn-lg"
+											style="width: 100%;" onclick="submitFunction()">
+											<span class="pe-7s-check"></span> Update
+										</button>
+									</div>
+								</form:form>
+
+
+							</div>
 						</div>
 					</div>
-				</div>
-				
+
 				</c:if>
-				
+
 				<c:if test="${editProjectStage == 'editViewProjectDetails'}">
-				
-				<div class="content">
-					<div class="row">
-						<h2 class="text-center">View Your Project Detail</h2>
-					</div>
 
-					<div class="row">
+					<div class="content">
+						<div class="row">
+							<h2 class="text-center">View Your Project Detail</h2>
+						</div>
 
-						<div class="col-md-12">
-						
-						
+						<div class="row">
 
-							<form:form modelAttribute="projectForm"
-								name="projectViewForm" >
-								
+							<div class="col-md-12">
+
+								<form:form modelAttribute="projectForm" name="projectViewForm">
+									<div class="content">
+										<div class="row">
+											<div class="text-center">
+												<label>STATUS</label>
+												<form:input path="projectStatus" class="form-control" readonly="true" />
+											</div>
+										</div>
+									</div>
 
 									<div class="row">
 										<div class="col-md-6">
@@ -476,7 +492,7 @@
 												<label>Project Id</label>
 												<form:input path="project_id" type="text"
 													class="form-control" id="project_id"
-													placeholder="Project Id" 
+													placeholder="Project Id"
 													cssErrorClass="form-control errorTrial" readonly="true" />
 												<form:errors path="project_id" />
 											</div>
@@ -735,28 +751,23 @@
 									</div>
 
 
-								<!-- </div> -->
-								<!-- <div class="modal-footer ">
+									<!-- </div> -->
+									<!-- <div class="modal-footer ">
 									<button type="button" class="btn btn-warning btn-lg"
 										style="width: 100%;" onclick="submitFunction()">
 										<span class="pe-7s-check"></span> Update
 									</button>
 								</div> -->
-							</form:form>
-						
-						
+								</form:form>
+
+
+							</div>
 						</div>
 					</div>
-				</div>
-			
+
 				</c:if>
 
 			</div>
-
-
-
-
-
 		</div>
 	</div>
 </div>

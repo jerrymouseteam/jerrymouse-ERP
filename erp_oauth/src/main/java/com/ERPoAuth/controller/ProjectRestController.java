@@ -49,14 +49,14 @@ public class ProjectRestController {
 	// -------------------Retrieve Single
 	// Project--------------------------------------------------------
 
-	@RequestMapping(value = "/project/{projectName}", method = RequestMethod.GET, produces = {
+	@RequestMapping(value = "/project/{projectId}", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Project> getProject(
-			@PathVariable("projectName") String projectName) {
-		System.out.println("Fetching Project with id " + projectName);
-		Project Project = projectService.findByProjectname(projectName);
+	public ResponseEntity<Project> getProjectUsingId(
+			@PathVariable("projectId") Integer projectId) {
+		System.out.println("Fetching Project with id " + projectId);
+		Project Project = projectService.findByProjectId(projectId);
 		if (Project == null) {
-			System.out.println("Project with projectId " + projectName
+			System.out.println("Project with projectId " + projectId
 					+ " not found");
 			return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
 		}
@@ -116,8 +116,6 @@ public class ProjectRestController {
 			System.out.println("Project with id " + projectId + " not found");
 			return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
 		}
-
-		// add setter methods
 
 		Project assosiatedProject = projectService.updateProject(project);
 		return new ResponseEntity<Project>(assosiatedProject, HttpStatus.OK);

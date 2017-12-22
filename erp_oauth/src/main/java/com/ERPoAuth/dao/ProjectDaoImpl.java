@@ -11,6 +11,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.ERP.constants.ProjectStatus;
 import com.ERPoAuth.model.Project;
 
 @Repository("projectDao")
@@ -40,7 +41,9 @@ public class ProjectDaoImpl extends AbstractDao<Integer, Project> implements
 
 	@SuppressWarnings("unchecked")
 	public List<Project> findAllProjects() {
-		Criteria criteria = createEntityCriteria().addOrder(
+		Criteria criteria = createEntityCriteria().add(
+				Restrictions.eq("projectStatus",
+						ProjectStatus.Open.getProjectStatus())).addOrder(
 				Order.asc("projectName"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
@@ -64,9 +67,11 @@ public class ProjectDaoImpl extends AbstractDao<Integer, Project> implements
 		Calendar cl = Calendar.getInstance();
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Criteria criteria = createEntityCriteria().addOrder(
-				Order.asc("projectName")).add(
-				Restrictions.lt("endDate", cl.getTime()));
+		Criteria criteria = createEntityCriteria().add(
+				Restrictions.eq("projectStatus",
+						ProjectStatus.Closed.getProjectStatus())).addOrder(
+				Order.asc("projectName"));
+		// .add(Restrictions.lt("endDate", cl.getTime()));
 
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
