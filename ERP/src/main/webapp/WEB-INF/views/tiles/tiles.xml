@@ -79,4 +79,66 @@
 
 	<!-- Requistion -->
 	
+	
+	<!-- PurchaseOrder -->
+
+	<definition name="createPurchaseOrder" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/po/createPurchaseOrder.jsp" />
+	</definition>
+	 <definition name="getPurchaseOrders" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/po/editPurchaseOrder.jsp" />
+	</definition>
+	
+
+	<!-- PurchaseOrder -->
+	
+	
+	<!-- Challan  -->
+	
+	<definition name="getQuotations" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/quotation/quotations.jsp" />
+	</definition>
+	 <definition name="requestQuotation" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/quotation/requestQuotation.jsp" />
+	</definition>
+	
+	<!-- Challan -->
+	
+	
+	<!-- Quatation  -->
+	
+	<definition name="createChallan" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/challan/createChallan.jsp" />
+	</definition>
+	 <definition name="getChallans" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/challan/editChallan.jsp" />
+	</definition>
+	
+	<!-- Quatation -->
+	
+	
+	
+	<!-- Vendor -->
+
+	<definition name="registerVendor" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/vendor/addVendor.jsp" />
+	</definition>
+	 <definition name="getVendors" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/vendor/editVendor.jsp" />
+	</definition>
+	<!--<definition name="deleteRequistion" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/deleteRequistion.jsp" />
+	</definition> -->
+
+	<!-- Vendor -->
+	
 </tiles-definitions>
