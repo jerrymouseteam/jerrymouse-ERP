@@ -31,6 +31,7 @@ import com.ERP.constants.ErpConstants;
 import com.ERP.constants.GradeType;
 import com.ERP.constants.GradeUnitVo;
 import com.ERP.constants.MaterialType;
+import com.ERP.constants.Test;
 import com.ERP.constants.UnitType;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
@@ -214,6 +215,13 @@ public class RequisitionController {
 	public ModelAndView addProject(@Valid Requisition requistionForm,
 			BindingResult result, ModelAndView model) {
 		AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
+		
+		System.out.println("==========================================");
+		
+		System.out.println("Requisition : "+requistionForm);
+		
+		System.out.println("==========================================");
+		
 
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
@@ -240,7 +248,7 @@ public class RequisitionController {
 				+ " added successfully");
 		model.addObject("loggedinuser", getPrincipal());
 		model.addObject("message", "Requisition successfully added");
-		model.setViewName("requisitionERP");
+		model.setViewName("raisedRequistion");
 
 		return model;
 	}
@@ -439,4 +447,24 @@ public class RequisitionController {
 	 * itemLists + "]";
 	 */
 
+	
+	 @ModelAttribute("getItemsList")
+	   public List<String> getItemsList() {
+		 return Test.getItems();
+	   }
+	 
+	 @ModelAttribute("getGradesList")
+	   public List<String> getGradesList() {
+		 return Test.getGrades();
+	   }
+	 
+	 @ModelAttribute("getQuantitiesList")
+	   public List<String> getQuantitiesList() {
+		 return Test.getQuantities();
+	   }
+	 
+	 @ModelAttribute("getUnitsList")
+	   public List<String> getUnitsList() {
+		 return Test.getUnits();
+	   }
 }

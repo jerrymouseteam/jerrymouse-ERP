@@ -2,6 +2,7 @@ package com.ERP.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -63,6 +65,10 @@ public class Requisition implements java.io.Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "requisition", cascade = CascadeType.ALL)
 	private Set<ItemList> itemLists = new HashSet<ItemList>(0);
+	
+	
+	@Transient
+	private List<RequisitionItem> requisitionItemParameterses ;
 
 	public Requisition() {
 	}
@@ -229,14 +235,26 @@ public class Requisition implements java.io.Serializable {
 			return false;
 		return true;
 	}
+	
+	
+
+	public List<RequisitionItem> getRequisitionItemParameterses() {
+		return requisitionItemParameterses;
+	}
+
+	public void setRequisitionItemParameterses(List<RequisitionItem> requisitionItemParameterses) {
+		this.requisitionItemParameterses = requisitionItemParameterses;
+	}
 
 	@Override
 	public String toString() {
 		return "Requisition [reqNo=" + reqNo + ", project=" + project + ", dateGen=" + dateGen + ", delDt=" + delDt
 				+ ", expectedDt=" + expectedDt + ", reqSts=" + reqSts + ", authorizeSectEngg=" + authorizeSectEngg
 				+ ", requestedBy=" + requestedBy + ", justification=" + justification + ", itemLists=" + itemLists
-				+ "]";
+				+ ", requisitionItemParameterses=" + requisitionItemParameterses + "]";
 	}
+
+	
 	
 	
 

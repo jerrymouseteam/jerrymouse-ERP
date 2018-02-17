@@ -170,101 +170,113 @@ iframe {
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="<%=request.getContextPath()%>/static/js/demo.js"></script>
 
-<script src="<%=request.getContextPath()%>/static/js/bootstrap-datepicker.js"
+<script
+	src="<%=request.getContextPath()%>/static/js/bootstrap-datepicker.js"
 	type="text/javascript"></script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		 $('.input-group.date').datepicker({
-		        format: "yyyy/mm/dd",
-		        //startDate: "1980-01-01",
-		        //endDate: "2015-01-01",
-		        //todayBtn: "linked",
-		        autoclose: true,
-				clearBtn:true,
-		        todayHighlight: true
-		    });
+	
+	<script type="text/javascript">
+	
+	$(document).ready(function() { 
+		$('#banks').change(
+			function() {
+				$.getJSON('/ERP/getBankBranch', {
+					bankId : $(this).val(),
+					ajax : 'true'
+				}, function(data) {
+					var html = '<option value="">------ Select Branch ------</option>';
+					var len = data.length;
+					for ( var i = 0; i < len; i++) {
+						html += '<option value="' + data[i].bank_branch_id + '">'
+								+ data[i].branch_name + '</option>';
+					}
+					html += '</option>';
+	 
+					$('#bankBranches').html(html);
+				});
+			});
 		
 		
-		$("#userSide").click(function() {
-			$("#dropdownUser").toggle();
+		//============
+			
+			/* $('.input-group.date').datepicker({
+			format : "yyyy/mm/dd",
+			//startDate: "1980-01-01",
+			//endDate: "2015-01-01",
+			//todayBtn: "linked",
+			autoclose : true,
+			clearBtn : true,
+			todayHighlight : true
 		});
-
+ */
 		$("#projectMenu").click(function() {
 			$("#dropdownProject").toggle();
+			$("#dropdownPO").hide();
+			$("#dropdownUser").hide();
+			$("#dropdownReq").hide();
+			$("#dropdownChallan").hide();
+			$("#dropdownQuot").hide();
+			$("#dropdownVendor").hide();
 		});
 
-		$("#ReqMenu").click(function() {
+		//dropdownPO	dropdownUser	dropdownProject dropdownReq dropdownChallan dropdownQuot
+		$("#reqMenu").click(function() {
+			$("#dropdownProject").hide();
+			$("#dropdownPO").hide();
+			$("#dropdownUser").hide();
 			$("#dropdownReq").toggle();
+			$("#dropdownChallan").hide();
+			$("#dropdownQuot").hide();
+			$("#dropdownVendor").hide();
+		});
+
+		$("#userMenu").click(function() {
+			$("#dropdownProject").hide();
+			$("#dropdownPO").hide();
+			$("#dropdownUser").toggle();
+			$("#dropdownReq").hide();
+			$("#dropdownChallan").hide();
+			$("#dropdownQuot").hide();
+			$("#dropdownVendor").hide();
+		});
+
+		$("#POMenu").click(function() {
+			$("#dropdownProject").hide();
+			$("#dropdownPO").toggle();
+			$("#dropdownUser").hide();
+			$("#dropdownReq").hide();
+			$("#dropdownChallan").hide();
+			$("#dropdownQuot").hide();
+			$("#dropdownVendor").hide();
+		});
+
+		$("#challanMenu").click(function() {
+			$("#dropdownProject").hide();
+			$("#dropdownPO").hide();
+			$("#dropdownUser").hide();
+			$("#dropdownReq").hide();
 			$("#dropdownChallan").toggle();
+			$("#dropdownQuot").hide();
+			$("#dropdownVendor").hide();
 		});
 
-		$("#projectSide").click(function() {
-			$("#projectMain").show(500);
-			$("#divAddProject").hide();
-			$("#divEditSearchProject").hide();
-			$("#divClosedProject").hide();
+		$("#QuotMenu").click(function() {
+			$("#dropdownProject").hide();
+			$("#dropdownPO").hide();
+			$("#dropdownUser").hide();
+			$("#dropdownReq").hide();
+			$("#dropdownChallan").hide();
+			$("#dropdownQuot").toggle();
+			$("#dropdownVendor").hide();
 		});
-
-		$("#projectAdd").click(function() {
-			$("#divAddProject").show(500);
-			$("#projectMain").hide();
-			$("#divEditSearchProject").hide();
-			$("#divClosedProject").hide();
-		});
-
-		$("#projectSearch").click(function() {
-			$("#divEditSearchProject").show(500);
-			$("#projectMain").hide();
-			$("#divAddProject").hide();
-			$("#divClosedProject").hide();
-		});
-
-		$("#ClosedProject").click(function() {
-			$("#divClosedProject").show(500);
-			$("#projectMain").hide();
-			$("#divAddProject").hide();
-			$("#divEditSearchProject").hide();
-		});
-
-		$("#EditUserr").click(function() {
-			$("#editEachUser").show(500);
-			$("#divEditSearchUser").hide();
-
-		});
-
-		$("#userAdd").click(function() {
-			$("#divAddUser").show(500);
-			$("#userMain").hide();
-			$("#divEditSearchUser").hide();
-			$("#editEachUser").hide();
-		});
-
-		$("#userSearch").click(function() {
-			$("#divEditSearchUser").show(500);
-			$("#userMain").hide();
-			$("#divAddUser").hide();
-			$("#editEachUser").hide();
-		});
-
 		
-		$("#addReqq").click(function() {
-			$("#raiseReq").show();
-			$("#divEditSearchRequisition").hide();
-			$("#deleteRequisition").hide();
-		});
-
-		$("#viewEditReqq").click(function() {
-			$("#divEditSearchRequisition").show();
-			$("#raiseReq").hide();
-			$("#deleteRequisition").hide();
-		});
-
-		$("#deleteReqq").click(function() {
-			$("#deleteRequisition").show();
-			$("#raiseReq").hide();
-			$("#divEditSearchRequisition").hide();
+		$("#VendorMenu").click(function() {
+			$("#dropdownProject").hide();
+			$("#dropdownPO").hide();
+			$("#dropdownUser").hide();
+			$("#dropdownReq").hide();
+			$("#dropdownChallan").hide();
+			$("#dropdownQuot").hide();
+			$("#dropdownVendor").toggle();
 		});
 
 		$('#datatable').dataTable();
@@ -275,11 +287,16 @@ iframe {
 			$('div li').removeClass("active");
 			$(this).addClass("active");
 		});
-		
-		
-	   
-	
-
+			
+			//======================
 	});
-</script>
+
+
+
+	 
+	
+	</script>
+
+
+
 </html>

@@ -87,6 +87,13 @@ public class Bank implements Serializable{
 	public String toString() {
 		return "Bank [bank_id=" + bank_id + ", bank_name=" + bank_name + "]";
 	}
+	public Bank(long bank_id, String bank_name) {
+		super();
+		this.bank_id = bank_id;
+		this.bank_name = bank_name;
+		
+	}
+	
 	
 	
 	

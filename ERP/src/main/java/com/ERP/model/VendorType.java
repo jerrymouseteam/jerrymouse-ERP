@@ -20,13 +20,22 @@ public class VendorType implements Serializable {
 	private long vendor_type_id;
 	
 	private String vendor_type_name;
+	
+
+	public VendorType() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	public VendorType(String vendor_type_name) {
 		super();
 		this.vendor_type_name = vendor_type_name;
 	}
-	public VendorType() {
+	
+	public VendorType(long vendor_type_id, String vendor_type_name) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.vendor_type_id = vendor_type_id;
+		this.vendor_type_name = vendor_type_name;
 	}
 	public long getVendor_type_id() {
 		return vendor_type_id;

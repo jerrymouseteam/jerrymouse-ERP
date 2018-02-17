@@ -21,7 +21,10 @@
 					<p class="category">Enter details of new Quotation to be raised</p>
 				</div>
 				<div class="content">
-					<form>
+					<spring:url value="/newuser" var="userActionUrl" />
+
+					<form:form method="post" modelAttribute="requistionForm"
+						action="${userActionUrl}">
 						<div class="col-md-12">
 
 							<div class="content">
@@ -214,7 +217,7 @@
 						</div>
 
 
-					</form>
+					</form:form>
 				</div>
 			</div>
 			<!-- add req-->

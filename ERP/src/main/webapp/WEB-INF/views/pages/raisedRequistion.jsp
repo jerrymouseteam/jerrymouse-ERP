@@ -38,7 +38,7 @@
 												</div>
 												<div class="col-md-2">
 													<input type="text" class="form-control" placeholder="Num"
-														value="${requistionForm.reqNo}" >
+														value="${requistionForm.reqNo}">
 												</div>
 												<div class="col-md-5">
 													<input type="date" class="form-control" placeholder="DATE"
@@ -49,51 +49,56 @@
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>Expected Delivery</label> 
-									
-													
-													<form:input path="expectedDt" type="date" class="form-control"
-													id="expectedDt" placeholder="Expected Delivery" />
+												<label>Expected Delivery</label>
+
+
+												<form:input path="expectedDt" type="date"
+													class="form-control" id="expectedDt"
+													placeholder="Expected Delivery" />
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Date of Generation</label> 
-												
-												
-													
-													<form:input path="dateGen" type="date" class="form-control"
-													id="dateGen" placeholder="Date of Generation" value="${requisitionForm.dateGen}"/>
+												<label>Date of Generation</label>
+
+
+
+												<form:input path="dateGen" type="date" class="form-control"
+													id="dateGen" placeholder="Date of Generation"
+													value="${requisitionForm.dateGen}" />
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Requested By</label> 
-													
-													<form:input path="requestedBy" type="text" class="form-control"
-													id="requestedBy" placeholder="Requested by" value="${user.firstName}"/>
-													
+												<label>Requested By</label>
+
+												<form:input path="requestedBy" type="text"
+													class="form-control" id="requestedBy"
+													placeholder="Requested by" value="${user.firstName}" />
+
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Project Name</label> 
+												<label>Project Name</label>
 												<form:select path="project" items="${user.project}"
-													 itemValue="project_id" itemLabel="projectName" 
+													itemValue="project_id" itemLabel="projectName"
 													class="form-control" />
-											
+
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Justification for Request</label>
-												
-											
-											<form:textarea path="justification" rows="4" cols="50" class="form-control" placeholder="Comments" id="justification"/>
+
+
+												<form:textarea path="justification" rows="4" cols="50"
+													class="form-control" placeholder="Comments"
+													id="justification" />
 
 											</div>
 										</div>
@@ -108,7 +113,23 @@
 
 
 						<br>
-						<!--style="display: none;"-->
+
+
+						<!-- <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
+						<INPUT type="button" value="Delete Row"
+							onclick="deleteRow('dataTable')" /> -->
+
+						<div class="col-md-12">
+
+
+							<INPUT type="button"
+								class="btn btn-primary btn-xs btn-fill pull-left col-md-1"
+								value="Add Row" onclick="addRow('dataTable')" /> <INPUT
+								type="button"
+								class="btn btn-danger btn-xs btn-fill pull-left col-md-1"
+								value="Delete Row" onclick="deleteRow('dataTable')" />
+
+						</div>
 
 						<div class="card">
 
@@ -116,8 +137,9 @@
 								<div class="row">
 									<div class="col-md-12">
 
-										<table class="table table-striped table-bordered"
-											cellspacing="0" width="100%">
+										<table id="dataTable"
+											class="table table-striped table-bordered" cellspacing="0"
+											width="100%">
 											<thead>
 												<tr>
 													<th>Serial No</th>
@@ -130,7 +152,7 @@
 												</tr>
 											</thead>
 
-											<tfoot>
+											<!-- <tfoot>
 												<tr>
 													<th>Serial No</th>
 													<th>Item</th>
@@ -140,64 +162,72 @@
 													<th>Unit</th>
 
 												</tr>
-											</tfoot>
+											</tfoot> -->
 
 											<tbody>
-												<tr>
-													<td>1</td>
-													<td><select id="itemSelect" class="form-control">
-															<option value="1">Item 1</option>
-															<option value="2">Item 2</option>
-															<option value="3">Item 3</option>
-															<option value="4" selected>Item 4</option>
 
-													</select></td>
-													<td><select id="gradeSelect" class="form-control">
-															<option value="1">Grade 1</option>
-															<option value="2">Grade 2</option>
-															<option value="3">Grade 3</option>
-															<option value="4">Grade 4</option>
-															<option value="5" selected>Grade 5</option>
-													</select></td>
-													<td>John</td>
-													<td>1 kg</td>
-													<td><select id="unitSelect" class="form-control">
-															<option value="1">Unit 1</option>
-															<option value="2">Unit 2</option>
-															<option value="3">Unit 3</option>
-															<option value="4">Unit 4</option>
-															<option value="5" selected>Unit 5</option>
-													</select></td>
-												</tr>
 
-												<tr>
-													<td>2</td>
-													<td><select id="itemSelect" class="form-control">
-															<option value="1">Item 1</option>
-															<option value="2">Item 2</option>
-															<option value="3" selected>Item 3</option>
-															<option value="4">Item 4</option>
 
-													</select></td>
-													<td><select id="gradeSelect" class="form-control">
-															<option value="1">Grade 1</option>
-															<option value="2">Grade 2</option>
-															<option value="3" selected>Grade 3</option>
-															<option value="4">Grade 4</option>
-															<option value="5">Grade 5</option>
-													</select></td>
-													<td>John</td>
-													<td>1 kg</td>
-													<td><select id="unitSelect" class="form-control">
-															<option value="1">Unit 1</option>
-															<option value="2">Unit 2</option>
-															<option value="3" selected>Unit 3</option>
-															<option value="4">Unit 4</option>
-															<option value="5">Unit 5</option>
-													</select></td>
-												</tr>
+
+												<c:forEach items="${user.requisitionItemParameterses}"
+													var="value" varStatus="loop">
+													<tr>
+
+														<td><form:checkbox path="chk[${loop.index}]"
+																id="chk[${loop.index}]" /></td>
+														<td><form:select
+																path="requisitionItemParameterses[${loop.index}].items"
+																id="requisitionItemParameterses[${loop.index}].items"
+																class="form-control">
+																<form:option value="NONE"
+																	label="----- Select Item -----" />
+																<form:options items="${getItemsList}" />
+															</form:select></td>
+
+														<td><form:select
+																path="requisitionItemParameterses[${loop.index}].grades"
+																id="requisitionItemParameterses[${loop.index}].grades"
+																class="form-control">
+																<form:option value="NONE"
+																	label="----- Select Grade -----" />
+																<form:options items="${getGradesList}" />
+															</form:select></td>
+														<td><form:input
+																path="requisitionItemParameterses[${loop.index}].usedFor"
+																type="text" class="form-control"
+																id="requisitionItemParameterses[${loop.index}].usedFor"
+																placeholder="Used For" /></td>
+														<td><form:select
+																path="requisitionItemParameterses[${loop.index}].quantities"
+																id="requisitionItemParameterses[${loop.index}].quantities"
+																class="form-control">
+																<form:option value="NONE"
+																	label="----- Select Quantity -----" />
+																<form:options items="${getQuantitiesList}" />
+															</form:select></td>
+														<td><form:select
+																path="requisitionItemParameterses[${loop.index}].units"
+																id="requisitionItemParameterses[${loop.index}].units"
+																class="form-control">
+																<form:option value="NONE"
+																	label="----- Select Unit -----" />
+																<form:options items="${getUnitsList}" />
+															</form:select></td>
+													</tr>
+												</c:forEach>
 
 											</tbody>
+											<!-- <tfoot>
+												<tr>
+													<th>Serial No</th>
+													<th>Item</th>
+													<th>Grade</th>
+													<th>Used For</th>
+													<th>Quantity</th>
+													<th>Unit</th>
+
+												</tr>
+											</tfoot> -->
 										</table>
 
 
@@ -221,3 +251,129 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	function addRow(tableID) {
+
+		var table = document.getElementById(tableID);
+
+		var rowCount = table.rows.length;
+		var row = table.insertRow(rowCount);
+
+		var length = (table.rows.length) - 1;
+		alert("rowCount : " + rowCount + "length : " + length);
+		var cell0 = row.insertCell(0);
+		var element0 = document.createElement("input");
+		element0.type = "checkbox";
+		element0.name = "chkbox[]";
+		cell0.appendChild(element0);
+		//============================================
+		var cell1 = row.insertCell(1);
+
+		var selectItem = document.createElement("select");
+		selectItem.setAttribute("id", "requisitionItemParameterses[" + length
+				+ "].items");
+		selectItem.setAttribute("name", "requisitionItemParameterses[" + length
+				+ "].items");
+		cell1.appendChild(selectItem);
+
+		<c:forEach var="itemListName" items="${getItemsList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${itemListName}");
+		option.text = "${itemListName}";
+		selectItem.appendChild(option);
+		</c:forEach>
+
+		//============================================
+		var cell2 = row.insertCell(2);
+
+		var selectGrade = document.createElement("select");
+		selectGrade.setAttribute("id", "requisitionItemParameterses[" + length
+				+ "].grades");
+		selectGrade.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].grades");
+		cell2.appendChild(selectGrade);
+
+		<c:forEach var="gradeListName" items="${getGradesList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${gradeListName}");
+		option.text = "${gradeListName}";
+		selectGrade.appendChild(option);
+		</c:forEach>
+
+		//===========================================
+
+		var cell3 = row.insertCell(3);
+		var usedForTextBox = document.createElement("input");
+		usedForTextBox.type = "text";
+		usedForTextBox.setAttribute("id", "requisitionItemParameterses["
+				+ length + "].usedFor");
+		usedForTextBox.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].usedFor");
+		//usedForTextBox.name = "operationParameterses[" + length + "].usedFor";
+		//element3.value = "";
+		cell3.appendChild(usedForTextBox);
+
+		//=================================================
+
+		var cell4 = row.insertCell(4);
+
+		var selectQunatity = document.createElement("select");
+		selectQunatity.setAttribute("id", "requisitionItemParameterses["
+				+ length + "].quantities");
+		selectQunatity.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].quantities");
+		cell4.appendChild(selectQunatity);
+
+		<c:forEach var="quantityListName" items="${getQuantitiesList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${quantityListName}");
+		option.text = "${quantityListName}";
+		selectQunatity.appendChild(option);
+		</c:forEach>
+
+		//=============================================		
+
+		var cell5 = row.insertCell(5);
+
+		var selectUnit = document.createElement("select");
+		selectUnit.setAttribute("id", "requisitionItemParameterses[" + length
+				+ "].units");
+		selectUnit.setAttribute("name", "requisitionItemParameterses[" + length
+				+ "].units");
+		cell5.appendChild(selectUnit);
+
+		<c:forEach var="unitListName" items="${getUnitsList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${unitListName}");
+		option.text = "${unitListName}";
+		selectUnit.appendChild(option);
+		</c:forEach>
+
+		//===============================
+
+	}
+
+	function deleteRow(tableID) {
+		try {
+			var table = document.getElementById(tableID);
+			var rowCount = table.rows.length;
+
+			for (var i = 0; i < rowCount; i++) {
+				var row = table.rows[i];
+				var chkbox = row.cells[0].childNodes[0];
+				if (null != chkbox && true == chkbox.checked) {
+					table.deleteRow(i);
+					rowCount--;
+					i--;
+				}
+			}
+		} catch (e) {
+			alert(e);
+		}
+	}
+</SCRIPT>
