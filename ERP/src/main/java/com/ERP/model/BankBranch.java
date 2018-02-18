@@ -26,10 +26,10 @@ public class BankBranch implements Serializable {
 
 	
 
-	private Bank bank;
+	//private Bank bank;
 	
 	
-    private List<VendorBankProfile> vendor_bank_profile;
+   // private List<VendorBankProfile> vendor_bank_profile;
 
 	public long getBank_branch_id() {
 		return bank_branch_id;
@@ -55,33 +55,28 @@ public class BankBranch implements Serializable {
 		this.branch_ifsc = branch_ifsc;
 	}
 
-	public Bank getBank() {
-		return bank;
-	}
-
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
+	
 
 	public BankBranch() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public BankBranch(String branch_name, String branch_ifsc, Bank bank) {
+	public BankBranch(String branch_name, String branch_ifsc) {
 		super();
 		this.branch_name = branch_name;
 		this.branch_ifsc = branch_ifsc;
-		this.bank = bank;
+		
 	}
 
-	public List<VendorBankProfile> getVendor_bank_profile() {
-		return vendor_bank_profile;
+	@Override
+	public String toString() {
+		return "BankBranch [bank_branch_id=" + bank_branch_id + ", branch_name=" + branch_name + ", branch_ifsc="
+				+ branch_ifsc + "]";
 	}
+	
 
-	public void setVendor_bank_profile(List<VendorBankProfile> vendor_bank_profile) {
-		this.vendor_bank_profile = vendor_bank_profile;
-	}
+	
 
 	
 

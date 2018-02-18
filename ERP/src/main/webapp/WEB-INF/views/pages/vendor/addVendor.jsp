@@ -85,7 +85,7 @@
 											<div class="form-group">
 												<label>Select Bank</label>
 
-												 <form:select path="banks" items="${getBanks}"
+												 <form:select path="bankId" items="${getBanks}"
 													multiple="false" itemValue="bank_id" itemLabel="bank_name"
 													class="form-control">
 
@@ -127,7 +127,7 @@
 											<div class="form-group">
 												<label>Type of Vendor</label>
 
-												<form:select path="vendorTypes" items="${getVendorTypes}"
+												<form:select path="vendorTypeId" items="${getVendorTypes}"
 													multiple="false" itemValue="vendor_type_id"
 													itemLabel="vendor_type_name" class="form-control" />
 
@@ -144,7 +144,7 @@
 													itemLabel="branch_name" class="form-control" /> --%>
 
 
-												<form:select path="bankBranches" multiple="false"
+												<form:select path="branchId" multiple="false"
 													itemValue="bank_branch_id" itemLabel="branch_name"
 													class="form-control">
 												</form:select>

@@ -49,6 +49,11 @@ public class VendorType implements Serializable {
 	public void setVendor_type_name(String vendor_type_name) {
 		this.vendor_type_name = vendor_type_name;
 	}
+
+	@Override
+	public String toString() {
+		return "VendorType [vendor_type_id=" + vendor_type_id + ", vendor_type_name=" + vendor_type_name + "]";
+	}
 	
 	
 	

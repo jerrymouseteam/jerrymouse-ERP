@@ -25,18 +25,16 @@ public class Vendor implements Serializable {
 	private String branch_ifsc;
 	private String serviceRendered_GoodsSupplied;
 
-	private List<VendorType> vendorTypes;
-
+	
 	private Address address;
 	private String contact_person_name;
 	private String contact_person_email;
 	private String contact_person_mobile;
 	private String contact_person_alternate_phone_no;
+	private long vendorTypeId;
+	private long bankId;
+	private long branchId;
 
-	private List<Bank> banks;
-	private List<BankBranch> bankBranches;
-
-	private List<VendorBankProfile> vendor_bank_profiles;
 
 	public Vendor() {
 		super();
@@ -62,7 +60,6 @@ public class Vendor implements Serializable {
 		return vendor_nickName;
 	}
 
-	
 	public String getServiceRendered_GoodsSupplied() {
 		return serviceRendered_GoodsSupplied;
 	}
@@ -123,20 +120,6 @@ public class Vendor implements Serializable {
 		this.contact_person_alternate_phone_no = contact_person_alternate_phone_no;
 	}
 
-	
-
-	@Override
-	public String toString() {
-		return "Vendor [vendor_id=" + vendor_id + ", vendor_name=" + vendor_name + ", vendor_nickName="
-				+ vendor_nickName + ", vendor_gst_number=" + vendor_gst_number + ", bankAccountNumber="
-				+ bankAccountNumber + ", branch_ifsc=" + branch_ifsc + ", serviceRendered_GoodsSupplied="
-				+ serviceRendered_GoodsSupplied + ", vendorTypes=" + vendorTypes + ", address=" + address
-				+ ", contact_person_name=" + contact_person_name + ", contact_person_email=" + contact_person_email
-				+ ", contact_person_mobile=" + contact_person_mobile + ", contact_person_alternate_phone_no="
-				+ contact_person_alternate_phone_no + ", banks=" + banks + ", bankBranches=" + bankBranches
-				+ ", vendor_bank_profiles=" + vendor_bank_profiles + "]";
-	}
-
 	public String getBranch_ifsc() {
 		return branch_ifsc;
 	}
@@ -153,36 +136,41 @@ public class Vendor implements Serializable {
 		this.bankAccountNumber = bankAccountNumber;
 	}
 
-	public List<VendorType> getVendorTypes() {
-		return vendorTypes;
+	public long getVendorTypeId() {
+		return vendorTypeId;
 	}
 
-	public void setVendorTypes(List<VendorType> vendorTypes) {
-		this.vendorTypes = vendorTypes;
+	public void setVendorTypeId(long vendorTypeId) {
+		this.vendorTypeId = vendorTypeId;
 	}
 
-	public List<Bank> getBanks() {
-		return banks;
+	public long getBankId() {
+		return bankId;
 	}
 
-	public void setBanks(List<Bank> banks) {
-		this.banks = banks;
+	public void setBankId(long bankId) {
+		this.bankId = bankId;
 	}
 
-	public List<BankBranch> getBankBranches() {
-		return bankBranches;
+	public long getBranchId() {
+		return branchId;
 	}
 
-	public void setBankBranches(List<BankBranch> bankBranches) {
-		this.bankBranches = bankBranches;
+	public void setBranchId(long branchId) {
+		this.branchId = branchId;
 	}
 
-	public List<VendorBankProfile> getVendor_bank_profiles() {
-		return vendor_bank_profiles;
+	@Override
+	public String toString() {
+		return "Vendor [vendor_id=" + vendor_id + ", vendor_name=" + vendor_name + ", vendor_nickName="
+				+ vendor_nickName + ", vendor_gst_number=" + vendor_gst_number + ", bankAccountNumber="
+				+ bankAccountNumber + ", branch_ifsc=" + branch_ifsc + ", serviceRendered_GoodsSupplied="
+				+ serviceRendered_GoodsSupplied + ", address=" + address + ", contact_person_name="
+				+ contact_person_name + ", contact_person_email=" + contact_person_email + ", contact_person_mobile="
+				+ contact_person_mobile + ", contact_person_alternate_phone_no=" + contact_person_alternate_phone_no
+				+ ", vendorTypeId=" + vendorTypeId + ", bankId=" + bankId + ", branchId=" + branchId + "]";
 	}
 
-	public void setVendor_bank_profiles(List<VendorBankProfile> vendor_bank_profiles) {
-		this.vendor_bank_profiles = vendor_bank_profiles;
-	}
+
 
 }
