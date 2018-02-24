@@ -33,16 +33,28 @@
 											<div class="form-group">
 
 												<div class="col-md-2">
-													<input type="text" class="form-control" placeholder="CC"
-														value="CC">
+												
+														
+														<form:input path="reqType" type="text"
+													class="form-control" id="reqType"
+													placeholder="Type"  value="CC"/>
+														
+														
 												</div>
 												<div class="col-md-2">
-													<input type="text" class="form-control" placeholder="Num"
-														value="${requistionForm.reqNo}">
+													
+														
+														
+														<form:input path="reqNo" type="text"
+													class="form-control" id="reqNo"
+													placeholder="Num" />
 												</div>
 												<div class="col-md-5">
-													<input type="date" class="form-control" placeholder="DATE"
-														value="${requisitionForm.dateGen}">
+												
+												<form:input path="reqDate" type="date"
+													class="form-control" id="reqDate"
+													placeholder="Date Of Generation" />
+													
 												</div>
 											</div>
 										</div>
@@ -66,7 +78,7 @@
 
 												<form:input path="dateGen" type="date" class="form-control"
 													id="dateGen" placeholder="Date of Generation"
-													value="${requisitionForm.dateGen}" />
+													 />
 											</div>
 										</div>
 
@@ -76,7 +88,7 @@
 
 												<form:input path="requestedBy" type="text"
 													class="form-control" id="requestedBy"
-													placeholder="Requested by" value="${user.firstName}" />
+													placeholder="Requested by" />
 
 											</div>
 										</div>
@@ -84,7 +96,7 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Project Name</label>
-												<form:select path="project" items="${user.project}"
+												<form:select path="projectId" items="${getProjectsList}"
 													itemValue="project_id" itemLabel="projectName"
 													class="form-control" />
 
@@ -126,6 +138,7 @@
 								class="btn btn-primary btn-xs btn-fill pull-left col-md-1"
 								value="Add Row" onclick="addRow('dataTable')" /> <INPUT
 								type="button"
+								
 								class="btn btn-danger btn-xs btn-fill pull-left col-md-1"
 								value="Delete Row" onclick="deleteRow('dataTable')" />
 
@@ -142,7 +155,8 @@
 											width="100%">
 											<thead>
 												<tr>
-													<th>Serial No</th>
+												<th> <input type="checkbox" name="selectAll" id="selectAll" class="form-control" onclick="selectAllTest('dataTable');"/></th>
+													
 													<th>Item</th>
 													<th>Grade</th>
 													<th>Used For</th>
@@ -173,8 +187,17 @@
 													var="value" varStatus="loop">
 													<tr>
 
-														<td><form:checkbox path="chk[${loop.index}]"
-																id="chk[${loop.index}]" /></td>
+														<td><%-- <form:checkbox path="chk[${loop.index}]"
+																id="chk[${loop.index}]" /> --%>
+																
+																<form:checkbox path="requisitionItemParameterses[${loop.index}].checked"
+																id="requisitionItemParameterses[${loop.index}].checked" />
+																
+																
+																
+																</td>
+																
+																
 														<td><form:select
 																path="requisitionItemParameterses[${loop.index}].items"
 																id="requisitionItemParameterses[${loop.index}].items"
@@ -261,12 +284,16 @@
 		var row = table.insertRow(rowCount);
 
 		var length = (table.rows.length) - 1;
-		alert("rowCount : " + rowCount + "length : " + length);
+		//alert("rowCount : " + rowCount + "length : " + length);
 		var cell0 = row.insertCell(0);
 		var element0 = document.createElement("input");
 		element0.type = "checkbox";
-		element0.name = "chkbox[]";
+		element0.id = "requisitionItemParameterses[" + length + "].checked";
+		element0.name = "requisitionItemParameterses[" + length + "].checked";
+		element0.setAttribute("class", "form-control");
 		cell0.appendChild(element0);
+		
+		
 		//============================================
 		var cell1 = row.insertCell(1);
 
@@ -275,6 +302,7 @@
 				+ "].items");
 		selectItem.setAttribute("name", "requisitionItemParameterses[" + length
 				+ "].items");
+		selectItem.setAttribute("class", "form-control");
 		cell1.appendChild(selectItem);
 
 		<c:forEach var="itemListName" items="${getItemsList}" varStatus="loop">
@@ -293,6 +321,7 @@
 				+ "].grades");
 		selectGrade.setAttribute("name", "requisitionItemParameterses["
 				+ length + "].grades");
+		selectGrade.setAttribute("class", "form-control");
 		cell2.appendChild(selectGrade);
 
 		<c:forEach var="gradeListName" items="${getGradesList}" varStatus="loop">
@@ -312,6 +341,7 @@
 				+ length + "].usedFor");
 		usedForTextBox.setAttribute("name", "requisitionItemParameterses["
 				+ length + "].usedFor");
+		usedForTextBox.setAttribute("class", "form-control");
 		//usedForTextBox.name = "operationParameterses[" + length + "].usedFor";
 		//element3.value = "";
 		cell3.appendChild(usedForTextBox);
@@ -325,6 +355,7 @@
 				+ length + "].quantities");
 		selectQunatity.setAttribute("name", "requisitionItemParameterses["
 				+ length + "].quantities");
+		selectQunatity.setAttribute("class", "form-control");
 		cell4.appendChild(selectQunatity);
 
 		<c:forEach var="quantityListName" items="${getQuantitiesList}" varStatus="loop">
@@ -344,6 +375,7 @@
 				+ "].units");
 		selectUnit.setAttribute("name", "requisitionItemParameterses[" + length
 				+ "].units");
+		selectUnit.setAttribute("class", "form-control");
 		cell5.appendChild(selectUnit);
 
 		<c:forEach var="unitListName" items="${getUnitsList}" varStatus="loop">
@@ -357,7 +389,8 @@
 		//===============================
 
 	}
-
+	
+	
 	function deleteRow(tableID) {
 		try {
 			var table = document.getElementById(tableID);
@@ -376,4 +409,30 @@
 			alert(e);
 		}
 	}
+	
+	function selectAllTest(tableID) {
+
+		var table = document.getElementById(tableID);
+
+		var rowCount = table.rows.length;
+
+		var length = (table.rows.length) - 1;
+		
+
+		var val = document.getElementById("selectAll").checked;
+		//alert("length : "+length+" -- val : "+val);
+		for (var i = 0; i < length; i++) {
+			var v = "requisitionItemParameterses[" + i + "].checked"
+			//alert("length : "+length+" -- val : "+val+" -- v : "+v);
+			if (val) {
+				
+				document.getElementById(v).checked = true;
+			} else {
+				document.getElementById(v).checked = false;
+			}
+
+		}
+
+	}
+
 </SCRIPT>

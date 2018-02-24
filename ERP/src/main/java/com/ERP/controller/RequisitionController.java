@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -36,9 +37,12 @@ import com.ERP.constants.UnitType;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Project;
 import com.ERP.model.Requisition;
+import com.ERP.model.RequisitionItem;
 import com.ERP.model.User;
+import com.ERP.model.Vendor;
 import com.ERP.service.UserProfileService;
 import com.ERP.util.AuthTokenAccess;
+import com.ERP.util.Utilities;
 
 @Controller
 @RequestMapping("/")
@@ -56,6 +60,8 @@ public class RequisitionController {
 
 	@Autowired
 	RestTemplate restTemplate;
+	
+	Utilities u= new com.ERP.util.Utilities();
 
 	/**
 	 * This method will provide the medium to add a new user.
@@ -212,25 +218,26 @@ public class RequisitionController {
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/addrequisition" }, method = RequestMethod.POST)
-	public ModelAndView addProject(@Valid Requisition requistionForm,
-			BindingResult result, ModelAndView model) {
-		AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
+	public String createRequisition(
+			@ModelAttribute("requistionForm") Requisition requistion,
+			BindingResult result, ModelMap model) {
+		//AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
 		
 		System.out.println("==========================================");
 		
-		System.out.println("Requisition : "+requistionForm);
+		System.out.println("Requisition : "+requistion);
 		
 		System.out.println("==========================================");
 		
 
-		if (result.hasErrors()) {
+	/*	if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			model.addObject("error", result.getAllErrors());
-			model.setViewName("requisitionERP");
+			model.setViewName("raisedRequistion");
 			return model;
-		}
+		}*/
 
-		HttpEntity<Object> request = new HttpEntity<Object>(requistionForm,
+	/*	HttpEntity<Object> request = new HttpEntity<Object>(requistionForm,
 				AuthTokenAccess.getHeaders());
 		try {
 			restTemplate.postForEntity(
@@ -243,14 +250,12 @@ public class RequisitionController {
 
 			excep.printStackTrace();
 
-		}
-		model.addObject("success", "Requisition " + requistionForm.getReqNo()
-				+ " added successfully");
-		model.addObject("loggedinuser", getPrincipal());
-		model.addObject("message", "Requisition successfully added");
-		model.setViewName("raisedRequistion");
+		}*/
+	
+		
+		
 
-		return model;
+		return "raisedRequistion";
 	}
 
 	/**
@@ -288,10 +293,80 @@ public class RequisitionController {
 
 		System.out
 				.println("*********** INSIDE raisedRequistion *******************8");
+		
+		
+		model.addAttribute("editRequisitionStage", "getRequisitionList");
 
 		return "raisedRequistion";
 
 	}
+	
+
+	@RequestMapping(value = { "/editRequisitionDetails/{reqNo}" }, method = RequestMethod.GET)
+	public String editRequisitionDetails(@PathVariable Long reqNo, ModelMap model) {
+		// AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting editRequisitionDetails API---------- reqNo :: " + reqNo);
+		
+		Requisition requisition=null;
+		if(reqNo ==1)
+		{
+			requisition=Test.getRequisition1();
+		}
+		else
+		{
+
+			requisition=Test.getRequisition2();
+			
+		}
+
+		
+
+		
+		model.addAttribute("requistionForm", requisition);
+	
+		model.addAttribute("editRequisitionStage", "editRequisitionDetails");
+		return "editRequistion";
+	}
+	
+	@RequestMapping(value = { "/updateRequisitionDetails" }, method = RequestMethod.POST)
+	public String updateMyData(ModelMap model, @ModelAttribute("requistionForm") Requisition requisition) {
+
+		System.out.println("\nTesting updateMyData API---------- Requisition :: " + requisition);
+
+	
+		//model.addAttribute("loggedinuser", u.getPrincipal());
+		return "redirect:/editRequistion";
+	}
+	
+	
+	@RequestMapping(value = { "/getRequisitionDetails/{reqNo}" }, method = RequestMethod.GET)
+	public String getRequisitionDetails(@PathVariable Long reqNo, ModelMap model) {
+		// AuthTokenInfo tokenInfo = sendTokenRequest();
+		System.out.println("\nTesting getRequisitionDetails API---------- reqNo :: " + reqNo);
+		
+		Requisition requisition=null;
+		if(reqNo ==1)
+		{
+			requisition=Test.getRequisition1();
+		}
+		else
+		{
+
+			requisition=Test.getRequisition2();
+			
+		}
+
+
+		
+
+		
+		model.addAttribute("requistionForm", requisition);
+		model.addAttribute("loggedinuser", u.getPrincipal());
+		model.addAttribute("editRequisitionStage", "getRequisitionDetails");
+		return "editRequistion";
+	}
+	
+	
 
 	@RequestMapping(value = { "/editRequistion" }, method = RequestMethod.GET)
 	public String editRequistion(
@@ -300,7 +375,9 @@ public class RequisitionController {
 
 		System.out
 				.println("*********** INSIDE editRequistion *******************8");
+		 requistion=null;
 
+		model.addAttribute("editRequisitionStage", "getRequisitionList");
 		return "editRequistion";
 
 	}
@@ -331,6 +408,12 @@ public class RequisitionController {
 			userName = principal.toString();
 		}
 		return userName;
+	}
+	
+	@ModelAttribute("getProjectsList")
+	public List<Project> getProjectsList()
+	{
+		return Test.getProjectListDetails();
 	}
 
 	@ModelAttribute("getEditRequisitionListDetails")
@@ -376,19 +459,21 @@ public class RequisitionController {
 		r1.setProject(p1);
 		r1.setRequestedBy("John");
 		r1.setJustification("Test Justification Message 1");
-		r1.setDateGen(new Date());
-		r1.setExpectedDt(new Date());
+		r1.setDateGen("2018-02-23");
+		r1.setExpectedDt("2018-02-23");
 		r1.setReqNo(1L);
 		r1.setReqSts("Approved");
+		r1.setReqDate("2018-02-23");
 
 		Requisition r2 = new Requisition();
 		r2.setProject(p2);
 		r2.setRequestedBy("Harshad");
 		r2.setJustification("Test Justification Message 2");
-		r2.setDateGen(new Date());
-		r2.setExpectedDt(new Date());
+		r2.setDateGen("2018-02-23");
+		r2.setExpectedDt("2018-02-23");
 		r2.setReqNo(2L);
 		r2.setReqSts("Approved");
+		r2.setReqDate("2018-02-23");
 		requisitionList.add(r1);
 		requisitionList.add(r2);
 
@@ -398,54 +483,12 @@ public class RequisitionController {
 	@ModelAttribute("getEditProjectListDetails")
 	public List<Project> getEditProjectListDetails() {
 
-		List<Project> projectList = new ArrayList<>();
+		
 
-		Project p1 = new Project();
-		p1.setProjectName("Suchi Heights");
-		p1.setSubDivisionName("Private Sector");
-		p1.setStartDate(new Date());
-		p1.setEndDate(new Date());
-		p1.setProjectAddress("");
-		p1.setRemarks("");
-		p1.setContactPersonName("John");
-		p1.setContactPersonEmail("");
-		p1.setContactPersonEmail("");
-		p1.setProjectClientName("Lodha");
-		p1.setProjectClientPhone("");
-		p1.setProjectClientEmail("");
-		p1.setStructuralName("");
-		p1.setStructuralPhone("");
-		p1.setStructuralEmail("");
-
-		Project p2 = new Project();
-		p2.setProjectName("Raheja Heights");
-		p2.setSubDivisionName("Private Sector");
-		p2.setStartDate(new Date());
-		p2.setEndDate(new Date());
-		p2.setProjectAddress("");
-		p2.setRemarks("");
-		p2.setContactPersonName("Harshad");
-		p2.setContactPersonEmail("");
-		p2.setContactPersonEmail("");
-		p2.setProjectClientName("Raheja");
-		p2.setProjectClientPhone("");
-		p2.setProjectClientEmail("");
-		p2.setStructuralName("");
-		p2.setStructuralPhone("");
-		p2.setStructuralEmail("");
-
-		projectList.add(p1);
-		projectList.add(p2);
-		return projectList;
+		
+		return Test.getProjectListDetails();
 	}
 
-	/*
-	 * "Requisition [reqNo=" + reqNo + ", project=" + project + ", dateGen=" +
-	 * dateGen + ", delDt=" + delDt + ", expectedDt=" + expectedDt + ", reqSts="
-	 * + reqSts + ", authorizeSectEngg=" + authorizeSectEngg + ", requestedBy="
-	 * + requestedBy + ", justification=" + justification + ", itemLists=" +
-	 * itemLists + "]";
-	 */
 
 	
 	 @ModelAttribute("getItemsList")
@@ -467,4 +510,17 @@ public class RequisitionController {
 	   public List<String> getUnitsList() {
 		 return Test.getUnits();
 	   }
+	 
+	 @ModelAttribute("getRequisitionItemsList")
+	   public List<RequisitionItem> getRequisitionItemsList() {
+		 return Test.getRequisitionItems();
+	   }
+	 
+	 @ModelAttribute("getRequisitionsList")
+	   public List<Requisition> getRequisitionsList() {
+		 return Test.getRequisitions();
+	   }
+	 
+	 
+	 
 }

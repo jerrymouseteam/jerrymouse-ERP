@@ -10,602 +10,779 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<!-- view edit req    put style="display: none;" to show hide below-->
-			<div class="card" id="divEditSearchRequisition">
-				<div class="header">
-					<h4 class="title">Requisition</h4>
-					<p class="category">Search /Edit Requisition</p>
-				</div>
-				<div class="content">
 
 
-					<div class="row">
 
-						<div class="col-md-12">
+			<c:if test="${editRequisitionStage == 'getRequisitionList'}">
 
 
-							<table id="datatable" class="table table-striped table-bordered"
-								cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>Requisition No.</th>
-										<th>Date of Generation</th>
-										<th>Expected date</th>
-										<th>Status</th>
-										<th>Edit</th>
-										<th>Details</th>
 
-									</tr>
-								</thead>
 
-								<tfoot>
-									<tr>
-										<th>Requisition No.</th>
-										<th>Date of Generation</th>
-										<th>Expected date</th>
-										<th>Status</th>
-										<th>Edit</th>
-										<th>Details</th>
-									</tr>
-								</tfoot>
+				<!-- Get List of Requisitions Start -->
+				<div class="card" id="divEditSearchRequisition">
+					<div class="header">
+						<h4 class="title">Requisition</h4>
+						<p class="category">Search /Edit Requisition</p>
+					</div>
+					<div class="content">
 
-								<tbody>
 
-									<c:forEach items="${getEditRequisitionListDetails}"
-										var="requisition" varStatus="val">
+						<div class="row">
+
+							<div class="col-md-12">
+
+
+								<table id="datatable" class="table table-striped table-bordered"
+									cellspacing="0" width="100%">
+									<thead>
 										<tr>
-											<td>${requisition.reqNo}</td>
-											<td>${requisition.dateGen}</td>
-											<td>${requisition.expectedDt}</td>
-											<td>${requisition.reqSts}<input type="hidden"
-												id="${val.index}_reqNo" name="${val.index}_reqNo"
-												value="${requisition.reqNo}" /> <input type="hidden"
-												id="${val.index}_project" name="${val.index}_project"
-												value="${requisition.project}" /> <input type="hidden"
-												id="${val.index}_dateGen" name="${val.index}_dateGen"
-												value="${requisition.dateGen}" /> <input type="hidden"
-												id="${val.index}_delDt" name="${val.index}_delDt"
-												value="${requisition.delDt}" /> <input type="hidden"
-												id="${val.index}_expectedDt" name="${val.index}_expectedDt"
-												value="${requisition.expectedDt}" /> <input type="hidden"
-												id="${val.index}_reqSts" name="${val.index}_reqSts"
-												value="${requisition.reqSts}" /> <input type="hidden"
-												id="${val.index}_authorizeSectEngg"
-												name="${val.index}_authorizeSectEngg"
-												value="${requisition.authorizeSectEngg}" /> <input
-												type="hidden" id="${val.index}_requestedBy"
-												name="${val.index}_requestedBy"
-												value="${requisition.requestedBy}" /> <input type="hidden"
-												id="${val.index}_justification"
-												name="${val.index}_justification"
-												value="${requisition.justification}" /> <input
-												type="hidden" id="${val.index}_itemLists"
-												name="${val.index}_itemLists"
-												value="${requisition.itemLists}" />
-
-
-											</td>
-											<td><p data-placement="top" data-toggle="tooltip"
-													title="Edit">
-													<button class="btn btn-primary btn-xs" data-title="Edit"
-														data-toggle="modal" data-target="#edit"
-														onclick="editRequisitionDetails('${val.index}');">
-														<span class="fa fa-edit"></span>
-													</button>
-												</p></td>
-											<td><p data-placement="top" data-toggle="tooltip"
-													title="Details">
-													<button class="btn btn-danger btn-xs" data-title="Details"
-														data-toggle="modal" data-target="#delete">
-														<span class="fa fa-search"></span>
-													</button>
-												</p></td>
+											<th>Requisition No.</th>
+											<th>Date of Generation</th>
+											<th>Expected date</th>
+											<th>Status</th>
+											<th>Edit</th>
+											<th>Details</th>
 
 										</tr>
-									</c:forEach>
+									</thead>
+
+									<tfoot>
+										<tr>
+											<th>Requisition No.</th>
+											<th>Date of Generation</th>
+											<th>Expected date</th>
+											<th>Status</th>
+											<th>Edit</th>
+											<th>Details</th>
+										</tr>
+									</tfoot>
+
+									<tbody>
+
+										<c:forEach items="${getRequisitionsList}" var="requisition"
+											varStatus="val">
+											<tr>
+												<td>${requisition.reqNo}</td>
+												<td>${requisition.dateGen}</td>
+												<td>${requisition.expectedDt}</td>
+												<td>${requisition.reqSts}</td>
+												<td><p data-placement="top" data-toggle="tooltip"
+														title="Edit">
+														<a class="btn btn-primary btn-xs"
+															href="<%=request.getContextPath()%>/editRequisitionDetails/${requisition.reqNo}"><span
+															class="fa fa-edit"></span></a>
+
+													</p></td>
+												<td><p data-placement="top" data-toggle="tooltip"
+														title="Details">
+
+														<a class="btn btn-danger btn-xs"
+															href="<%=request.getContextPath()%>/getRequisitionDetails/${requisition.reqNo}"><span
+															class="fa fa-search"></span></a>
+													</p></td>
+
+											</tr>
+										</c:forEach>
 
 
 
-									<!-- <tr>
-										<td>2</td>
-										<td>John</td>
-										<td>Nicholas</td>
-										<td>Jr Engg</td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Edit">
-												<button class="btn btn-primary btn-xs" data-title="Edit"
-													data-toggle="modal" data-target="#edit">
-													<span class="fa fa-edit"></span>
-												</button>
-											</p></td>
-										<td><p data-placement="top" data-toggle="tooltip"
-												title="Details">
-												<button class="btn btn-danger btn-xs" data-title="Details"
-													data-toggle="modal" data-target="#delete">
-													<span class="fa fa-search"></span>
-												</button>
-											</p></td>
-
-									</tr>
- -->
 
 
-								</tbody>
-							</table>
+									</tbody>
+								</table>
 
 
+							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="modal fade" id="edit" tabindex="-1" role="dialog"
-					aria-labelledby="edit" aria-hidden="true">
-					<div class="modal-dialog">
+				<!-- Get List of Requisitions End -->
+			</c:if>
 
-						<div class="modal-content" style="width: 800px;">
+			<c:if test="${editRequisitionStage == 'editRequisitionDetails'}">
 
-							<spring:url value="/newuser" var="userActionUrl" />
 
-							<form:form method="post" modelAttribute="requistionForm"
-								action="${userActionUrl}">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-hidden="true">×</button>
-									<!-- <h4 class="modal-title custom_align" id="Heading">Edit
-									Details for {{Requistion Name}}</h4> -->
+				<!-- Requisition Update Start  -->
 
-									<h4 class="modal-title custom_align" id="Heading"
-										id="dynamicRequistionName"></h4>
-								</div>
-								<div class="modal-body">
-									<div class="content">
+				<div class="card" id="editRequisitionDetails">
 
+					<div class="header">
+						<h4 class="title">Edit Requisition Details</h4>
+
+					</div>
+
+
+
+					<spring:url value="/updateRequisitionDetails"
+						var="updateRequisitionDetailsActionUrl" />
+
+					<form:form method="POST" modelAttribute="requistionForm"
+						name="updateRequisitionDetailsForm"
+						action="${updateRequisitionDetailsActionUrl}">
+
+
+						<div class="content">
+
+							<div class="col-md-12">
+
+								<div class="content">
+
+									<div class="row">
 										<div class="col-md-12">
 
-											<div class="content">
+											<div class="col-md-9">
+												<label>Requistion Number</label>
+												<div class="form-group">
 
-												<div class="row">
-													<div class="col-md-12">
-
-														<div class="col-md-9">
-															<label>Requistion Number</label>
-															<div class="form-group">
-
-																<div class="col-md-2">
-																	<input type="text" class="form-control"
-																		placeholder="CC" value="22">
-																</div>
-																<div class="col-md-2">
-																	<input type="text" class="form-control"
-																		placeholder="Num" value="255">
-																</div>
-																<div class="col-md-5">
-																	<input type="date" class="form-control"
-																		placeholder="DATE" value="">
-																</div>
-															</div>
-														</div>
-
-														<div class="col-md-3">
-															<div class="form-group">
-																<label>Expected Delivery</label>
-
-																<form:input path="expectedDt" type="date"
-																	class="form-control" id="expectedDt"
-																	placeholder="Expected Delivery" />
-
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Date of Generation</label>
-
-																<form:input path="dateGen" type="date"
-																	class="form-control" id="dateGen"
-																	placeholder="Date of Generation" />
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Requested By</label>
-
-																<form:input path="requestedBy" type="text"
-																	class="form-control" id="requestedBy"
-																	placeholder="Requested by" />
-
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Project Name</label>
+													<div class="col-md-2">
 
 
-																<form:select path="project"
-																	items="${getEditProjectListDetails}"
-																	itemValue="project_id" itemLabel="projectName"
-																	class="form-control" />
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Justification for Request</label>
-																<form:textarea path="justification" rows="4" cols="50"
-																	class="form-control" placeholder="Comments"
-																	id="justification" />
-
-															</div>
-														</div>
+														<form:input path="reqType" type="text"
+															class="form-control" id="reqType" placeholder="Type"
+															readonly="true" value="CC" />
 
 
 													</div>
+													<div class="col-md-2">
+
+
+
+														<form:input path="reqNo" type="text" class="form-control"
+															readonly="true" id="reqNo" placeholder="Num" />
+													</div>
+													<div class="col-md-5">
+
+														<form:input path="reqDate" type="date"
+															class="form-control" id="reqDate" readonly="true"
+															placeholder="Date Of Generation" />
+
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-3">
+												<div class="form-group">
+													<label>Expected Delivery</label>
+
+
+													<form:input path="expectedDt" type="date"
+														class="form-control" id="expectedDt"
+														placeholder="Expected Delivery" />
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Date of Generation</label>
+
+
+
+													<form:input path="dateGen" type="date" class="form-control"
+														id="dateGen" placeholder="Date of Generation" />
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Requested By</label>
+
+													<form:input path="requestedBy" type="text"
+														class="form-control" id="requestedBy"
+														placeholder="Requested by" />
 
 												</div>
 											</div>
 
-										</div>
-
-
-										<br>
-										<!--style="display: none;"-->
-
-										<div class="card">
-
-											<div class="content">
-												<div class="row">
-													<div class="col-md-12">
-
-														<table id="datatable"
-															class="table table-striped table-bordered"
-															cellspacing="0" width="100%">
-															<thead>
-																<tr>
-																	<th>Serial No</th>
-																	<th>Item</th>
-																	<th>Grade</th>
-																	<th>Used For</th>
-																	<th>Quantity</th>
-																	<th>Unit</th>
-
-																</tr>
-															</thead>
-
-															<tfoot>
-																<tr>
-																	<th>Serial No</th>
-																	<th>Item</th>
-																	<th>Grade</th>
-																	<th>Used For</th>
-																	<th>Quantity</th>
-																	<th>Unit</th>
-
-																</tr>
-															</tfoot>
-
-															<tbody>
-																<tr>
-																	<td>1</td>
-																	<td><select id="itemSelect" class="form-control">
-																			<option value="1">Item 1</option>
-																			<option value="2">Item 2</option>
-																			<option value="3">Item 3</option>
-																			<option value="4" selected>Item 4</option>
-
-																	</select></td>
-																	<td><select id="gradeSelect" class="form-control">
-																			<option value="1">Grade 1</option>
-																			<option value="2">Grade 2</option>
-																			<option value="3">Grade 3</option>
-																			<option value="4">Grade 4</option>
-																			<option value="5" selected>Grade 5</option>
-																	</select></td>
-																	<td>John</td>
-																	<td>1 kg</td>
-																	<td><select id="unitSelect" class="form-control">
-																			<option value="1">Unit 1</option>
-																			<option value="2">Unit 2</option>
-																			<option value="3">Unit 3</option>
-																			<option value="4">Unit 4</option>
-																			<option value="5" selected>Unit 5</option>
-																	</select></td>
-																</tr>
-
-																<tr>
-																	<td>2</td>
-																	<td><select id="itemSelect" class="form-control">
-																			<option value="1">Item 1</option>
-																			<option value="2">Item 2</option>
-																			<option value="3" selected>Item 3</option>
-																			<option value="4">Item 4</option>
-
-																	</select></td>
-																	<td><select id="gradeSelect" class="form-control">
-																			<option value="1">Grade 1</option>
-																			<option value="2">Grade 2</option>
-																			<option value="3" selected>Grade 3</option>
-																			<option value="4">Grade 4</option>
-																			<option value="5">Grade 5</option>
-																	</select></td>
-																	<td>John</td>
-																	<td>1 kg</td>
-																	<td><select id="unitSelect" class="form-control">
-																			<option value="1">Unit 1</option>
-																			<option value="2">Unit 2</option>
-																			<option value="3" selected>Unit 3</option>
-																			<option value="4">Unit 4</option>
-																			<option value="5">Unit 5</option>
-																	</select></td>
-																</tr>
-
-															</tbody>
-														</table>
-
-
-													</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Project Name</label>
+													<form:select path="projectId" items="${getProjectsList}"
+														itemValue="project_id" itemLabel="projectName"
+														multiple="false" class="form-control" />
 
 												</div>
-
 											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Justification for Request</label>
+
+
+													<form:textarea path="justification" rows="4" cols="50"
+														class="form-control" placeholder="Comments"
+														id="justification" />
+
+												</div>
+											</div>
+
 
 										</div>
 
+									</div>
+								</div>
 
+							</div>
+
+
+							<br>
+							<!--style="display: none;"-->
+
+							<div class="col-md-12">
+
+
+								<INPUT type="button"
+									class="btn btn-primary btn-xs btn-fill pull-left col-md-1"
+									value="Add Row"
+									onclick="addRow('dataTableForUpdateRequisition')" /> <INPUT
+									type="button"
+									class="btn btn-danger btn-xs btn-fill pull-left col-md-1"
+									value="Delete Row"
+									onclick="deleteRow('dataTableForUpdateRequisition')" />
+
+							</div>
+
+							<div class="card">
+
+								<div class="content">
+									<div class="row">
+										<div class="col-md-12">
+
+											<table id="dataTableForUpdateRequisition"
+												class="table table-striped table-bordered" cellspacing="0"
+												width="100%">
+												<thead>
+													<tr>
+														<th><input type="checkbox" id="selectAll" class="form-control"
+															onclick="selectAllTest('dataTableForUpdateRequisition');"></th>
+														<th>Item</th>
+														<th>Grade</th>
+														<th>Used For</th>
+														<th>Quantity</th>
+														<th>Unit</th>
+
+													</tr>
+												</thead>
+
+												<!-- <tfoot>
+													<tr>
+														<th>Serial No</th>
+														<th>Item</th>
+														<th>Grade</th>
+														<th>Used For</th>
+														<th>Quantity</th>
+														<th>Unit</th>
+
+													</tr>
+												</tfoot> -->
+
+												<tbody>
+
+													<c:forEach
+														items="${requistionForm.requisitionItemParameterses}"
+														var="value" varStatus="loop">
+														<tr>
+															<td><form:checkbox
+																	path="requisitionItemParameterses[${loop.index}].checked"
+																	class="form-control"
+																	id="requisitionItemParameterses[${loop.index}].checked" /></td>
+
+
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].items"
+																	multiple="false"
+																	id="requisitionItemParameterses[${loop.index}].items"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Item -----" />
+																	<form:options items="${getItemsList}" />
+																</form:select></td>
+
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].grades"
+																	multiple="false"
+																	id="requisitionItemParameterses[${loop.index}].grades"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Grade -----" />
+																	<form:options items="${getGradesList}" />
+																</form:select></td>
+															<td><form:input
+																	path="requisitionItemParameterses[${loop.index}].usedFor"
+																	type="text" class="form-control"
+																	id="requisitionItemParameterses[${loop.index}].usedFor"
+																	placeholder="Used For" /></td>
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].quantities"
+																	multiple="false"
+																	id="requisitionItemParameterses[${loop.index}].quantities"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Quantity -----" />
+																	<form:options items="${getQuantitiesList}" />
+																</form:select></td>
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].units"
+																	multiple="false"
+																	id="requisitionItemParameterses[${loop.index}].units"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Unit -----" />
+																	<form:options items="${getUnitsList}" />
+																</form:select></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+
+
+										</div>
 
 									</div>
 
-
 								</div>
 
-								<div class="modal-footer ">
+							</div>
 
-									<button type="button" class="btn btn-warning btn-lg"
-										style="width: 100%;">
-										<span class="pe-7s-check"></span> Update
-									</button>
 
-								</div>
-							</form:form>
+
 						</div>
 
 
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
+
+
+						<div class="modal-footer ">
+
+							<button type="button" class="btn btn-warning btn-lg"
+								style="width: 100%;" onclick="submitFunction();">
+								<span class="pe-7s-check"></span> Update
+							</button>
+
+						</div>
+					</form:form>
+
 				</div>
 
+				<!-- Requisition Update End  -->
+			</c:if>
+			<c:if test="${editRequisitionStage == 'getRequisitionDetails'}">
+
+				<!-- Requisition Details Start -->
+
+				<div class="card" id="getRequisitionDetails">
+					<div class="header">
+						<h4 class="title">Requisition Details</h4>
+
+					</div>
+
+					<form:form modelAttribute="requistionForm"
+						name="requisitionDetailsForm">
 
 
-				<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-					aria-labelledby="edit" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content" style="width: 800px;">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">×</button>
-								<h4 class="modal-title custom_align" id="Heading">Details
-									for {{Requistion Name}}</h4>
-							</div>
-							<div class="modal-body">
+						<div class="content">
+
+							<div class="col-md-12">
+
 								<div class="content">
-									<form>
+
+									<div class="row">
 										<div class="col-md-12">
 
-											<div class="content">
 
-												<div class="row">
-													<div class="col-md-12">
 
-														<div class="col-md-9">
-															<label>Requistion Number</label>
-															<div class="form-group">
 
-																<div class="col-md-2">
-																	<input type="text" class="form-control"
-																		placeholder="CC" value="22" readonly>
-																</div>
-																<div class="col-md-2">
-																	<input type="text" class="form-control"
-																		placeholder="Num" value="255" readonly>
-																</div>
-																<div class="col-md-5">
-																	<input type="date" class="form-control"
-																		placeholder="DATE" value="" readonly>
-																</div>
-															</div>
-														</div>
+											<div class="col-md-9">
+												<label>Requistion Number</label>
+												<div class="form-group">
 
-														<div class="col-md-3">
-															<div class="form-group">
-																<label>Expected Delivery</label> <input type="date"
-																	class="form-control" placeholder="Expected Delivery"
-																	value="" readonly>
-															</div>
-														</div>
+													<div class="col-md-2">
 
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Date of Generation</label> <input type="date"
-																	class="form-control" placeholder="Date of Generation"
-																	value="" readonly>
-															</div>
-														</div>
 
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Requested By</label> <input type="text"
-																	class="form-control" placeholder="Requested by"
-																	value="John" readonly>
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Project Name</label> <input type="text"
-																	class="form-control" value="Project 1" readonly>
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Justification for Request</label>
-																<textarea rows="4" cols="50" name="comment"
-																	form="usrform" class="form-control"
-																	placeholder="Comments" readonly>
-											jkjkjk</textarea>
-
-															</div>
-														</div>
+														<form:input path="reqType" type="text"
+															class="form-control" id="reqType" placeholder="Type"
+															readonly="true" value="CC" />
 
 
 													</div>
+													<div class="col-md-2">
+
+
+
+														<form:input path="reqNo" type="text" class="form-control"
+															readonly="true" id="reqNo" placeholder="Num" />
+													</div>
+													<div class="col-md-5">
+
+														<form:input path="reqDate" type="date"
+															class="form-control" id="reqDate" readonly="true"
+															placeholder="Date Of Generation" />
+
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-3">
+												<div class="form-group">
+													<label>Expected Delivery</label>
+
+
+													<form:input path="expectedDt" type="date"
+														class="form-control" id="expectedDt" readonly="true"
+														placeholder="Expected Delivery" />
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Date of Generation</label>
+
+
+
+													<form:input path="dateGen" type="date" class="form-control"
+														id="dateGen" placeholder="Date of Generation"
+														readonly="true" />
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Requested By</label>
+
+													<form:input path="requestedBy" type="text"
+														class="form-control" id="requestedBy" readonly="true"
+														placeholder="Requested by" />
 
 												</div>
 											</div>
 
-										</div>
-
-
-										<br>
-										<!--style="display: none;"-->
-
-										<div class="card">
-
-											<div class="content">
-												<div class="row">
-													<div class="col-md-12">
-
-														<table id="datatable"
-															class="table table-striped table-bordered"
-															cellspacing="0" width="100%">
-															<thead>
-																<tr>
-																	<th>Serial No</th>
-																	<th>Item</th>
-																	<th>Grade</th>
-																	<th>Used For</th>
-																	<th>Quantity</th>
-																	<th>Unit</th>
-
-																</tr>
-															</thead>
-
-															<tfoot>
-																<tr>
-																	<th>Serial No</th>
-																	<th>Item</th>
-																	<th>Grade</th>
-																	<th>Used For</th>
-																	<th>Quantity</th>
-																	<th>Unit</th>
-
-																</tr>
-															</tfoot>
-
-															<tbody>
-																<tr>
-																	<td>1</td>
-																	<td><input id="itemSelectD" type="text"
-																		class="form-control" value="item1" readonly></td>
-																	<td><input id="gradeSelectD" type="text"
-																		class="form-control" value="grade2" readonly>
-																	</td>
-																	<td>John</td>
-																	<td>1 kg</td>
-																	<td><input id="unitSelectD" type="text"
-																		class="form-control" value="unit3" readonly></td>
-																</tr>
-
-																<tr>
-																	<td>2</td>
-																	<td><input id="itemSelectD" type="text"
-																		class="form-control" value="item2" readonly></td>
-																	<td><input id="gradeSelectD" type="text"
-																		class="form-control" value="grade1" readonly>
-																	</td>
-																	<td>John</td>
-																	<td>1 kg</td>
-																	<td><input id="unitSelectD" type="text"
-																		class="form-control" value="unit5" readonly></td>
-																</tr>
-
-															</tbody>
-														</table>
-
-
-													</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Project Name</label>
+													<form:select path="projectId" items="${getProjectsList}"
+														itemValue="project_id" itemLabel="projectName"
+														multiple="false" disabled="true" class="form-control" />
 
 												</div>
-
 											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Justification for Request</label>
+
+
+													<form:textarea path="justification" rows="4" cols="50"
+														class="form-control" placeholder="Comments"
+														readonly="true" id="justification" />
+
+												</div>
+											</div>
+
 
 										</div>
 
-
-									</form>
+									</div>
 								</div>
 
+							</div>
+
+
+							<br>
+
+
+							<div class="card">
+
+								<div class="content">
+									<div class="row">
+										<div class="col-md-12">
+
+
+
+
+
+
+											<table id="datatableForGetRequisitionItems"
+												class="table table-striped table-bordered" cellspacing="0"
+												width="100%">
+												<thead>
+													<tr>
+														<th>Requisition Item No</th>
+														<th>Item</th>
+														<th>Grade</th>
+														<th>Used For</th>
+														<th>Quantity</th>
+														<th>Unit</th>
+
+													</tr>
+												</thead>
+
+												<!-- <tfoot>
+													<tr>
+														<th>Serial No</th>
+														<th>Item</th>
+														<th>Grade</th>
+														<th>Used For</th>
+														<th>Quantity</th>
+														<th>Unit</th>
+
+													</tr>
+												</tfoot> -->
+
+												<tbody>
+
+													<c:forEach
+														items="${requistionForm.requisitionItemParameterses}"
+														var="value" varStatus="loop">
+														<tr>
+
+															<td><form:input
+																	path="requisitionItemParameterses[${loop.index}].requisitionItemId"
+																	type="text" class="form-control" readonly="true"
+																	id="requisitionItemParameterses[${loop.index}].requisitionItemId"
+																	placeholder="Used For" />
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].items"
+																	multiple="false" disabled="true"
+																	id="requisitionItemParameterses[${loop.index}].items"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Item -----" />
+																	<form:options items="${getItemsList}" />
+																</form:select></td>
+
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].grades"
+																	multiple="false" disabled="true"
+																	id="requisitionItemParameterses[${loop.index}].grades"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Grade -----" />
+																	<form:options items="${getGradesList}" />
+																</form:select></td>
+															<td><form:input
+																	path="requisitionItemParameterses[${loop.index}].usedFor"
+																	type="text" class="form-control" readonly="true"
+																	id="requisitionItemParameterses[${loop.index}].usedFor"
+																	placeholder="Used For" /></td>
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].quantities"
+																	multiple="false" disabled="true"
+																	id="requisitionItemParameterses[${loop.index}].quantities"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Quantity -----" />
+																	<form:options items="${getQuantitiesList}" />
+																</form:select></td>
+															<td><form:select
+																	path="requisitionItemParameterses[${loop.index}].units"
+																	multiple="false" disabled="true"
+																	id="requisitionItemParameterses[${loop.index}].units"
+																	class="form-control">
+																	<form:option value="NONE"
+																		label="----- Select Unit -----" />
+																	<form:options items="${getUnitsList}" />
+																</form:select></td>
+														</tr>
+													</c:forEach>
+
+
+
+
+												</tbody>
+											</table>
+
+
+										</div>
+
+									</div>
+
+								</div>
 
 							</div>
 
-							<div class="modal-footer ">
-								<button type="button" class="btn btn-danger btn-lg"
-									data-dismiss="modal" style="width: 100%;">
-									<span class="pe-7s-check"></span>Close
-								</button>
 
-							</div>
 
 						</div>
 
 
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
-				</div>
-			</div>
 
+
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-danger btn-lg"
+								data-dismiss="modal" style="width: 100%;">
+								<span class="pe-7s-check"></span>Close
+							</button>
+
+						</div>
+
+
+					</form:form>
+				</div>
+
+				<!-- Requisition Details End -->
+
+			</c:if>
 			<!-- view req-->
 		</div>
 	</div>
 </div>
 
-
 <script type="text/javascript">
-	function editDetails(indexVal) {
+	function addRow(tableID) {
 
-		var _reqNo = document.getElementById(indexVal + "_reqNo").value;
-		var _project = document.getElementById(indexVal + "_project").value;
-		var _dateGen = document.getElementById(indexVal + "_dateGen").value;
-		var _delDt = document.getElementById(indexVal + "_delDt").value;
-		var _expectedDt = document.getElementById(indexVal + "_expectedDt").value;
-		var _reqSts = document.getElementById(indexVal + "_reqSts").value;
-		var _authorizeSectEngg = document.getElementById(indexVal
-				+ "_authorizeSectEngg").value;
-		var _requestedBy = document.getElementById(indexVal + "_requestedBy").value;
-		var _itemLists = document.getElementById(indexVal + "_itemLists").value;
+		var table = document.getElementById(tableID);
 
-		document.getElementById("dynamicRequistionName").innerHTML = "Edit Details for "
-				+ _reqNo;
+		var rowCount = table.rows.length;
+		var row = table.insertRow(rowCount);
 
-		document.getElementById("reqNo").value = _reqNo;
-		document.getElementById("project").value = _project;
-		document.getElementById("dateGen").value = _dateGen;
+		var length = (table.rows.length) - 1;
 
-		document.getElementById("expectedDt").value = _expectedDt;
+		var cell0 = row.insertCell(0);
+		var element0 = document.createElement("input");
+		element0.type = "checkbox";
+		element0.id = "requisitionItemParameterses[" + length + "].checked";
+		element0.name = "requisitionItemParameterses[" + length + "].checked";
+		element0.setAttribute("class", "form-control");
+		cell0.appendChild(element0);
+		//============================================
+		var cell1 = row.insertCell(1);
 
-		document.getElementById("requestedBy").value = _requestedBy;
+		var selectItem = document.createElement("select");
+		selectItem.setAttribute("id", "requisitionItemParameterses[" + length
+				+ "].items");
+		selectItem.setAttribute("name", "requisitionItemParameterses[" + length
+				+ "].items");
+		selectItem.setAttribute("class", "form-control");
+		cell1.appendChild(selectItem);
+
+		<c:forEach var="itemListName" items="${getItemsList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${itemListName}");
+		option.text = "${itemListName}";
+		selectItem.appendChild(option);
+		</c:forEach>
+
+		//============================================
+		var cell2 = row.insertCell(2);
+
+		var selectGrade = document.createElement("select");
+		selectGrade.setAttribute("id", "requisitionItemParameterses[" + length
+				+ "].grades");
+		selectGrade.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].grades");
+		selectGrade.setAttribute("class", "form-control");
+		cell2.appendChild(selectGrade);
+
+		<c:forEach var="gradeListName" items="${getGradesList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${gradeListName}");
+		option.text = "${gradeListName}";
+		selectGrade.appendChild(option);
+		</c:forEach>
+
+		//===========================================
+
+		var cell3 = row.insertCell(3);
+		var usedForTextBox = document.createElement("input");
+		usedForTextBox.type = "text";
+		usedForTextBox.setAttribute("id", "requisitionItemParameterses["
+				+ length + "].usedFor");
+		usedForTextBox.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].usedFor");
+		usedForTextBox.setAttribute("class", "form-control");
+		cell3.appendChild(usedForTextBox);
+
+		//=================================================
+
+		var cell4 = row.insertCell(4);
+
+		var selectQunatity = document.createElement("select");
+		selectQunatity.setAttribute("id", "requisitionItemParameterses["
+				+ length + "].quantities");
+		selectQunatity.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].quantities");
+		selectQunatity.setAttribute("class", "form-control");
+		cell4.appendChild(selectQunatity);
+
+		<c:forEach var="quantityListName" items="${getQuantitiesList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${quantityListName}");
+		option.text = "${quantityListName}";
+		selectQunatity.appendChild(option);
+		</c:forEach>
+
+		//=============================================		
+
+		var cell5 = row.insertCell(5);
+
+		var selectUnit = document.createElement("select");
+		selectUnit.setAttribute("id", "requisitionItemParameterses[" + length
+				+ "].units");
+		selectUnit.setAttribute("name", "requisitionItemParameterses[" + length
+				+ "].units");
+		selectUnit.setAttribute("class", "form-control");
+		cell5.appendChild(selectUnit);
+
+		<c:forEach var="unitListName" items="${getUnitsList}" varStatus="loop">
+
+		var option = document.createElement("option");
+		option.setAttribute("value", "${unitListName}");
+		option.text = "${unitListName}";
+		selectUnit.appendChild(option);
+		</c:forEach>
+
+		//===============================
 
 	}
 
-	function submitFunction() {
-		alert("myFunction");
+	function deleteRow(tableID) {
+		try {
+			var table = document.getElementById(tableID);
+			var rowCount = table.rows.length;
 
-		var x = document.getElementsByName('userForm');
+			for (var i = 0; i < rowCount; i++) {
+				var row = table.rows[i];
+				var chkbox = row.cells[0].childNodes[0];
+				if (null != chkbox && true == chkbox.checked) {
+					table.deleteRow(i);
+					rowCount--;
+					i--;
+				}
+			}
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	function selectAllTest(tableID) {
+
+		var table = document.getElementById(tableID);
+
+		var rowCount = table.rows.length;
+
+		var length = (table.rows.length) - 1;
+
+		var val = document.getElementById("selectAll").checked;
+
+		for (var i = 0; i < length; i++) {
+			var v = "requisitionItemParameterses[" + i + "].checked"
+			if (val) {
+				document.getElementById(v).checked = true;
+			} else {
+				document.getElementById(v).checked = false;
+			}
+
+		}
+
+	}
+	function submitFunction() {
+
+		var x = document.getElementsByName('updateRequisitionDetailsForm');
 		x[0].submit(); // Form submission
 
 	}
-</script>
+</SCRIPT>
+
 

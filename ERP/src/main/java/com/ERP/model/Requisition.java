@@ -29,25 +29,46 @@ public class Requisition implements java.io.Serializable {
 	@Id
 	@Column(name = "REQ_NO", unique = true, nullable = false)
 	private Long reqNo;
+	
+	@Transient
+	private String reqDate;
+	
+	@Transient
+	private String reqType;
+
+	public String getReqDate() {
+		return reqDate;
+	}
+
+	public void setReqDate(String reqDate) {
+		this.reqDate = reqDate;
+	}
+
+	public String getReqType() {
+		return reqType;
+	}
+
+	public void setReqType(String reqType) {
+		this.reqType = reqType;
+	}
+
+
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "REQ_PROJ_ID", referencedColumnName = "project_id")
 	private Project project;
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATE_GEN", length = 19)
-	private Date dateGen;
+	
+	private int projectId;
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DEL_DT", length = 19)
-	private Date delDt;
+	@Transient
+	private String dateGen;
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "EXPECTED_DT", length = 19)
-	private Date expectedDt;
+	@Transient
+	private String delDt;
+
+	@Transient
+	private String expectedDt;
 
 	@Column(name = "REQ_STS")
 	private String reqSts;
@@ -73,8 +94,8 @@ public class Requisition implements java.io.Serializable {
 	public Requisition() {
 	}
 
-	public Requisition(Project project, Date dateGen, Date delDt,
-			Date expectedDt, String reqSts, Set<ItemList> itemLists) {
+	public Requisition(Project project, String dateGen, String delDt,
+			String expectedDt, String reqSts, Set<ItemList> itemLists) {
 		this.project = project;
 		this.dateGen = dateGen;
 		this.delDt = delDt;
@@ -99,27 +120,27 @@ public class Requisition implements java.io.Serializable {
 		this.project = project;
 	}
 
-	public Date getDateGen() {
+	public String getDateGen() {
 		return dateGen;
 	}
 
-	public void setDateGen(Date dateGen) {
+	public void setDateGen(String dateGen) {
 		this.dateGen = dateGen;
 	}
 
-	public Date getDelDt() {
+	public String getDelDt() {
 		return delDt;
 	}
 
-	public void setDelDt(Date delDt) {
+	public void setDelDt(String delDt) {
 		this.delDt = delDt;
 	}
 
-	public Date getExpectedDt() {
+	public String getExpectedDt() {
 		return expectedDt;
 	}
 
-	public void setExpectedDt(Date expectedDt) {
+	public void setExpectedDt(String expectedDt) {
 		this.expectedDt = expectedDt;
 	}
 
@@ -163,6 +184,34 @@ public class Requisition implements java.io.Serializable {
 		this.itemLists = itemLists;
 	}
 
+	
+	
+
+	public List<RequisitionItem> getRequisitionItemParameterses() {
+		return requisitionItemParameterses;
+	}
+
+	public void setRequisitionItemParameterses(List<RequisitionItem> requisitionItemParameterses) {
+		this.requisitionItemParameterses = requisitionItemParameterses;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+
+	@Override
+	public String toString() {
+		return "Requisition [reqNo=" + reqNo + ", reqDate=" + reqDate + ", reqType=" + reqType + ", project=" + project
+				+ ", projectId=" + projectId + ", dateGen=" + dateGen + ", delDt=" + delDt + ", expectedDt="
+				+ expectedDt + ", reqSts=" + reqSts + ", authorizeSectEngg=" + authorizeSectEngg + ", requestedBy="
+				+ requestedBy + ", justification=" + justification + ", itemLists=" + itemLists
+				+ ", requisitionItemParameterses=" + requisitionItemParameterses + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -170,15 +219,17 @@ public class Requisition implements java.io.Serializable {
 		result = prime * result + (authorizeSectEngg ? 1231 : 1237);
 		result = prime * result + ((dateGen == null) ? 0 : dateGen.hashCode());
 		result = prime * result + ((delDt == null) ? 0 : delDt.hashCode());
-		result = prime * result
-				+ ((expectedDt == null) ? 0 : expectedDt.hashCode());
-		result = prime * result
-				+ ((itemLists == null) ? 0 : itemLists.hashCode());
+		result = prime * result + ((expectedDt == null) ? 0 : expectedDt.hashCode());
+		result = prime * result + ((itemLists == null) ? 0 : itemLists.hashCode());
+		result = prime * result + ((justification == null) ? 0 : justification.hashCode());
 		result = prime * result + ((project == null) ? 0 : project.hashCode());
+		result = prime * result + projectId;
+		result = prime * result + ((reqDate == null) ? 0 : reqDate.hashCode());
 		result = prime * result + ((reqNo == null) ? 0 : reqNo.hashCode());
 		result = prime * result + ((reqSts == null) ? 0 : reqSts.hashCode());
-		result = prime * result
-				+ ((requestedBy == null) ? 0 : requestedBy.hashCode());
+		result = prime * result + ((reqType == null) ? 0 : reqType.hashCode());
+		result = prime * result + ((requestedBy == null) ? 0 : requestedBy.hashCode());
+		result = prime * result + ((requisitionItemParameterses == null) ? 0 : requisitionItemParameterses.hashCode());
 		return result;
 	}
 
@@ -213,10 +264,22 @@ public class Requisition implements java.io.Serializable {
 				return false;
 		} else if (!itemLists.equals(other.itemLists))
 			return false;
+		if (justification == null) {
+			if (other.justification != null)
+				return false;
+		} else if (!justification.equals(other.justification))
+			return false;
 		if (project == null) {
 			if (other.project != null)
 				return false;
 		} else if (!project.equals(other.project))
+			return false;
+		if (projectId != other.projectId)
+			return false;
+		if (reqDate == null) {
+			if (other.reqDate != null)
+				return false;
+		} else if (!reqDate.equals(other.reqDate))
 			return false;
 		if (reqNo == null) {
 			if (other.reqNo != null)
@@ -228,31 +291,26 @@ public class Requisition implements java.io.Serializable {
 				return false;
 		} else if (!reqSts.equals(other.reqSts))
 			return false;
+		if (reqType == null) {
+			if (other.reqType != null)
+				return false;
+		} else if (!reqType.equals(other.reqType))
+			return false;
 		if (requestedBy == null) {
 			if (other.requestedBy != null)
 				return false;
 		} else if (!requestedBy.equals(other.requestedBy))
 			return false;
+		if (requisitionItemParameterses == null) {
+			if (other.requisitionItemParameterses != null)
+				return false;
+		} else if (!requisitionItemParameterses.equals(other.requisitionItemParameterses))
+			return false;
 		return true;
 	}
+
 	
 	
-
-	public List<RequisitionItem> getRequisitionItemParameterses() {
-		return requisitionItemParameterses;
-	}
-
-	public void setRequisitionItemParameterses(List<RequisitionItem> requisitionItemParameterses) {
-		this.requisitionItemParameterses = requisitionItemParameterses;
-	}
-
-	@Override
-	public String toString() {
-		return "Requisition [reqNo=" + reqNo + ", project=" + project + ", dateGen=" + dateGen + ", delDt=" + delDt
-				+ ", expectedDt=" + expectedDt + ", reqSts=" + reqSts + ", authorizeSectEngg=" + authorizeSectEngg
-				+ ", requestedBy=" + requestedBy + ", justification=" + justification + ", itemLists=" + itemLists
-				+ ", requisitionItemParameterses=" + requisitionItemParameterses + "]";
-	}
 
 	
 	
