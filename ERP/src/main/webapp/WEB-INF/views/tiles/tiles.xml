@@ -66,15 +66,15 @@
 
 	<definition name="raisedRequistion" extends="erp-definition">
 		<put-attribute name="body"
-			value="/WEB-INF/views/pages/raisedRequistion.jsp" />
+			value="/WEB-INF/views/pages/requisition/raisedRequistion.jsp" />
 	</definition>
 	<definition name="editRequistion" extends="erp-definition">
 		<put-attribute name="body"
-			value="/WEB-INF/views/pages/editRequistion.jsp" />
+			value="/WEB-INF/views/pages/requisition/editRequistion.jsp" />
 	</definition>
 	<definition name="deleteRequistion" extends="erp-definition">
 		<put-attribute name="body"
-			value="/WEB-INF/views/pages/deleteRequistion.jsp" />
+			value="/WEB-INF/views/pages/requisition/deleteRequistion.jsp" />
 	</definition>
 
 	<!-- Requistion -->
@@ -95,7 +95,8 @@
 	<!-- PurchaseOrder -->
 	
 	
-	<!-- Challan  -->
+	<!-- Quatation  -->
+	
 	
 	<definition name="getQuotations" extends="erp-definition">
 		<put-attribute name="body"
@@ -105,11 +106,12 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/quotation/requestQuotation.jsp" />
 	</definition>
+	<!-- Quatation -->
 	
 	<!-- Challan -->
 	
 	
-	<!-- Quatation  -->
+	
 	
 	<definition name="createChallan" extends="erp-definition">
 		<put-attribute name="body"
@@ -119,8 +121,8 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/challan/editChallan.jsp" />
 	</definition>
+	<!-- Challan  -->
 	
-	<!-- Quatation -->
 	
 	
 	

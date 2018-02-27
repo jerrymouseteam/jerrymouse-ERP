@@ -216,10 +216,10 @@ public class Test {
 
 	public static List<String> getItems() {
 		List<String> items = new ArrayList<>();
-		items.add("items 1");
-		items.add("items 2");
-		items.add("items 3");
-		items.add("items 4");
+		items.add("Cement");
+		items.add("RMC");
+		items.add("Steel");
+		items.add("Blocks");
 		items.add("items 5");
 
 		return items;
@@ -227,11 +227,43 @@ public class Test {
 
 	public static List<String> getGrades() {
 		List<String> grades = new ArrayList<>();
-		grades.add("grades 1");
-		grades.add("grades 2");
-		grades.add("grades 3");
-		grades.add("grades 4");
-		grades.add("grades 5");
+
+		String item = "Cement";
+
+		if (item.equalsIgnoreCase("Cement")) {
+
+			grades.add("PPC");
+			grades.add("OPC33");
+			grades.add("OPC43");
+			grades.add("OPC53");
+		} else if (item.equalsIgnoreCase("RMC")) {
+
+			grades.add("M20");
+			grades.add("M25");
+			grades.add("M30");
+			grades.add("M35");
+			grades.add("M40");
+			grades.add("M45");
+			grades.add("M50");
+		} else if (item.equalsIgnoreCase("Steel")) {
+
+			grades.add("d6mm");
+			grades.add("d8mm");
+			grades.add("d12mm");
+			grades.add("d16mm");
+			grades.add("d20mm");
+			grades.add("d25mm");
+			grades.add("d32mm");
+		}
+
+		else if (item.equalsIgnoreCase("Blocks")) {
+
+			grades.add("inch4");
+			grades.add("inch6");
+
+		} else {
+			grades.add("NA");
+		}
 
 		return grades;
 	}
@@ -249,17 +281,40 @@ public class Test {
 
 	public static List<String> getUnits() {
 		List<String> units = new ArrayList<>();
-		units.add("units 1");
-		units.add("units 2");
-		units.add("units 3");
-		units.add("units 4");
-		units.add("units 5");
+
+
+		String item = "Cement";
+
+		if (item.equalsIgnoreCase("Cement")) {
+
+			units.add("bags");
+
+		} else if (item.equalsIgnoreCase("RMC")) {
+
+			units.add("cum");
+
+		} else if (item.equalsIgnoreCase("Steel")) {
+
+			units.add("kg");
+
+		}
+
+		else if (item.equalsIgnoreCase("Blocks")) {
+
+			units.add("sqm");
+
+		} else {
+			units.add("bags");
+			units.add("cum");
+			units.add("kg");
+			units.add("sqm");
+			units.add("NA");
+		}
 
 		return units;
 	}
-	
-	public static Project getProject1()
-	{
+
+	public static Project getProject1() {
 		Project p1 = new Project();
 		p1.setProject_id(1);
 		p1.setProjectName("Suchi Heights");
@@ -277,11 +332,11 @@ public class Test {
 		p1.setStructuralName("");
 		p1.setStructuralPhone("");
 		p1.setStructuralEmail("");
-		
+
 		return p1;
 	}
-	public static Project getProject2()
-	{
+
+	public static Project getProject2() {
 		Project p2 = new Project();
 		p2.setProject_id(2);
 		p2.setProjectName("Raheja Heights");
@@ -300,57 +355,50 @@ public class Test {
 		p2.setStructuralPhone("");
 		p2.setStructuralEmail("");
 
-		
 		return p2;
 	}
-	
-	
+
 	public static List<Project> getProjectListDetails() {
 
 		List<Project> projectList = new ArrayList<>();
-
-	
 
 		projectList.add(Test.getProject1());
 		projectList.add(Test.getProject2());
 		return projectList;
 	}
 
-	
-	
 	public static List<RequisitionItem> getRequisitionItems() {
 		List<RequisitionItem> requisitionItem = new ArrayList<>();
 
 		RequisitionItem i1 = new RequisitionItem();
 		i1.setRequisitionItemId(1);
 		List<String> items = new ArrayList<>();
-		items.add("items 1");
+		items.add("Cement");
 		List<String> units = new ArrayList<>();
-		units.add("units 1");
-		List<String> quantities = new ArrayList<>();
-		quantities.add("quantities 1");
+		units.add("bags");
+		/*List<String> quantities = new ArrayList<>();
+		quantities.add("quantities 1");*/
 		List<String> grades = new ArrayList<>();
-		grades.add("grades 1");
+		grades.add("PPC");
 		i1.setItems(items);
-		i1.setQuantities(quantities);
+		i1.setQuantities("2");
 		i1.setGrades(grades);
 		i1.setUnits(units);
 		i1.setUsedFor("Test1");
 		i1.setChecked(true);
-		
 
 		RequisitionItem i2 = new RequisitionItem();
 		i2.setRequisitionItemId(2);
 		List<String> items2 = new ArrayList<>();
-		items2.add("items 2");
+		items2.add("RMC");
 		List<String> units2 = new ArrayList<>();
-		units2.add("units 2");
+		units2.add("cum");
 		List<String> quantities2 = new ArrayList<>();
 		quantities2.add("quantities 2");
 		List<String> grades2 = new ArrayList<>();
-		grades2.add("grades 2");
+		grades2.add("M20");
 		i2.setItems(items2);
-		i2.setQuantities(quantities2);
+		i2.setQuantities("3");
 		i2.setGrades(grades2);
 		i2.setUnits(units2);
 		i2.setUsedFor("Test2");

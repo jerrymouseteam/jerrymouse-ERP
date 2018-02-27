@@ -529,17 +529,5 @@
 
 
 <script type="text/javascript">
-	/* function submitFunction() {
-
-		var x = document.getElementsByName('updateUserProjectDetailsForm');
-		x[0].submit(); // Form submission
-
-	}
-
-	function submitFunction2() {
-
-		var x = document.getElementsByName('updateUserDetailsForm');
-		x[0].submit(); // Form submission
-
-	} */
+	
 </script>

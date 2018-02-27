@@ -68,9 +68,9 @@
 						<p style="color: burlywood;" id="viewEditReqq">View / Edit
 							Requistion</p>
 				</a></li>
-				<li><a href="<%=request.getContextPath()%>/deleteRequistion">
+				<%-- <li><a href="<%=request.getContextPath()%>/deleteRequistion">
 						<p style="color: burlywood;" id="deleteReqq">Delete Requistion</p>
-				</a></li>
+				</a></li> --%>
 			</div>
 			<li><a href="#"> <i class="pe-7s-paperclip"></i>
 					<p id="challanMenu">
@@ -79,15 +79,15 @@
 			</a></li>
 			<div id="dropdownChallan" align="left"
 				style="display: none; color: black">
-				<li><a href="#">
+				<li><a href="<%=request.getContextPath()%>/createChallan">
 						<p style="color: burlywood;" id="">Add Challan</p>
 				</a></li>
-				<li><a href="#">
+				<li><a href="<%=request.getContextPath()%>/getChallans">
 						<p style="color: burlywood;" id="">View / Edit Challan</p>
 				</a></li>
-				<li><a href="#">
+				<%-- <li><a href="<%=request.getContextPath()%>/">
 						<p style="color: burlywood;" id="">Delete Challan</p>
-				</a></li>
+				</a></li> --%>
 			</div>
 
 			<li><a href="#"> <i class="pe-7s-map"></i>

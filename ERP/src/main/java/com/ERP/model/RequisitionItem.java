@@ -14,7 +14,8 @@ public class RequisitionItem implements Serializable {
 	private boolean checked;
 	private List<String> items;
 	private List<String> grades;
-	private List<String> quantities;
+	//private List<String> quantities;
+	private String quantities;
 	private List<String> units;
 	private String usedFor;
 	
@@ -43,10 +44,10 @@ public class RequisitionItem implements Serializable {
 	public void setGrades(List<String> grades) {
 		this.grades = grades;
 	}
-	public List<String> getQuantities() {
+	public String getQuantities() {
 		return quantities;
 	}
-	public void setQuantities(List<String> quantities) {
+	public void setQuantities(String quantities) {
 		this.quantities = quantities;
 	}
 	public List<String> getUnits() {

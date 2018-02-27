@@ -24,8 +24,6 @@ public class Vendor implements Serializable {
 	private String bankAccountNumber;
 	private String branch_ifsc;
 	private String serviceRendered_GoodsSupplied;
-
-	
 	private Address address;
 	private String contact_person_name;
 	private String contact_person_email;
@@ -34,7 +32,6 @@ public class Vendor implements Serializable {
 	private long vendorTypeId;
 	private long bankId;
 	private long branchId;
-
 
 	public Vendor() {
 		super();
@@ -170,7 +167,5 @@ public class Vendor implements Serializable {
 				+ contact_person_mobile + ", contact_person_alternate_phone_no=" + contact_person_alternate_phone_no
 				+ ", vendorTypeId=" + vendorTypeId + ", bankId=" + bankId + ", branchId=" + branchId + "]";
 	}
-
-
 
 }

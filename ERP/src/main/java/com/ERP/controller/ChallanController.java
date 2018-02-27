@@ -47,7 +47,7 @@ public class ChallanController {
 	
 
 	@RequestMapping(value = { "/getChallans" }, method = RequestMethod.GET)
-	public String getChallans(@ModelAttribute("vendorForm") User user, BindingResult result, ModelMap model) {
+	public String getChallans(ModelMap model) {
 
 		System.out.println("\nTesting getChallans API----------");
 
