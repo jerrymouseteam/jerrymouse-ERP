@@ -201,7 +201,7 @@
 														<td><form:select
 																path="requisitionItemParameterses[${loop.index}].items"
 																id="requisitionItemParameterses[${loop.index}].items"
-																class="form-control">
+																class="form-control items">
 																<form:option value="NONE"
 																	label="----- Select Item -----" />
 																<form:options items="${getItemsList}" />
@@ -310,7 +310,7 @@
 				+ "].items");
 		selectItem.setAttribute("name", "requisitionItemParameterses[" + length
 				+ "].items");
-		selectItem.setAttribute("class", "form-control");
+		selectItem.setAttribute("class", "form-control items");
 		cell1.appendChild(selectItem);
 
 		<c:forEach var="itemListName" items="${getItemsList}" varStatus="loop">

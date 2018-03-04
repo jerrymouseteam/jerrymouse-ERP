@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -39,7 +41,7 @@ import com.ERP.model.Project;
 import com.ERP.model.Requisition;
 import com.ERP.model.RequisitionItem;
 import com.ERP.model.User;
-import com.ERP.model.Vendor;
+import com.ERP.model.VendorDTO;
 import com.ERP.service.UserProfileService;
 import com.ERP.util.AuthTokenAccess;
 import com.ERP.util.Utilities;
@@ -392,6 +394,16 @@ public class RequisitionController {
 
 		return "deleteRequistion";
 
+	}
+	
+	
+	@RequestMapping(value = "/getGradesForItems", method = RequestMethod.GET)
+	public @ResponseBody
+	List<String> getGradesForItems(
+			@RequestParam(value = "bankId", required = true) String itemName) {
+		
+		System.out.println("*************** finding getGradesForItems for itemName " + itemName);
+		return Test.getGradesForItems(itemName);
 	}
 
 	/**

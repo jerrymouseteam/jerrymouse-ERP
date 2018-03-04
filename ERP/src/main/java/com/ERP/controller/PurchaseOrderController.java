@@ -29,7 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import com.ERP.constants.ErpConstants;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.User;
-import com.ERP.model.Vendor;
+import com.ERP.model.VendorDTO;
 import com.ERP.util.Utilities;
 
 @Controller
@@ -49,7 +49,7 @@ public class PurchaseOrderController {
 	@RequestMapping(value = { "/createPurchaseOrder" }, method = RequestMethod.GET)
 	public String createPurchaseOrder(ModelMap model) {
 
-		Vendor vendor = new Vendor();
+		VendorDTO vendor = new VendorDTO();
 
 		System.out.println("createPurchaseOrder");
 		model.addAttribute("vendorForm", vendor);

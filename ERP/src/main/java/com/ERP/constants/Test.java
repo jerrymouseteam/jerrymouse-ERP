@@ -10,7 +10,7 @@ import com.ERP.model.BankBranch;
 import com.ERP.model.Project;
 import com.ERP.model.Requisition;
 import com.ERP.model.RequisitionItem;
-import com.ERP.model.Vendor;
+import com.ERP.model.VendorDTO;
 import com.ERP.model.VendorType;
 
 public class Test {
@@ -124,11 +124,11 @@ public class Test {
 
 	}
 
-	public static List<Vendor> getVendorList() {
+	public static List<VendorDTO> getVendorList() {
 
-		List<Vendor> list = new ArrayList<>();
+		List<VendorDTO> list = new ArrayList<>();
 
-		Vendor v1 = new Vendor();
+		VendorDTO v1 = new VendorDTO();
 		v1.setVendor_id(1);
 		v1.setVendor_name("Harshad");
 		v1.setVendor_nickName("Harsh");
@@ -144,7 +144,7 @@ public class Test {
 		v1.setContact_person_name("Balaji");
 		v1.setServiceRendered_GoodsSupplied("serviceRendered_GoodsSupplied");
 
-		Vendor v2 = new Vendor();
+		VendorDTO v2 = new VendorDTO();
 		v2.setVendor_id(2);
 		v2.setVendor_name("John");
 		v2.setVendor_nickName("jo");
@@ -166,9 +166,9 @@ public class Test {
 
 	}
 
-	public static Vendor getVendor1() {
+	public static VendorDTO getVendor1() {
 
-		Vendor v1 = new Vendor();
+		VendorDTO v1 = new VendorDTO();
 		v1.setVendor_id(1);
 		v1.setVendor_name("Harshad");
 		v1.setVendor_nickName("Harsh");
@@ -190,9 +190,9 @@ public class Test {
 		return v1;
 	}
 
-	public static Vendor getVendor2() {
+	public static VendorDTO getVendor2() {
 
-		Vendor v2 = new Vendor();
+		VendorDTO v2 = new VendorDTO();
 		v2.setVendor_id(2);
 		v2.setVendor_name("John");
 		v2.setVendor_nickName("jo");
@@ -229,6 +229,49 @@ public class Test {
 		List<String> grades = new ArrayList<>();
 
 		String item = "Cement";
+
+		if (item.equalsIgnoreCase("Cement")) {
+
+			grades.add("PPC");
+			grades.add("OPC33");
+			grades.add("OPC43");
+			grades.add("OPC53");
+		} else if (item.equalsIgnoreCase("RMC")) {
+
+			grades.add("M20");
+			grades.add("M25");
+			grades.add("M30");
+			grades.add("M35");
+			grades.add("M40");
+			grades.add("M45");
+			grades.add("M50");
+		} else if (item.equalsIgnoreCase("Steel")) {
+
+			grades.add("d6mm");
+			grades.add("d8mm");
+			grades.add("d12mm");
+			grades.add("d16mm");
+			grades.add("d20mm");
+			grades.add("d25mm");
+			grades.add("d32mm");
+		}
+
+		else if (item.equalsIgnoreCase("Blocks")) {
+
+			grades.add("inch4");
+			grades.add("inch6");
+
+		} else {
+			grades.add("NA");
+		}
+
+		return grades;
+	}
+	
+	public static List<String> getGradesForItems(String item) {
+		List<String> grades = new ArrayList<>();
+
+		
 
 		if (item.equalsIgnoreCase("Cement")) {
 

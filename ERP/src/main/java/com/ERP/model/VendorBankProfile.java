@@ -21,7 +21,7 @@ public class VendorBankProfile implements Serializable
 	private long vendor_bank_profile_id;
 	
 	
-	private Vendor vendor;
+	private VendorDTO vendor;
 	
 	
 	
@@ -37,10 +37,10 @@ public class VendorBankProfile implements Serializable
 	}
 	
 	
-	public Vendor getVendor() {
+	public VendorDTO getVendor() {
 		return vendor;
 	}
-	public void setVendor(Vendor vendor) {
+	public void setVendor(VendorDTO vendor) {
 		this.vendor = vendor;
 	}
 	public BankBranch getBank_branch() {

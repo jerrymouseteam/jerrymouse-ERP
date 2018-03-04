@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ERP.model.User;
-import com.ERP.model.Vendor;
+import com.ERP.model.VendorDTO;
 import com.ERP.util.Utilities;
 
 @Controller
@@ -33,7 +33,7 @@ public class QuatationController {
 	@RequestMapping(value = { "/getQuotations" }, method = RequestMethod.GET)
 	public String getQuotations(ModelMap model) {
 
-		Vendor vendor = new Vendor();
+		VendorDTO vendor = new VendorDTO();
 
 		System.out.println("getQuotations");
 		model.addAttribute("quotationForm", vendor);

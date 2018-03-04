@@ -173,8 +173,8 @@ iframe {
 <script
 	src="<%=request.getContextPath()%>/static/js/bootstrap-datepicker.js"
 	type="text/javascript"></script>
-	
-	<script type="text/javascript">
+
+<script type="text/javascript">
 	
 	$(document).ready(function() { 
 		$('#bankId').change(
@@ -194,6 +194,37 @@ iframe {
 					$('#branchId').html(html);
 				});
 			});
+		
+		//====================================
+		
+			 /*   $('select').change(
+			function() {
+				 var id = $(this).attr('id');
+				if((id.indexOf("items") > -1))
+				  {
+					
+					$.getJSON('/ERP/getGradesForItems', {
+						bankId : $(this).val(),
+						ajax : 'true'
+					}, function(data) {
+						var html = '<option value="">------ Select Grade ------</option>';
+						var len = data.length;
+						for ( var i = 0; i < len; i++) {
+							html += '<option value="' + data[i] + '">'
+									+ data[i]+ '</option>';
+						}
+						html += '</option>';
+		 
+						$('#requisitionItemParameterses[1].grades').html(html);
+					});
+					
+				  }
+				else
+					{
+						alert("NA...");
+					}
+				
+			}); */
 		
 		
 		//============

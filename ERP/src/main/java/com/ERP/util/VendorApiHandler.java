@@ -12,21 +12,21 @@ import org.springframework.web.client.RestTemplate;
 import com.ERP.constants.ErpConstants;
 import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Bank;
-import com.ERP.model.Vendor;
+import com.ERP.model.VendorDTO;
 
-public class VendorApiHandler implements RestApiHandler<Vendor> {
+public class VendorApiHandler implements RestApiHandler<VendorDTO> {
 
 	@Override
-	public ResponseEntity<Vendor> save(AuthTokenInfo tokenInfo, Vendor className) {
+	public ResponseEntity<VendorDTO> save(AuthTokenInfo tokenInfo, VendorDTO className) {
 
-		ResponseEntity<Vendor> response = null;
+		ResponseEntity<VendorDTO> response = null;
 		RestTemplate restTemplate = new RestTemplate();
 
 		HttpEntity<Object> request = new HttpEntity<Object>(className, Utilities.getHeaders());
 
 		try {
 			response = restTemplate.postForEntity(ErpConstants.VENDOR_CREATE
-					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), request, Vendor.class);
+					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), request, VendorDTO.class);
 
 		} catch (HttpClientErrorException excep) {
 			excep.printStackTrace();
@@ -66,7 +66,7 @@ public class VendorApiHandler implements RestApiHandler<Vendor> {
 	}
 
 	@Override
-	public ResponseEntity<Vendor> getDetailsById(AuthTokenInfo tokenInfo, Long id) {
+	public ResponseEntity<VendorDTO> getDetailsById(AuthTokenInfo tokenInfo, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
