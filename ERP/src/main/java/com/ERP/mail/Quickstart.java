@@ -257,11 +257,11 @@ public class Quickstart {
 	}
 	
 	public static void sendFileAttachedEmail() throws IOException, MessagingException {
-
+			//karan.sutarwala17@gmail.com
 		Gmail service = getGmailService();
-		File file =new File("C:\\Users\\Harshad\\Desktop\\Dashboard.JPG");
-		MimeMessage mimeMessage= Quickstart.createEmailWithAttachment("harshadgaikwad19@gmail.com", "jerrymouse.erpteam@gmail.com",
-				"Test Google Email Api", "Testing Email",file);
+		File file =new File("C:\\Users\\Harshad\\Desktop\\procurement_database_dump.sql");
+		MimeMessage mimeMessage= Quickstart.createEmailWithAttachment("vaiban@gmail.com", "jerrymouse.erpteam@gmail.com",
+				"Procurement SQL Database Dump", Quickstart.bodyMessage(),file);
 		Message message = Quickstart.sendMessage(service, "me", mimeMessage);
 		System.out.println("mm.toString() :: " + message.toPrettyString());
 
@@ -274,7 +274,7 @@ public class Quickstart {
 		sb.append("Hello Vaibhav,");
 		sb.append("\n");
 		sb.append("\n");
-		sb.append(" This is testing mail from JerryMouse team.");
+		sb.append("PFA.............");
 		sb.append("\n");
 		sb.append("\n");
 		sb.append(" *** This is an automatically generated email, please do not reply ***");

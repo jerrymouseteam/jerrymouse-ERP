@@ -14,7 +14,7 @@
 
 			<!-- edit view challan begins here-->
 
-			<div class="card" style="display: none" id="viewEditChallanDiv">
+			<div class="card" style="display: block" id="viewEditChallanDiv">
 				<div class="header">
 					<h4 class="title">Edit/View Challan</h4>
 					<p class="category">Edit details of Challan</p>

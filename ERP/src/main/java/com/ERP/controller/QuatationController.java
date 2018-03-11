@@ -1,5 +1,8 @@
 package com.ERP.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.ERP.constants.Test;
+import com.ERP.model.Quotation;
+import com.ERP.model.Requisition;
 import com.ERP.model.User;
 import com.ERP.model.VendorDTO;
 import com.ERP.util.Utilities;
@@ -47,7 +53,7 @@ public class QuatationController {
 	
 
 	@RequestMapping(value = { "/requestQuotation" }, method = RequestMethod.GET)
-	public String requestQuotation(@ModelAttribute("vendorForm") User user, BindingResult result, ModelMap model) {
+	public String requestQuotation(@ModelAttribute("quotationForm") Quotation quotation, BindingResult result, ModelMap model) {
 
 		System.out.println("\nTesting requestQuotation API----------");
 
@@ -56,5 +62,30 @@ public class QuatationController {
 		model.addAttribute("loggedinuser", new Utilities().getPrincipal());
 		return "requestQuotation";
 	}
+	
+	@RequestMapping(value = { "/requestQuotation" }, method = RequestMethod.POST)
+	public String createQuotation(@ModelAttribute("quotationForm") Quotation quotation, BindingResult result, ModelMap model) {
+
+		System.out.println("\nTesting quotationForm API---------- quotation : "+quotation);
+
+		model.addAttribute("editUserStage", "editUserList");
+		model.addAttribute("editUserList", true);
+		model.addAttribute("loggedinuser", new Utilities().getPrincipal());
+		return "requestQuotation";
+	}
+
+	@ModelAttribute("getRequisitionsListForQuotation")
+	public List<Requisition> getRequisitionsList() {
+		return Test.getRequisitions();
+	}
+	
+	@ModelAttribute("getVendorNameList")
+	   public List<String> getVendorNameList() {
+		List<String> vList=new ArrayList<>();
+		vList.add("ABC Enterprise");
+		vList.add("XYZ Enterprise");
+		 return vList;
+	   }
+	 
 
 }

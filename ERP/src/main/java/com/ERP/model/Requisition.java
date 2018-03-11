@@ -90,8 +90,23 @@ public class Requisition implements java.io.Serializable {
 	
 	@Transient
 	private List<RequisitionItem> requisitionItemParameterses ;
+	
+	private long itemId;
+	private long gradeId;
+	private long unitId;
+	private long requisitionLineItemId;
+	private boolean checked;
 
 	public Requisition() {
+	}
+
+	
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 	public Requisition(Project project, String dateGen, String delDt,
@@ -203,13 +218,17 @@ public class Requisition implements java.io.Serializable {
 		this.projectId = projectId;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Requisition [reqNo=" + reqNo + ", reqDate=" + reqDate + ", reqType=" + reqType + ", project=" + project
 				+ ", projectId=" + projectId + ", dateGen=" + dateGen + ", delDt=" + delDt + ", expectedDt="
 				+ expectedDt + ", reqSts=" + reqSts + ", authorizeSectEngg=" + authorizeSectEngg + ", requestedBy="
 				+ requestedBy + ", justification=" + justification + ", itemLists=" + itemLists
-				+ ", requisitionItemParameterses=" + requisitionItemParameterses + "]";
+				+ ", requisitionItemParameterses=" + requisitionItemParameterses + ", itemId=" + itemId + ", gradeId="
+				+ gradeId + ", unitId=" + unitId + ", requisitionLineItemId=" + requisitionLineItemId + ", checked="
+				+ checked + "]";
 	}
 
 	@Override
@@ -309,6 +328,42 @@ public class Requisition implements java.io.Serializable {
 		return true;
 	}
 
+	public long getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(long itemId) {
+		this.itemId = itemId;
+	}
+
+	public long getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(long gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public long getUnitId() {
+		return unitId;
+	}
+
+	public void setUnitId(long unitId) {
+		this.unitId = unitId;
+	}
+
+	public long getRequisitionLineItemId() {
+		return requisitionLineItemId;
+	}
+
+	public void setRequisitionLineItemId(long requisitionLineItemId) {
+		this.requisitionLineItemId = requisitionLineItemId;
+	}
+
+	
+	
+
+	
 	
 	
 

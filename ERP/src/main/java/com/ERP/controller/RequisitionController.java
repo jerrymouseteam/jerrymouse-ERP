@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
@@ -26,9 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ERP.constants.ErpConstants;
 import com.ERP.constants.GradeType;
@@ -37,11 +33,13 @@ import com.ERP.constants.MaterialType;
 import com.ERP.constants.Test;
 import com.ERP.constants.UnitType;
 import com.ERP.model.AuthTokenInfo;
+import com.ERP.model.Grade;
+import com.ERP.model.Item;
 import com.ERP.model.Project;
 import com.ERP.model.Requisition;
 import com.ERP.model.RequisitionItem;
+import com.ERP.model.Unit;
 import com.ERP.model.User;
-import com.ERP.model.VendorDTO;
 import com.ERP.service.UserProfileService;
 import com.ERP.util.AuthTokenAccess;
 import com.ERP.util.Utilities;
@@ -507,10 +505,20 @@ public class RequisitionController {
 	   public List<String> getItemsList() {
 		 return Test.getItems();
 	   }
+	 @ModelAttribute("getItemsList2")
+	   public List<Item> getItemsList2() {
+		 return Test.getItemsList();
+	   }
+	 
 	 
 	 @ModelAttribute("getGradesList")
 	   public List<String> getGradesList() {
 		 return Test.getGrades();
+	   }
+	 
+	 @ModelAttribute("getGradesList2")
+	   public List<Grade> getGradesList2() {
+		 return Test.getGradesList();
 	   }
 	 
 	 @ModelAttribute("getQuantitiesList")
@@ -521,6 +529,11 @@ public class RequisitionController {
 	 @ModelAttribute("getUnitsList")
 	   public List<String> getUnitsList() {
 		 return Test.getUnits();
+	   }
+	 
+	 @ModelAttribute("getUnitsList2")
+	   public List<Unit> getUnitsList2() {
+		 return Test.getUnitsList();
 	   }
 	 
 	 @ModelAttribute("getRequisitionItemsList")

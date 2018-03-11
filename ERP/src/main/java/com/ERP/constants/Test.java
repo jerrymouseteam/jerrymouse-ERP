@@ -7,9 +7,12 @@ import java.util.List;
 import com.ERP.model.Address;
 import com.ERP.model.Bank;
 import com.ERP.model.BankBranch;
+import com.ERP.model.Grade;
+import com.ERP.model.Item;
 import com.ERP.model.Project;
 import com.ERP.model.Requisition;
 import com.ERP.model.RequisitionItem;
+import com.ERP.model.Unit;
 import com.ERP.model.VendorDTO;
 import com.ERP.model.VendorType;
 
@@ -225,6 +228,61 @@ public class Test {
 		return items;
 	}
 
+	public static List<Item> getItemsList() {
+		List<Item> items = new ArrayList<>();
+		Item i1 = new Item(1, "Cement");
+		Item i2 = new Item(2, "RMC");
+		Item i3 = new Item(3, "Steel");
+		Item i4 = new Item(4, "Blocks");
+
+		items.add(i1);
+		items.add(i2);
+		items.add(i3);
+		items.add(i4);
+
+		return items;
+	}
+
+	public static List<Grade> getGradesList() {
+		List<Grade> grade = new ArrayList<>();
+
+		grade.add(new Grade(1, "PPC"));
+		grade.add(new Grade(2, "OPC33"));
+		grade.add(new Grade(3, "OPC43"));
+		grade.add(new Grade(4, "OPC53"));
+		grade.add(new Grade(5, "M20"));
+		grade.add(new Grade(6, "M25"));
+		grade.add(new Grade(7, "M30"));
+		grade.add(new Grade(8, "M35"));
+		grade.add(new Grade(9, "M40"));
+		grade.add(new Grade(10, "M45"));
+		grade.add(new Grade(11, "M50"));
+		grade.add(new Grade(12, "d6mm"));
+		grade.add(new Grade(13, "d8mm"));
+		grade.add(new Grade(14, "d12mm"));
+		grade.add(new Grade(15, "d16mm"));
+		grade.add(new Grade(16, "d20mm"));
+		grade.add(new Grade(17, "d25mm"));
+		grade.add(new Grade(18, "d32mm"));
+		grade.add(new Grade(19, "inch4"));
+		grade.add(new Grade(20, "inch6"));
+		grade.add(new Grade(21, "NA"));
+
+		return grade;
+	}
+
+	public static List<Unit> getUnitsList() {
+		List<Unit> unit = new ArrayList<>();
+
+		unit.add(new Unit(1, "bags"));
+		unit.add(new Unit(2, "cum"));
+		unit.add(new Unit(3, "kg"));
+		unit.add(new Unit(4, "sqm"));
+		unit.add(new Unit(5, "NA"));
+
+		return unit;
+	}
+
 	public static List<String> getGrades() {
 		List<String> grades = new ArrayList<>();
 
@@ -267,11 +325,9 @@ public class Test {
 
 		return grades;
 	}
-	
+
 	public static List<String> getGradesForItems(String item) {
 		List<String> grades = new ArrayList<>();
-
-		
 
 		if (item.equalsIgnoreCase("Cement")) {
 
@@ -324,7 +380,6 @@ public class Test {
 
 	public static List<String> getUnits() {
 		List<String> units = new ArrayList<>();
-
 
 		String item = "Cement";
 
@@ -414,37 +469,25 @@ public class Test {
 		List<RequisitionItem> requisitionItem = new ArrayList<>();
 
 		RequisitionItem i1 = new RequisitionItem();
-		i1.setRequisitionItemId(1);
-		List<String> items = new ArrayList<>();
-		items.add("Cement");
-		List<String> units = new ArrayList<>();
-		units.add("bags");
-		/*List<String> quantities = new ArrayList<>();
-		quantities.add("quantities 1");*/
-		List<String> grades = new ArrayList<>();
-		grades.add("PPC");
-		i1.setItems(items);
-		i1.setQuantities("2");
-		i1.setGrades(grades);
-		i1.setUnits(units);
+		i1.setRequisitionLineItemId(1);
+
+		i1.setQuantity("2");
+
 		i1.setUsedFor("Test1");
+		i1.setItemId(1);
+		i1.setUnitId(1);
+		i1.setGradeId(1);
 		i1.setChecked(true);
 
 		RequisitionItem i2 = new RequisitionItem();
-		i2.setRequisitionItemId(2);
-		List<String> items2 = new ArrayList<>();
-		items2.add("RMC");
-		List<String> units2 = new ArrayList<>();
-		units2.add("cum");
-		List<String> quantities2 = new ArrayList<>();
-		quantities2.add("quantities 2");
-		List<String> grades2 = new ArrayList<>();
-		grades2.add("M20");
-		i2.setItems(items2);
-		i2.setQuantities("3");
-		i2.setGrades(grades2);
-		i2.setUnits(units2);
+		i2.setRequisitionLineItemId(2);
+
+		i2.setQuantity("3");
+
 		i2.setUsedFor("Test2");
+		i2.setItemId(2);
+		i2.setUnitId(2);
+		i2.setGradeId(2);
 		i2.setChecked(true);
 
 		requisitionItem.add(i1);

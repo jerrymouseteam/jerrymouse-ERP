@@ -82,8 +82,8 @@
 															href="<%=request.getContextPath()%>/getRequisitionDetails/${requisition.reqNo}"><span
 															class="fa fa-search"></span></a>
 													</p></td>
-													
-													<td><p data-placement="top" data-toggle="tooltip"
+
+												<td><p data-placement="top" data-toggle="tooltip"
 														title="Delete">
 
 														<a class="btn btn-danger btn-xs"
@@ -263,8 +263,9 @@
 												width="100%">
 												<thead>
 													<tr>
-														<th><input type="checkbox" id="selectAll" class="form-control"
-															onclick="selectAllTest('dataTableForUpdateRequisition');"></th>
+														<th><input type="checkbox" id="selectAll"
+															class="form-control"
+															onclick="javascript:selectAllFunction('dataTableForUpdateRequisition');"></th>
 														<th>Item</th>
 														<th>Grade</th>
 														<th>Used For</th>
@@ -274,17 +275,6 @@
 													</tr>
 												</thead>
 
-												<!-- <tfoot>
-													<tr>
-														<th>Serial No</th>
-														<th>Item</th>
-														<th>Grade</th>
-														<th>Used For</th>
-														<th>Quantity</th>
-														<th>Unit</th>
-
-													</tr>
-												</tfoot> -->
 
 												<tbody>
 
@@ -295,60 +285,59 @@
 															<td><form:checkbox
 																	path="requisitionItemParameterses[${loop.index}].checked"
 																	class="form-control"
-																	id="requisitionItemParameterses[${loop.index}].checked" /></td>
+																	id="requisitionItemParameterses[${loop.index}].checked" />
+																	
+																	<form:hidden 
+																path="requisitionItemParameterses[${loop.index}].requisitionLineItemId"  />
+																	</td>
 
 
-															<td><form:select
-																	path="requisitionItemParameterses[${loop.index}].items"
-																	multiple="false"
-																	id="requisitionItemParameterses[${loop.index}].items"
+															<td>
+																 <form:select 
+																	path="requisitionItemParameterses[${loop.index}].itemId"
+																	items="${getItemsList2}" multiple="false"
+																	itemValue="itemId" itemLabel="itemName"
 																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Item -----" />
-																	<form:options items="${getItemsList}" />
-																</form:select></td>
 
-															<td><form:select
-																	path="requisitionItemParameterses[${loop.index}].grades"
-																	multiple="false"
-																	id="requisitionItemParameterses[${loop.index}].grades"
+																</form:select>
+															</td>
+
+															<td>
+																 <form:select
+																
+																	path="requisitionItemParameterses[${loop.index}].gradeId"
+																	items="${getGradesList2}" multiple="false"
+																	itemValue="gradeId" itemLabel="gradeName"
 																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Grade -----" />
-																	<form:options items="${getGradesList}" />
-																</form:select></td>
+
+																</form:select>
+															</td>
 															<td><form:input
+														
 																	path="requisitionItemParameterses[${loop.index}].usedFor"
 																	type="text" class="form-control"
 																	id="requisitionItemParameterses[${loop.index}].usedFor"
 																	placeholder="Used For" /></td>
-															<td><%-- <form:select
-																	path="requisitionItemParameterses[${loop.index}].quantities"
-																	multiple="false"
-																	id="requisitionItemParameterses[${loop.index}].quantities"
-																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Quantity -----" />
-																	<form:options items="${getQuantitiesList}" />
-																</form:select> --%>
-																
-																
+															<td>
 																<form:input
-																	path="requisitionItemParameterses[${loop.index}].quantities"
-																	type="text" class="form-control"
-																	id="requisitionItemParameterses[${loop.index}].quantities"
-																	placeholder="Quantity" />
 																
-																</td>
-															<td><form:select
-																	path="requisitionItemParameterses[${loop.index}].units"
-																	multiple="false"
-																	id="requisitionItemParameterses[${loop.index}].units"
+															
+																	path="requisitionItemParameterses[${loop.index}].quantity"
+																	type="text" class="form-control"
+																	id="requisitionItemParameterses[${loop.index}].quantity"
+																	placeholder="Quantity" />
+
+															</td>
+															<td>
+																<form:select
+															
+																	path="requisitionItemParameterses[${loop.index}].unitId"
+																	items="${getUnitsList2}" multiple="false"
+																	itemValue="unitId" itemLabel="unitName"
 																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Unit -----" />
-																	<form:options items="${getUnitsList}" />
-																</form:select></td>
+
+																</form:select>
+															</td>
 														</tr>
 													</c:forEach>
 												</tbody>
@@ -534,18 +523,6 @@
 													</tr>
 												</thead>
 
-												<!-- <tfoot>
-													<tr>
-														<th>Serial No</th>
-														<th>Item</th>
-														<th>Grade</th>
-														<th>Used For</th>
-														<th>Quantity</th>
-														<th>Unit</th>
-
-													</tr>
-												</tfoot> -->
-
 												<tbody>
 
 													<c:forEach
@@ -554,60 +531,59 @@
 														<tr>
 
 															<td><form:input
-																	path="requisitionItemParameterses[${loop.index}].requisitionItemId"
+																	path="requisitionItemParameterses[${loop.index}].requisitionLineItemId"
 																	type="text" class="form-control" readonly="true"
-																	id="requisitionItemParameterses[${loop.index}].requisitionItemId"
+																	id="requisitionItemParameterses[${loop.index}].requisitionLineItemId"
 																	placeholder="Used For" />
-															<td><form:select
-																	path="requisitionItemParameterses[${loop.index}].items"
-																	multiple="false" disabled="true"
-																	id="requisitionItemParameterses[${loop.index}].items"
+																	
+																	
+															<td>
+																
+																<form:select
+																
+																	path="requisitionItemParameterses[${loop.index}].itemId"
+																	items="${getItemsList2}" multiple="false"
+																	disabled="true" itemValue="itemId" itemLabel="itemName"
 																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Item -----" />
-																	<form:options items="${getItemsList}" />
-																</form:select></td>
 
-															<td><form:select
-																	path="requisitionItemParameterses[${loop.index}].grades"
-																	multiple="false" disabled="true"
-																	id="requisitionItemParameterses[${loop.index}].grades"
-																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Grade -----" />
-																	<form:options items="${getGradesList}" />
-																</form:select></td>
+																</form:select>
+															</td>
+
+															<td>
+																<form:select
+																
+																	path="requisitionItemParameterses[${loop.index}].gradeId"
+																	items="${getGradesList2}" multiple="false"
+																	disabled="true" itemValue="gradeId"
+																	itemLabel="gradeName" class="form-control">
+
+																</form:select>
+															</td>
 															<td><form:input
+															
 																	path="requisitionItemParameterses[${loop.index}].usedFor"
 																	type="text" class="form-control" readonly="true"
 																	id="requisitionItemParameterses[${loop.index}].usedFor"
 																	placeholder="Used For" /></td>
-															<td><%-- <form:select
-																	path="requisitionItemParameterses[${loop.index}].quantities"
-																	multiple="false" disabled="true"
-																	id="requisitionItemParameterses[${loop.index}].quantities"
-																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Quantity -----" />
-																	<form:options items="${getQuantitiesList}" />
-																</form:select> --%>
+															<td>
+																 <form:input
 																
-																
-																<form:input
-																	path="requisitionItemParameterses[${loop.index}].quantities"
+																	path="requisitionItemParameterses[${loop.index}].quantity"
 																	type="text" class="form-control" readonly="true"
-																	id="requisitionItemParameterses[${loop.index}].quantities"
+																	id="requisitionItemParameterses[${loop.index}].quantity"
 																	placeholder="Quantity" />
-																</td>
-															<td><form:select
-																	path="requisitionItemParameterses[${loop.index}].units"
-																	multiple="false" disabled="true"
-																	id="requisitionItemParameterses[${loop.index}].units"
+															</td>
+															<td>
+																
+																<form:select
+																
+																	path="requisitionItemParameterses[${loop.index}].unitId"
+																	items="${getUnitsList2}" multiple="false"
+																	disabled="true" itemValue="unitId" itemLabel="unitName"
 																	class="form-control">
-																	<form:option value="NONE"
-																		label="----- Select Unit -----" />
-																	<form:options items="${getUnitsList}" />
-																</form:select></td>
+
+																</form:select>
+															</td>
 														</tr>
 													</c:forEach>
 
@@ -670,41 +646,59 @@
 		element0.name = "requisitionItemParameterses[" + length + "].checked";
 		element0.setAttribute("class", "form-control");
 		cell0.appendChild(element0);
+		
+		 var requisitionItemId1 = document.createElement("input");
+		 requisitionItemId1.type = "hidden";
+		 requisitionItemId1.setAttribute("id", "requisitionItemParameterses["
+				+ length + "].requisitionLineItemId");
+		 requisitionItemId1.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].requisitionLineItemId");
+		 requisitionItemId1.setAttribute("value", "0");
+		 requisitionItemId1.setAttribute("class", "form-control");
+		cell0.appendChild(requisitionItemId1); 
+		
+		
 		//============================================
 		var cell1 = row.insertCell(1);
 
 		var selectItem = document.createElement("select");
 		selectItem.setAttribute("id", "requisitionItemParameterses[" + length
-				+ "].items");
-		selectItem.setAttribute("name", "requisitionItemParameterses[" + length
-				+ "].items");
-		selectItem.setAttribute("class", "form-control");
+				+ "].itemId");
+		selectItem.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].itemId");
+		selectItem.setAttribute("class", "form-control items");
 		cell1.appendChild(selectItem);
 
-		<c:forEach var="itemListName" items="${getItemsList}" varStatus="loop">
+
+
+		<c:forEach var="itemListName2" items="${getItemsList2}" varStatus="loop">
 
 		var option = document.createElement("option");
-		option.setAttribute("value", "${itemListName}");
-		option.text = "${itemListName}";
+		option.setAttribute("value", "${itemListName2.itemId}");
+		option.text = "${itemListName2.itemName}";
 		selectItem.appendChild(option);
 		</c:forEach>
 
 		//============================================
 		var cell2 = row.insertCell(2);
 
+		
+
 		var selectGrade = document.createElement("select");
 		selectGrade.setAttribute("id", "requisitionItemParameterses[" + length
-				+ "].grades");
+				+ "].gradeId");
 		selectGrade.setAttribute("name", "requisitionItemParameterses["
-				+ length + "].grades");
-		selectGrade.setAttribute("class", "form-control");
+				+ length + "].gradeId");
+		selectGrade.setAttribute("class", "form-control items");
 		cell2.appendChild(selectGrade);
 
-		<c:forEach var="gradeListName" items="${getGradesList}" varStatus="loop">
+		
+
+		<c:forEach var="itemListName2" items="${getGradesList2}" varStatus="loop">
 
 		var option = document.createElement("option");
-		option.setAttribute("value", "${gradeListName}");
-		option.text = "${gradeListName}";
+		option.setAttribute("value", "${itemListName2.gradeId}");
+		option.text = "${itemListName2.gradeName}";
 		selectGrade.appendChild(option);
 		</c:forEach>
 
@@ -722,52 +716,40 @@
 
 		//=================================================
 
-		/* var cell4 = row.insertCell(4);
-
-		var selectQunatity = document.createElement("select");
-		selectQunatity.setAttribute("id", "requisitionItemParameterses["
-				+ length + "].quantities");
-		selectQunatity.setAttribute("name", "requisitionItemParameterses["
-				+ length + "].quantities");
-		selectQunatity.setAttribute("class", "form-control");
-		cell4.appendChild(selectQunatity);
-
-		<c:forEach var="quantityListName" items="${getQuantitiesList}" varStatus="loop">
-
-		var option = document.createElement("option");
-		option.setAttribute("value", "${quantityListName}");
-		option.text = "${quantityListName}";
-		selectQunatity.appendChild(option);
-		</c:forEach> */
+		
 
 		var cell4 = row.insertCell(4);
 		var quantityTextBox = document.createElement("input");
 		quantityTextBox.type = "text";
 		quantityTextBox.setAttribute("id", "requisitionItemParameterses["
-				+ length + "].quantities");
+				+ length + "].quantity");
 		quantityTextBox.setAttribute("name", "requisitionItemParameterses["
-				+ length + "].quantities");
+				+ length + "].quantity");
 		quantityTextBox.setAttribute("class", "form-control");
-		
+
 		cell4.appendChild(quantityTextBox);
-		
+
 		//=============================================		
 
 		var cell5 = row.insertCell(5);
 
+		
+
 		var selectUnit = document.createElement("select");
 		selectUnit.setAttribute("id", "requisitionItemParameterses[" + length
-				+ "].units");
-		selectUnit.setAttribute("name", "requisitionItemParameterses[" + length
-				+ "].units");
+				+ "].unitId");
+		selectUnit.setAttribute("name", "requisitionItemParameterses["
+				+ length + "].unitId");
 		selectUnit.setAttribute("class", "form-control");
 		cell5.appendChild(selectUnit);
 
-		<c:forEach var="unitListName" items="${getUnitsList}" varStatus="loop">
+		
+
+		<c:forEach var="itemListName2" items="${getUnitsList2}" varStatus="loop">
 
 		var option = document.createElement("option");
-		option.setAttribute("value", "${unitListName}");
-		option.text = "${unitListName}";
+		option.setAttribute("value", "${itemListName2.unitId}");
+		option.text = "${itemListName2.unitName}";
 		selectUnit.appendChild(option);
 		</c:forEach>
 
@@ -794,7 +776,7 @@
 		}
 	}
 
-	function selectAllTest(tableID) {
+	function selectAllFunction(tableID) {
 
 		var table = document.getElementById(tableID);
 
@@ -803,13 +785,19 @@
 		var length = (table.rows.length) - 1;
 
 		var val = document.getElementById("selectAll").checked;
-
-		for (var i = 0; i < length; i++) {
+		
+		for (var i = 1; i <= length; i++) {
 			var v = "requisitionItemParameterses[" + i + "].checked"
-			if (val) {
-				document.getElementById(v).checked = true;
-			} else {
-				document.getElementById(v).checked = false;
+		
+			var myEle = document.getElementById(v);
+			
+			if (myEle) {
+				if (val) {
+
+					document.getElementById(v).checked = true;
+				} else {
+					document.getElementById(v).checked = false;
+				}
 			}
 
 		}
