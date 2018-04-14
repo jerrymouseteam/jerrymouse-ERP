@@ -8,8 +8,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.ERPoAuth.model.Bank;
-import com.ERPoAuth.model.BankBranch;
 import com.ERPoAuth.model.VendorType;
 
 @Repository("vendorTypeDao")
@@ -30,7 +28,7 @@ public class VendorTypeDaoImpl extends AbstractDao<Long, VendorType> implements 
 	public VendorType findByVendorTypeName(String vendor_type_name) {
 		logger.info("findByVendorTypeName : {}" + vendor_type_name);
 		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("vendor_type_name", vendor_type_name));
+		crit.add(Restrictions.eq("vendorType_name", vendor_type_name));
 		VendorType vendorType = (VendorType) crit.uniqueResult();
 		if (vendorType != null) {
 			return vendorType;
@@ -51,7 +49,7 @@ public class VendorTypeDaoImpl extends AbstractDao<Long, VendorType> implements 
 
 	@Override
 	public List<VendorType> findAllVendorTypes() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("vendor_type_name"));
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("vendorType_name"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
 

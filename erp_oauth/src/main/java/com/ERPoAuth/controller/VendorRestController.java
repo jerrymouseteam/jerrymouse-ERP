@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ERPoAuth.model.User;
 import com.ERPoAuth.model.Vendor;
-import com.ERPoAuth.model.VendorDTO;
 import com.ERPoAuth.service.VendorService;
 
 @RestController
@@ -26,30 +24,32 @@ public class VendorRestController {
 
 	@RequestMapping(value = "/vendor/create/", method = RequestMethod.POST)
 	public ResponseEntity<Vendor> createVendor(@RequestBody Vendor vendor, UriComponentsBuilder ucBuilder) {
+		
+		try {
+			vendorService.saveVendor(vendor);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Vendor>(vendor, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/vendor/create2/", method = RequestMethod.POST)
+	public ResponseEntity<Vendor> createVendor2(@RequestBody Vendor vendor, UriComponentsBuilder ucBuilder) {
+		
+		
 
 		try {
 			vendorService.saveVendor(vendor);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return new ResponseEntity<Vendor>(vendor, HttpStatus.OK);
 	}
-	@RequestMapping(value = "/vendor/create2/", method = RequestMethod.POST)
-	public ResponseEntity<VendorDTO> createVendor2(@RequestBody VendorDTO vendor, UriComponentsBuilder ucBuilder) {
-		
-		System.out.println("VendorRestController -- createVendor2 -- VendorDTO : "+vendor);
 
-		/*try {
-			vendorService.saveVendor(vendor);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		return new ResponseEntity<VendorDTO>(vendor, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/vendor/{vendorId}", method = RequestMethod.PUT)
-	public ResponseEntity<Vendor> updateVendor(@PathVariable("vendorId") Long vendorId, @RequestBody Vendor vendor) {
-		System.out.println("Updating User " + vendorId);
+	@RequestMapping(value = "/vendor/update/", method = RequestMethod.PUT)
+	public ResponseEntity<Vendor> updateVendor( @RequestBody Vendor vendor) {
+		System.out.println("Updating vendor " + vendor);
 
 		Vendor mergedVendor = vendorService.updateVendor(vendor);
 		return new ResponseEntity<Vendor>(mergedVendor, HttpStatus.OK);

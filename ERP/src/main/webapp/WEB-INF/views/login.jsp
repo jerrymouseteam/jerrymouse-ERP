@@ -116,7 +116,7 @@
 							<div class="form-group">
 
 
-								<button type="submit" class="btn btn-primary btn-block">Login</button>
+								<button type="submit" class="btn btn-primary btn-block" >Login</button>
 
 								<p class="help-block">
 									<a class="pull-right text-muted" href="#" id="forgotPassword"><small>Forgot
@@ -154,5 +154,6 @@
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>

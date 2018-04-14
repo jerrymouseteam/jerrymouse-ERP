@@ -20,6 +20,13 @@
 	</definition>
 	
 	
+	
+	
+	<definition name="setQuotationVendorRate" extends="withoutLayout-definition">
+
+		<put-attribute name="body" value="/WEB-INF/views/setQuotationVendorRate.jsp" />
+	</definition>
+	
 
 
 	<!-- Base Definition -->

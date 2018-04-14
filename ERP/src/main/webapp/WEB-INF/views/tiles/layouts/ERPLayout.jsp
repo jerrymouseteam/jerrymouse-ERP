@@ -177,7 +177,7 @@ iframe {
 <script type="text/javascript">
 	
 	$(document).ready(function() { 
-		$('#bankId').change(
+		/* $('#bankId').change(
 			function() {
 				$.getJSON('/ERP/getBankBranch', {
 					bankId : $(this).val(),
@@ -193,7 +193,7 @@ iframe {
 	 
 					$('#branchId').html(html);
 				});
-			});
+			}); */
 		
 		//====================================
 		

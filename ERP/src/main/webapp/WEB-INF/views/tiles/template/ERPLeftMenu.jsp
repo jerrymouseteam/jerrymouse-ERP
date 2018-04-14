@@ -142,7 +142,7 @@
 			<!-- Vendor Menu End  -->
 
 
-			<li><a href="#"> <i class="pe-7s-graph2"></i>
+			<li><a href="<%=request.getContextPath()%>/setQuotationVendorRate"> <i class="pe-7s-graph2"></i>
 					<p>Reports</p>
 			</a></li>
 			<li><a href="#"> <i class="pe-7s-date"></i>

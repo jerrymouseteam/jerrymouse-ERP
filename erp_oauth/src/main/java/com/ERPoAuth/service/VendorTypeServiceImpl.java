@@ -1,17 +1,17 @@
 package com.ERPoAuth.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ERPoAuth.dao.BankDao;
-import com.ERPoAuth.dao.ProjectDao;
 import com.ERPoAuth.dao.VendorTypeDao;
-import com.ERPoAuth.model.Bank;
-import com.ERPoAuth.model.BankBranch;
 import com.ERPoAuth.model.VendorType;
+import com.ERPoAuth.model.VendorTypeForm;
+
+
 
 @Service("vendorTypeService")
 @Transactional
@@ -48,7 +48,18 @@ public class VendorTypeServiceImpl implements VendorTypeService {
 
 	@Override
 	public List<VendorType> findAllVendorTypes() {
-		// TODO Auto-generated method stub
+		
+		/*System.out.println("================= VendorTypeServiceImpl - findAllVendorTypes ====================");
+		List<VendorType> VendorTypeList=dao.findAllVendorTypes();
+		List<VendorTypeForm> vendorTypeFormList=new ArrayList<>();
+		for(VendorType v:VendorTypeList)
+		{
+			System.out.println("================= VendorTypeServiceImpl - findAllVendorTypes ==================== VendorType : "+v);
+			VendorTypeForm vendorTypeForm=new VendorTypeForm();
+			vendorTypeForm.setVendorTypeId(v.getId());
+			vendorTypeForm.setVendorTypeName(v.getName());
+			vendorTypeFormList.add(vendorTypeForm);
+		}*/
 		return dao.findAllVendorTypes();
 	}
 

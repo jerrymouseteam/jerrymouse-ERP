@@ -13,17 +13,17 @@ public class VendorQuotation implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private boolean vendorCheck;
-	private List<com.ERP.model.VendorDTO> vendors ;
+	private List<com.ERP.model.Vendor> vendors ;
 	public boolean isVendorCheck() {
 		return vendorCheck;
 	}
 	public void setVendorCheck(boolean vendorCheck) {
 		this.vendorCheck = vendorCheck;
 	}
-	public List<com.ERP.model.VendorDTO> getVendors() {
+	public List<com.ERP.model.Vendor> getVendors() {
 		return vendors;
 	}
-	public void setVendors(List<com.ERP.model.VendorDTO> vendors) {
+	public void setVendors(List<com.ERP.model.Vendor> vendors) {
 		this.vendors = vendors;
 	}
 	public VendorQuotation() {

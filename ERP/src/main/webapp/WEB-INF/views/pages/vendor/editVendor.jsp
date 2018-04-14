@@ -108,6 +108,7 @@
 			<!-- 	========== Vendor List End =============== -->
 		<!-- 	========== Update =============== -->
 			<c:if test="${editVendorStage == 'editVendorDetails'}">
+			
 				<div class="card" id="editVendorDetails">
 
 					<div class="header">
@@ -119,7 +120,7 @@
 					<spring:url value="/updateVendorDetails"
 						var="updateVendorDetailsURL" />
 
-					<form:form method="post" modelAttribute="vendorForm"
+					 <form:form method="post" modelAttribute="vendorForm"
 						name="updateVendorDetailsForm" action="${updateVendorDetailsURL}">
 
 
@@ -134,7 +135,7 @@
 											<label>Vendor Name</label>
 											<form:input path="vendor_name" type="text"
 												class="form-control" id="vendor_name"
-												placeholder="Vendor Name" value=""
+												placeholder="Vendor Name" 
 												cssErrorClass="form-control errorTrial" />
 
 											<form:hidden path="vendor_id" id="vendor_id" />
@@ -153,42 +154,44 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Bank Account Number</label>
-											<form:input path="bankAccountNumber" type="text"
-												class="form-control" id="bankAccountNumber"
+											<form:input path="bank_account_number" type="text"
+												class="form-control" id="bank_account_number"
 												placeholder="A/c Number"
 												cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
 
-									<div class="col-md-6">
+								 	<div class="col-md-6">
 										<div class="form-group">
 											<label>Vendor's Address</label>
+											<form:hidden path="address.address_id"/>
 											<form:input path="address.addres_line1" type="text"
-												class="form-control" id="addres_line1"
-												placeholder="Vendor's Address"
-												cssErrorClass="form-control errorTrial" />
+													class="form-control" id="addres_line1"
+													placeholder="Vendor's Address"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Select Bank</label>
-											<form:select path="bankId" items="${getBanks}"
-												multiple="false" itemValue="bank_id" itemLabel="bank_name"
-												class="form-control">
-
-											</form:select>
+											
+											<form:input path="bank_name" type="text"
+													class="form-control" id="bank_name"
+													placeholder="Bank Name"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>GST No.</label>
-											<form:input path="vendor_gst_number" type="text"
-												class="form-control" id="vendor_gst_number"
-												placeholder="GST No."
-												cssErrorClass="form-control errorTrial" />
+											
+													<form:input path="vendor_gst_number" type="text"
+													class="form-control" id="vendor_gst_number"
+													placeholder="GST No."
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
@@ -196,10 +199,12 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>IFSC Code :</label>
-											<form:input path="branch_ifsc" type="text"
-												class="form-control" id="branch_ifsc"
-												placeholder="IFSC Code"
-												cssErrorClass="form-control errorTrial" />
+											
+												
+												<form:input path="bank_branch_ifsc" type="text"
+													class="form-control" id="bank_branch_ifsc"
+													placeholder="IFSC Code"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
@@ -208,18 +213,21 @@
 										<div class="form-group">
 											<label>Type of Vendor</label>
 											<form:select path="vendorTypeId" items="${getVendorTypes}"
-												multiple="false" itemValue="vendor_type_id"
-												itemLabel="vendor_type_name" class="form-control" />
+													multiple="false" itemValue="vendorType_id"
+													itemLabel="vendorType_name" class="form-control" />
 										</div>
+										
+										
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Select Branch</label>
-											<form:select path="branchId" multiple="false"
-												items="${getBankBranches}" itemValue="bank_branch_id"
-												itemLabel="branch_name" class="form-control">
-											</form:select>
+											
+											<form:input path="bank_branch_name" type="text"
+													class="form-control" id="bank_branch_name"
+													placeholder="Branch Name"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
@@ -269,7 +277,7 @@
 												placeholder="Alternate Phone no."
 												cssErrorClass="Alternate Phone no." />
 										</div>
-									</div>
+									</div> 
 
 
 								</div>
@@ -316,7 +324,7 @@
 
 
 
-					<form:form method="post" modelAttribute="vendorForm"
+					 <form:form method="post" modelAttribute="vendorForm"
 						name="vendorDetailsForm">
 
 
@@ -350,8 +358,8 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Bank Account Number</label>
-											<form:input path="bankAccountNumber" type="text" readonly="true"
-												class="form-control" id="bankAccountNumber"
+											<form:input path="bank_account_number" type="text" readonly="true"
+												class="form-control" id="bank_account_number"
 												placeholder="A/c Number"
 												cssErrorClass="form-control errorTrial" />
 										</div>
@@ -361,31 +369,33 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Vendor's Address</label>
-											<form:input path="address.addres_line1" type="text" readonly="true"
-												class="form-control" id="addres_line1"
-												placeholder="Vendor's Address"
-												cssErrorClass="form-control errorTrial" />
+											<form:hidden path="address.address_id"/>
+												<form:input path="address.addres_line1" type="text"
+													class="form-control" id="addres_line1"
+													placeholder="Vendor's Address"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Select Bank</label>
-											<form:select path="bankId" items="${getBanks}" disabled="true"
-												multiple="false" itemValue="bank_id" itemLabel="bank_name"
-												class="form-control">
-
-											</form:select>
+											
+											<form:input path="bank_name" type="text"
+													class="form-control" id="bank_name"
+													placeholder="Bank Name"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>GST No.</label>
-											<form:input path="vendor_gst_number" type="text" readonly="true"
-												class="form-control" id="vendor_gst_number"
-												placeholder="GST No."
-												cssErrorClass="form-control errorTrial" />
+											
+												<form:input path="vendor_gst_number" type="text"
+													class="form-control" id="vendor_gst_number"
+													placeholder="GST No."
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
@@ -393,10 +403,12 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>IFSC Code :</label>
-											<form:input path="branch_ifsc" type="text" readonly="true"
-												class="form-control" id="branch_ifsc"
-												placeholder="IFSC Code"
-												cssErrorClass="form-control errorTrial" />
+											
+												
+												<form:input path="bank_branch_ifsc" type="text"
+													class="form-control" id="bank_branch_ifsc"
+													placeholder="IFSC Code"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
@@ -404,19 +416,24 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Type of Vendor</label>
-											<form:select path="vendorTypeId" items="${getVendorTypes}" disabled="true"
-												multiple="false" itemValue="vendor_type_id"
-												itemLabel="vendor_type_name" class="form-control" />
+											
+												
+													
+													<form:select path="vendorTypeId" items="${getVendorTypes}"
+													multiple="false" itemValue="vendorType_id"
+													itemLabel="vendorType_name" class="form-control" />
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Select Branch</label>
-											<form:select path="branchId" multiple="false" disabled="true"
-												items="${getBankBranches}" itemValue="bank_branch_id"
-												itemLabel="branch_name" class="form-control">
-											</form:select>
+											
+											
+												<form:input path="bank_branch_name" type="text"
+													class="form-control" id="bank_branch_name"
+													placeholder="Branch Name"
+													cssErrorClass="form-control errorTrial" />
 										</div>
 									</div>
 
@@ -424,10 +441,13 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label>Service Rendered/Goods Supplied</label>
-											<form:input path="serviceRendered_GoodsSupplied" type="text" readonly="true"
-												class="form-control" id="serviceRendered_GoodsSupplied"
-												placeholder="Service Rendered/Goods Supplied"
-												cssErrorClass="Service Rendered/Goods Supplied" />
+										
+												
+												
+												<form:input path="serviceRendered_GoodsSupplied" type="text"
+													class="form-control" id="serviceRendered_GoodsSupplied"
+													placeholder="Service Rendered/Goods Supplied"
+													cssErrorClass="Service Rendered/Goods Supplied" />
 										</div>
 									</div>
 
@@ -488,7 +508,7 @@
 
 						</div>
 
-					</form:form>
+					</form:form> 
 
 				</div>
 			</c:if>

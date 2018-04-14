@@ -2,14 +2,6 @@ package com.ERP.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 
 public class VendorBankProfile implements Serializable 
 {
@@ -21,7 +13,7 @@ public class VendorBankProfile implements Serializable
 	private long vendor_bank_profile_id;
 	
 	
-	private VendorDTO vendor;
+	private Vendor vendor;
 	
 	
 	
@@ -37,10 +29,10 @@ public class VendorBankProfile implements Serializable
 	}
 	
 	
-	public VendorDTO getVendor() {
+	public Vendor getVendor() {
 		return vendor;
 	}
-	public void setVendor(VendorDTO vendor) {
+	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
 	}
 	public BankBranch getBank_branch() {

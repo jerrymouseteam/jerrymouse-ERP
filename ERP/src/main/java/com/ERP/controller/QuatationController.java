@@ -19,7 +19,7 @@ import com.ERP.constants.Test;
 import com.ERP.model.Quotation;
 import com.ERP.model.Requisition;
 import com.ERP.model.User;
-import com.ERP.model.VendorDTO;
+import com.ERP.model.Vendor;
 import com.ERP.util.Utilities;
 
 @Controller
@@ -39,7 +39,7 @@ public class QuatationController {
 	@RequestMapping(value = { "/getQuotations" }, method = RequestMethod.GET)
 	public String getQuotations(ModelMap model) {
 
-		VendorDTO vendor = new VendorDTO();
+		Vendor vendor = new Vendor();
 
 		System.out.println("getQuotations");
 		model.addAttribute("quotationForm", vendor);
@@ -72,6 +72,21 @@ public class QuatationController {
 		model.addAttribute("editUserList", true);
 		model.addAttribute("loggedinuser", new Utilities().getPrincipal());
 		return "requestQuotation";
+	}
+	
+	
+	@RequestMapping(value = { "/setQuotationVendorRate" }, method = RequestMethod.GET)
+	public String setQuotationVendorRate(ModelMap model) {
+
+		Vendor vendor = new Vendor();
+
+		System.out.println("getQuotations");
+		model.addAttribute("quotationForm", vendor);
+		model.addAttribute("edit", false);
+		model.addAttribute("loggedinuser", new Utilities().getPrincipal());
+		model.addAttribute("success", "");
+
+		return "setQuotationVendorRate";
 	}
 
 	@ModelAttribute("getRequisitionsListForQuotation")

@@ -45,13 +45,26 @@ import org.springframework.web.servlet.view.JstlView;
 
 import com.ERP.constants.ErpConstants;
 import com.ERP.constants.UserStatus;
+import com.ERP.model.Address;
 import com.ERP.model.AuthTokenInfo;
+import com.ERP.model.Bank;
+import com.ERP.model.BankBranch;
 import com.ERP.model.Project;
 import com.ERP.model.User;
 import com.ERP.model.UserProfile;
+import com.ERP.model.Vendor;
+import com.ERP.model.VendorTypeForm;
+import com.ERP.model.VendorBankProfile;
+
 import com.ERP.service.UserProfileService;
 import com.ERP.service.UserService;
 import com.ERP.service.UserServiceImpl;
+import com.ERP.util.AddressApiHandler;
+import com.ERP.util.BankApiHandler;
+import com.ERP.util.BankBranchApiHandler;
+import com.ERP.util.VendorApiHandler;
+import com.ERP.util.VendorBankProfileApiHandler;
+import com.ERP.util.VendorTypeApiHandler;
 
 @Controller
 @RequestMapping("/")
@@ -88,8 +101,7 @@ public class UserController {
 	 */
 	private static HttpHeaders getHeadersWithClientCredentials() {
 		String plainClientCredentials = "my-trusted-client:secret";
-		String base64ClientCredentials = new String(
-				Base64.encodeBase64(plainClientCredentials.getBytes()));
+		String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
 
 		HttpHeaders headers = getHeaders();
 		headers.add("Authorization", "Basic " + base64ClientCredentials);
@@ -108,12 +120,11 @@ public class UserController {
 			HttpHeaders h = getHeadersWithClientCredentials();
 			HttpEntity<String> request = new HttpEntity<String>(h);
 			ResponseEntity<Object> response = restTemplate.exchange(
-					ErpConstants.AUTH_SERVER_URI
-							+ ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST,
-					request, Object.class);
-			LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response
-					.getBody();
+					ErpConstants.AUTH_SERVER_URI + ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST, request,
+					Object.class);
+			LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
 
+			System.out.println("************************* map "+map);
 			if (map != null) {
 				tokenInfo = new AuthTokenInfo();
 				tokenInfo.setAccess_token((String) map.get("access_token"));
@@ -121,7 +132,7 @@ public class UserController {
 				tokenInfo.setRefresh_token((String) map.get("refresh_token"));
 				tokenInfo.setExpires_in((Integer) map.get("expires_in"));
 				tokenInfo.setScope((String) map.get("scope"));
-				System.out.println(tokenInfo);
+				System.out.println("################# "+tokenInfo);
 				// System.out.println("access_token
 				// ="+map.get("access_token")+",
 				// token_type="+map.get("token_type")+",
@@ -129,21 +140,20 @@ public class UserController {
 				// +", expires_in="+map.get("expires_in")+",
 				// scope="+map.get("scope"));;
 			} else {
-				System.out.println("No user exist----------");
+				System.out.println("############# No user exist----------");
 
 			}
 			return tokenInfo;
 		} catch (final HttpClientErrorException e) {
 			System.out.println(e.getStatusCode());
 			System.out.println(e.getResponseBodyAsString());
+			e.printStackTrace();
 		}
 		return tokenInfo;
 	}
 
 	@RequestMapping(value = { "/", "/project" }, method = RequestMethod.GET)
-	public String UserDashboard(
-			HttpServletRequest request,
-			ModelMap model,
+	public String UserDashboard(HttpServletRequest request, ModelMap model,
 			@RequestParam(value = "remember-me", required = false) boolean asSelectedCheckbox) {
 		System.out.println("asSelectedCheckbox" + asSelectedCheckbox);
 		Cookie[] cookies = request.getCookies();
@@ -192,13 +202,9 @@ public class UserController {
 
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 		try {
-			ResponseEntity<List> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI + "/user/"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, List.class);
-			List<LinkedHashMap<String, Object>> usersMap = (List<LinkedHashMap<String, Object>>) response
-					.getBody();
+			ResponseEntity<List> response = restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/"
+					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.GET, request, List.class);
+			List<LinkedHashMap<String, Object>> usersMap = (List<LinkedHashMap<String, Object>>) response.getBody();
 			if (usersMap != null) {
 
 				model.addAttribute("users", usersMap);
@@ -228,13 +234,133 @@ public class UserController {
 		model.addAttribute("loggedinuser", getPrincipal());
 		model.addAttribute("success", "");
 
+		// ============================================
+		
+
+		//BankApiHandler bankApi = new BankApiHandler();
+		/*
+		 * Bank bank=new Bank("IDBI"); ResponseEntity<Bank>
+		 * respBank=bankApi.saveBank(sendTokenRequest(), bank);
+		 * System.out.println("@@@@@@@@@@@ respBank : "+respBank);
+		 * List<LinkedHashMap<String, Object>>
+		 * respAllBank=bankApi.findAllBanks(sendTokenRequest());
+		 * System.out.println("@@@@@@@@@@@ respAllBank : "+respAllBank);
+		 */
+
+		/*Bank bank = new Bank();
+		bank.setBank_id(1l);
+		bank.setBank_name("HDFC");
+*/		/*
+		 * Bank_Branch bankBranch=new Bank_Branch(); bankBranch.setBank(bank);
+		 * bankBranch.setBranch_ifsc("1111111111");
+		 * bankBranch.setBranch_name("Dadar"); ResponseEntity<Bank_Branch>
+		 * respBankBranch=bankApi.saveBankBranch(sendTokenRequest(),
+		 * bankBranch); System.out.println("@@@@@@@@@@@ respBankBranch : "
+		 * +respBankBranch);
+		 */
+		//List<LinkedHashMap<String, Object>> respAllBankBranches = bankApi.findAllInfo(sendTokenRequest());
+		//System.out.println("@@@@@@@@@@@ respAllBankBranches : " + respAllBankBranches);
+
+		// ************************************************************
+
+		try {
+			/*BankApiHandler bankApiHandler = new BankApiHandler();
+			
+			Bank bank1 = new Bank("PNB");
+			Bank bank2 = new Bank("CITI");
+			
+			ResponseEntity<Bank> responseBank2=bankApiHandler.save(sendTokenRequest(), bank2);
+			System.out.println("@@@@@@@@@@@ responseBank2 : "+responseBank2.getBody().getBank_id() +"----"+responseBank2.getBody().getBank_name());
+			
+			ResponseEntity<Bank> responseBank2=bankApiHandler.getDetailsById(sendTokenRequest(), 1L);
+			System.out.println("@@@@@@@@@@@ responseBank2 : "+responseBank2.getBody().getBank_id() +"----"+responseBank2.getBody().getBank_name());
+			
+			List<com.ERP.model.BankBranch> list=responseBank2.getBody().getBank_branches();
+			for(com.ERP.model.BankBranch b: list)
+			{
+				System.out.println("=>>>>>>>>>>>>>>>>> "+b.getBank_branch_id()+" -- "+b.getBranch_ifsc());
+			}*/
+			
+			BankApiHandler bankApiHandler = new BankApiHandler();
+			Bank b1 = new Bank("US BANK");
+			ResponseEntity<Bank> responseBank1=bankApiHandler.save(sendTokenRequest(), b1);
+			Bank responseB1 = responseBank1.getBody();
+			System.out.println("----------------------------------------------------------- responseB1 : "+responseB1.getBank_id());
+			
+			ResponseEntity<Bank> responseBank2=bankApiHandler.getDetailsById(sendTokenRequest(), responseB1.getBank_id());
+			System.out.println("@@@@@@@@@@@ responseBank2 : "+responseBank2.getBody().getBank_id() +"----"+responseBank2.getBody().getBank_name());
+		/*	
+			List<com.ERP.model.BankBranch> list=responseBank2.getBody().getBank_branches();
+			for(com.ERP.model.BankBranch b: list)
+			{
+				System.out.println("=>>>>>>>>>>>>>>>>> "+b.getBank_branch_id()+" -- "+b.getBranch_ifsc());
+			}*/
+			
+			/*BankBranchApiHandler bankBranchApiHandler = new BankBranchApiHandler();
+			BankBranch bb1 = new BankBranch();
+			bb1.setBank(responseB1);
+			bb1.setBranch_ifsc("US40000");
+			bb1.setBranch_name("USA");
+			ResponseEntity<BankBranch> responseBankBranch1=bankBranchApiHandler.save(sendTokenRequest(), bb1);
+			BankBranch responseBB1 = responseBankBranch1.getBody();
+			System.out.println("----------------------------------------------------------- responseBB1 : "+responseBB1.getBank_branch_id());
+			
+			
+			VendorTypeApiHandler vendorTypeApiHandler = new VendorTypeApiHandler();
+			VendorType vt1 = new VendorType("Test Vendor Type");
+			ResponseEntity<VendorType> responseVendorType1=vendorTypeApiHandler.save(sendTokenRequest(), vt1);
+			VendorType responseVT1 = responseVendorType1.getBody();
+			System.out.println("----------------------------------------------------------- responseVT1 : "+responseVT1.getVendor_type_id());
+			 
+			
+			AddressApiHandler addressApiHandler = new AddressApiHandler();
+			Address a1=new Address();
+			a1.setAddres_line1("Address2");
+			ResponseEntity<Address> responseAddress1=addressApiHandler.save(sendTokenRequest(), a1);
+			Address responseA1 = responseAddress1.getBody();
+			System.out.println("----------------------------------------------------------- responseA1 : "+responseA1.getAddress_id());
+			
+			VendorApiHandler vendorApiHandler = new VendorApiHandler();
+			Vendor v1=new Vendor();
+			v1.setVendor_name("Harshad");
+			v1.setVendor_gst_number("Test1235");
+			v1.setVendor_type(responseVT1);
+			v1.setAddress(responseA1);
+			ResponseEntity<Vendor> responseVendor1=vendorApiHandler.save(sendTokenRequest(), v1);
+			Vendor responseV1 = responseVendor1.getBody();
+			System.out.println("----------------------------------------------------------- responseV1 : "+responseV1.getVendor_id());
+			
+			VendorBankProfileApiHandler vendorBankProfileApiHandler = new VendorBankProfileApiHandler();
+			VendorBankProfile vbf1 = new VendorBankProfile();
+			vbf1.setBank_account_number("Account NUmber 1");
+			vbf1.setBank_branch(responseBB1);
+			vbf1.setVendor(responseV1);
+			ResponseEntity<VendorBankProfile> responseVendorBankProfile1=vendorBankProfileApiHandler.save(sendTokenRequest(), vbf1);
+			VendorBankProfile responsevbf1 = responseVendorBankProfile1.getBody();
+			System.out.println("----------------------------------------------------------- responsevbf1 : "+responsevbf1.getVendor_bank_profile_id());
+			*/
+			
+			
+			/*BankBranchApiHandler bankBranchApiHandler = new BankBranchApiHandler();
+			ResponseEntity<BankBranch> responseBank2=bankBranchApiHandler.getDetailsById(sendTokenRequest(), 1111111111L);
+			
+			BankBranch bb= responseBank2.getBody();
+			System.out.println("@@@@@@@@@@@ responseBank2 : "+bb.getBank_branch_id() +"----"+bb.getBranch_ifsc()+" --- "+bb.getBranch_name()+" -- "+bb.getBank().getBank_name());*/
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// ************************************************************
+
+		// ============================================
+
 		return "registration";
 	}
 
 	@RequestMapping(value = { "/registerProject" }, method = RequestMethod.GET)
-	public String registerProject(
-			@ModelAttribute("projectForm") Project project,
-			BindingResult result, ModelMap model) {
+	public String registerProject(@ModelAttribute("projectForm") Project project, BindingResult result,
+			ModelMap model) {
 
 		model.addAttribute("success", "");
 
@@ -252,12 +378,10 @@ public class UserController {
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-	public String saveUser(@Valid @ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model) {
+	public String saveUser(@Valid @ModelAttribute("userForm") User user, BindingResult result, ModelMap model) {
 
 		System.out.println("AppController -- saveUser -- User : " + user);
-		System.out.println("AppController -- saveUser -- User : "
-				+ user.getUserProfiles());
+		System.out.println("AppController -- saveUser -- User : " + user.getUserProfiles());
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 
 		if (result.hasErrors()) {
@@ -272,25 +396,21 @@ public class UserController {
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		ResponseEntity<User> response = null;
 		try {
-			response = restTemplate.postForEntity(ErpConstants.REST_SERVICE_URI
-					+ "/user/create/" + ErpConstants.QPM_ACCESS_TOKEN
-					+ tokenInfo.getAccess_token(), request, User.class);
+			response = restTemplate.postForEntity(ErpConstants.REST_SERVICE_URI + "/user/create/"
+					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), request, User.class);
 		} catch (HttpClientErrorException excep) {
 			if (HttpStatus.CONFLICT.equals(excep.getStatusCode())) {
-				FieldError ssoError = new FieldError("user", "ssoId",
-						messageSource.getMessage("non.unique.ssoId",
-								new String[] { user.getSsoId() },
-								Locale.getDefault()));
+				FieldError ssoError = new FieldError("user", "ssoId", messageSource.getMessage("non.unique.ssoId",
+						new String[] { user.getSsoId() }, Locale.getDefault()));
 				result.addError(ssoError);
 				return "registration";
 			}
 		}
 
-		System.out.println(" What is the response code "
-				+ response.getStatusCode() + " ## " + user.getSsoId());
+		System.out.println(" What is the response code " + response.getStatusCode() + " ## " + user.getSsoId());
 
-		model.addAttribute("success", "User " + user.getFirstName() + " "
-				+ user.getLastName() + " registered successfully");
+		model.addAttribute("success",
+				"User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		User user1 = new User();
 		model.addAttribute("userForm", user1);
@@ -302,8 +422,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUserList" }, method = RequestMethod.GET)
-	public String editUserList(@ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model) {
+	public String editUserList(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model) {
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting getUser API----------");
 
@@ -323,9 +442,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.POST)
-	public String editUser(@ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model, HttpServletRequest rq,
-			HttpServletResponse resp) {
+	public String editUser(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model,
+			HttpServletRequest rq, HttpServletResponse resp) {
 
 		System.out.println("\n Request " + rq.getPathInfo());
 		System.out.println("AppController -- editUser -- User : " + user);
@@ -337,8 +455,7 @@ public class UserController {
 	@RequestMapping(value = { "/editUserDetails/{ssoId}" }, method = RequestMethod.GET)
 	public String editUserDetails(@PathVariable String ssoId, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting editUserTest API---------- ssoId :: "
-				+ ssoId);
+		System.out.println("\nTesting editUserTest API---------- ssoId :: " + ssoId);
 
 		User user = userService.findBySSO(ssoId);
 
@@ -354,49 +471,42 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/updateUserDetails" }, method = RequestMethod.POST)
-	public String updateUserDetails(ModelMap model,
-			@ModelAttribute("userForm") User user) {
-		System.out
-				.println("*********************************************************");
-		System.out.println("\nTesting updateUserDetails API---------- user :: "
-				+ user);
-		System.out
-				.println("*********************************************************");
+	public String updateUserDetails(ModelMap model, @ModelAttribute("userForm") User user) {
+		System.out.println("*********************************************************");
+		System.out.println("\nTesting updateUserDetails API---------- user :: " + user);
+		System.out.println("*********************************************************");
 
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		try {
-			restTemplate.put(
-					ErpConstants.REST_SERVICE_URI + "/user/" + user.getSsoId()
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), request, User.class);
+			restTemplate.put(ErpConstants.REST_SERVICE_URI + "/user/" + user.getSsoId() + ErpConstants.QPM_ACCESS_TOKEN
+					+ tokenInfo.getAccess_token(), request, User.class);
 		} catch (HttpClientErrorException excep) {/*
-												 * if
-												 * (HttpStatus.CONFLICT.equals
-												 * (excep.getStatusCode())) {
-												 * FieldError ssoError = new
-												 * FieldError("user", "ssoId",
-												 * messageSource
-												 * .getMessage("non.unique.ssoId"
-												 * , new String[] {
-												 * user.getSsoId() },
-												 * Locale.getDefault()));
-												 * result.addError(ssoError);
-												 * return "registration"; }
-												 */
+													 * if (HttpStatus.CONFLICT.
+													 * equals
+													 * (excep.getStatusCode()))
+													 * { FieldError ssoError =
+													 * new FieldError("user",
+													 * "ssoId", messageSource
+													 * .getMessage(
+													 * "non.unique.ssoId" , new
+													 * String[] {
+													 * user.getSsoId() },
+													 * Locale.getDefault()));
+													 * result.addError(ssoError)
+													 * ; return "registration";
+													 * }
+													 */
 		}
 
 		return "redirect:/editUserList";
 	}
 
 	@RequestMapping(value = { "/getUserProjectDetails/{ssoId}" }, method = RequestMethod.GET)
-	public String getUserProjectDetails(@PathVariable String ssoId,
-			ModelMap model) {
+	public String getUserProjectDetails(@PathVariable String ssoId, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out
-				.println("\nTesting getUserProjectDetails API---------- ssoId :: "
-						+ ssoId);
+		System.out.println("\nTesting getUserProjectDetails API---------- ssoId :: " + ssoId);
 
 		// user=getEditUserDetails();
 
@@ -413,12 +523,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/updateUserProjectDetails" }, method = RequestMethod.POST)
-	public String updateUserProjectDetails(ModelMap model,
-			@ModelAttribute("proejctForm") Project project) {
+	public String updateUserProjectDetails(ModelMap model, @ModelAttribute("proejctForm") Project project) {
 
-		System.out
-				.println("\nTesting updateUserProjectDetails API---------- Project :: "
-						+ project);
+		System.out.println("\nTesting updateUserProjectDetails API---------- Project :: " + project);
 
 		model.addAttribute("proejctForm", project);
 		model.addAttribute("ssoId", 1);
@@ -429,11 +536,9 @@ public class UserController {
 
 	@Transactional
 	@RequestMapping(value = { "/getUserProjectListDetails/{ssoId}" }, method = RequestMethod.GET)
-	public String getUserProjectListDetails(@PathVariable String ssoId,
-			ModelMap model) {
+	public String getUserProjectListDetails(@PathVariable String ssoId, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting editUserTest API---------- ssoId :: "
-				+ ssoId);
+		System.out.println("\nTesting editUserTest API---------- ssoId :: " + ssoId);
 
 		User user = userService.findBySSO(ssoId);
 
@@ -444,13 +549,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUserProject" }, method = RequestMethod.POST)
-	public String editUserProject(@ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model, HttpServletRequest rq,
-			HttpServletResponse resp) {
+	public String editUserProject(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model,
+			HttpServletRequest rq, HttpServletResponse resp) {
 
 		System.out.println("\n editUserProject Request " + rq.getPathInfo());
-		System.out
-				.println("AppController -- editUserProject -- User : " + user);
+		System.out.println("AppController -- editUserProject -- User : " + user);
 
 		return "redirect:/editUserList";
 	}
@@ -460,8 +563,7 @@ public class UserController {
 	 * updating user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/editUser/{ssoId}" }, method = RequestMethod.POST)
-	public String updateUser(@Valid User user, BindingResult result,
-			ModelMap model, @PathVariable String ssoId) {
+	public String updateUser(@Valid User user, BindingResult result, ModelMap model, @PathVariable String ssoId) {
 
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 
@@ -486,15 +588,12 @@ public class UserController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
-		ResponseEntity<User> response = restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/user/" + user.getId()
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.PUT, request,
-				User.class);
+		ResponseEntity<User> response = restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/" + user.getId()
+				+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.PUT, request, User.class);
 		System.out.println(response.getBody());
 
-		model.addAttribute("success", "User " + user.getFirstName() + " "
-				+ user.getLastName() + " updated successfully");
+		model.addAttribute("success",
+				"User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registrationsuccess";
 	}
@@ -509,15 +608,10 @@ public class UserController {
 		System.out.println("\nTesting delete User API----------");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		System.out.println(" URL :::" + ErpConstants.REST_SERVICE_URI
-				+ "/user/delete/" + ssoId + ErpConstants.QPM_ACCESS_TOKEN
-				+ tokenInfo.getAccess_token() + HttpMethod.GET + request
-				+ User.class);
-		restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/user/delete/" + ssoId
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.DELETE,
-				request, User.class);
+		System.out.println(" URL :::" + ErpConstants.REST_SERVICE_URI + "/user/delete/" + ssoId
+				+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token() + HttpMethod.GET + request + User.class);
+		restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/delete/" + ssoId + ErpConstants.QPM_ACCESS_TOKEN
+				+ tokenInfo.getAccess_token(), HttpMethod.DELETE, request, User.class);
 
 		return "redirect:/list";
 	}
@@ -563,15 +657,12 @@ public class UserController {
 	 * RememberMe functionality is useless in your app.
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request,
-			HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
+	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			// new SecurityContextLogoutHandler().logout(request, response,
 			// auth);
-			persistentTokenBasedRememberMeServices.logout(request, response,
-					auth);
+			persistentTokenBasedRememberMeServices.logout(request, response, auth);
 			SecurityContextHolder.getContext().setAuthentication(null);
 		}
 		return "redirect:/login?logout";
@@ -582,8 +673,7 @@ public class UserController {
 	 */
 	private String getPrincipal() {
 		String userName = null;
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
 			userName = ((UserDetails) principal).getUsername();
@@ -598,14 +688,12 @@ public class UserController {
 	 * else false.
 	 */
 	private boolean isCurrentAuthenticationAnonymous() {
-		final Authentication authentication = SecurityContextHolder
-				.getContext().getAuthentication();
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return authenticationTrustResolver.isAnonymous(authentication);
 	}
 
 	@RequestMapping(value = { "/forgotPassword" }, method = RequestMethod.POST)
-	public @ResponseBody
-	String forgotPassword(@RequestParam String emailId) {
+	public @ResponseBody String forgotPassword(@RequestParam String emailId) {
 
 		System.out.println("\nTesting delcheckEmail  User API----------");
 		String email = emailId.replaceAll("=", "").replaceAll("%40", "@");
@@ -625,12 +713,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/changepassword" }, method = RequestMethod.GET)
-	public @ResponseBody
-	String changePassword() {
+	public @ResponseBody String changePassword() {
 
 		String userName = null;
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
 			userName = ((UserDetails) principal).getUsername();
@@ -670,11 +756,8 @@ public class UserController {
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 
 		try {
-			ResponseEntity<List> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI + "/user/"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, List.class);
+			ResponseEntity<List> response = restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/"
+					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.GET, request, List.class);
 			userList = response.getBody();
 		} catch (HttpClientErrorException excep) {
 			if (HttpStatus.NO_CONTENT.equals(excep.getStatusCode())) {
@@ -694,9 +777,8 @@ public class UserController {
 	 * p1.setProjectClientName("projectSet1 ERP CLIENT 1");
 	 * p1.setStructuralName("projectSet1 EPR1 Sector 1");
 	 * 
-	 * Project p2 = new Project(); p2.setProject_id(2);
-	 * p2.setProjectName("projectSet1 EPR2");
-	 * p2.setProjectClientName("projectSet1 ERP CLIENT 2");
+	 * Project p2 = new Project(); p2.setProject_id(2); p2.setProjectName(
+	 * "projectSet1 EPR2"); p2.setProjectClientName("projectSet1 ERP CLIENT 2");
 	 * p2.setStructuralName("projectSet1 EPR1 Sector 2"); projectSet1.add(p1);
 	 * projectSet1.add(p2);
 	 * 

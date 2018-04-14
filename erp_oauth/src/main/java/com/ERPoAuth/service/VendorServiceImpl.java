@@ -6,14 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ERPoAuth.dao.BankDao;
-import com.ERPoAuth.dao.ProjectDao;
 import com.ERPoAuth.dao.VendorDao;
-import com.ERPoAuth.dao.VendorTypeDao;
-import com.ERPoAuth.model.Bank;
-import com.ERPoAuth.model.BankBranch;
 import com.ERPoAuth.model.Vendor;
-import com.ERPoAuth.model.VendorType;
 
 @Service("vendorService")
 @Transactional

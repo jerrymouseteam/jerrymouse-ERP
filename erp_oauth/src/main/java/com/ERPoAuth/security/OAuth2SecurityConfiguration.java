@@ -73,4 +73,5 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 	    web.ignoring().antMatchers("/user/checkEmail**");
 	}
+	
 }

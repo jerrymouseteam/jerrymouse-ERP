@@ -57,6 +57,14 @@ public class BankBranch implements Serializable {
 
 	
 
+	/*public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}*/
+
 	public BankBranch() {
 		super();
 		// TODO Auto-generated constructor stub

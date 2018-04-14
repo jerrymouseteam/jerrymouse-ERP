@@ -69,7 +69,7 @@ public class Quickstart {
 	 * Arrays.asList(GmailScopes.GMAIL_LABELS);
 	 */
 
-	private static final List<String> SCOPES = Arrays.asList(GmailScopes.GMAIL_SEND);
+	private static final List<String> SCOPES = Arrays.asList(GmailScopes.GMAIL_SEND,GmailScopes.GMAIL_COMPOSE);
 
 	static {
 		try {
@@ -249,7 +249,7 @@ public class Quickstart {
 	public static void sendSimpleEmail() throws IOException, MessagingException {
 
 		Gmail service = getGmailService();
-		MimeMessage mimeMessage = Quickstart.createEmail("vaiban@gmail.com", "jerrymouse.erpteam@gmail.com",
+		MimeMessage mimeMessage = Quickstart.createEmail("harshadgaikwad14@gmail.com", "jerrymouse.erpteam@gmail.com",
 				"Test Email From JerryMouseTeam", Quickstart.bodyMessage());
 		Message message = Quickstart.sendMessage(service, "me", mimeMessage);
 		System.out.println("mm.toString() :: " + message.toPrettyString());
@@ -260,7 +260,7 @@ public class Quickstart {
 			//karan.sutarwala17@gmail.com
 		Gmail service = getGmailService();
 		File file =new File("C:\\Users\\Harshad\\Desktop\\procurement_database_dump.sql");
-		MimeMessage mimeMessage= Quickstart.createEmailWithAttachment("vaiban@gmail.com", "jerrymouse.erpteam@gmail.com",
+		MimeMessage mimeMessage= Quickstart.createEmailWithAttachment("harshadgaikwad14@gmail.com", "jerrymouse.erpteam@gmail.com",
 				"Procurement SQL Database Dump", Quickstart.bodyMessage(),file);
 		Message message = Quickstart.sendMessage(service, "me", mimeMessage);
 		System.out.println("mm.toString() :: " + message.toPrettyString());
@@ -292,7 +292,7 @@ public class Quickstart {
 	
 
 	public static void main(String[] args) throws IOException, MessagingException {
-		sendFileAttachedEmail();
+		sendSimpleEmail();
 		
 		
 		

@@ -1,17 +1,6 @@
 package com.ERP.model;
 
 import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 public class Vendor implements Serializable {
 
@@ -21,8 +10,7 @@ public class Vendor implements Serializable {
 	private String vendor_name;
 	private String vendor_nickName;
 	private String vendor_gst_number;
-	private String bankAccountNumber;
-	private String branch_ifsc;
+	
 	private String serviceRendered_GoodsSupplied;
 	private Address address;
 	private String contact_person_name;
@@ -30,8 +18,21 @@ public class Vendor implements Serializable {
 	private String contact_person_mobile;
 	private String contact_person_alternate_phone_no;
 	private long vendorTypeId;
-	private long bankId;
-	private long branchId;
+	
+	private VendorType vendor_type;
+
+	private String bank_account_number;
+
+	private String bank_branch_ifsc;
+
+	private String bank_name;
+
+	private String bank_branch_name;
+
+
+
+	
+	
 
 	public Vendor() {
 		super();
@@ -117,21 +118,7 @@ public class Vendor implements Serializable {
 		this.contact_person_alternate_phone_no = contact_person_alternate_phone_no;
 	}
 
-	public String getBranch_ifsc() {
-		return branch_ifsc;
-	}
-
-	public void setBranch_ifsc(String branch_ifsc) {
-		this.branch_ifsc = branch_ifsc;
-	}
-
-	public String getBankAccountNumber() {
-		return bankAccountNumber;
-	}
-
-	public void setBankAccountNumber(String bankAccountNumber) {
-		this.bankAccountNumber = bankAccountNumber;
-	}
+	
 
 	public long getVendorTypeId() {
 		return vendorTypeId;
@@ -141,31 +128,173 @@ public class Vendor implements Serializable {
 		this.vendorTypeId = vendorTypeId;
 	}
 
-	public long getBankId() {
-		return bankId;
+	
+
+	public VendorType getVendor_type() {
+		return vendor_type;
 	}
 
-	public void setBankId(long bankId) {
-		this.bankId = bankId;
+	public void setVendor_type(VendorType vendor_type) {
+		this.vendor_type = vendor_type;
 	}
 
-	public long getBranchId() {
-		return branchId;
+	public String getBank_account_number() {
+		return bank_account_number;
 	}
 
-	public void setBranchId(long branchId) {
-		this.branchId = branchId;
+	public void setBank_account_number(String bank_account_number) {
+		this.bank_account_number = bank_account_number;
+	}
+
+	public String getBank_branch_ifsc() {
+		return bank_branch_ifsc;
+	}
+
+	public void setBank_branch_ifsc(String bank_branch_ifsc) {
+		this.bank_branch_ifsc = bank_branch_ifsc;
+	}
+
+	public String getBank_name() {
+		return bank_name;
+	}
+
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
+
+	public String getBank_branch_name() {
+		return bank_branch_name;
+	}
+
+	public void setBank_branch_name(String bank_branch_name) {
+		this.bank_branch_name = bank_branch_name;
 	}
 
 	@Override
 	public String toString() {
 		return "Vendor [vendor_id=" + vendor_id + ", vendor_name=" + vendor_name + ", vendor_nickName="
-				+ vendor_nickName + ", vendor_gst_number=" + vendor_gst_number + ", bankAccountNumber="
-				+ bankAccountNumber + ", branch_ifsc=" + branch_ifsc + ", serviceRendered_GoodsSupplied="
+				+ vendor_nickName + ", vendor_gst_number=" + vendor_gst_number + ", serviceRendered_GoodsSupplied="
 				+ serviceRendered_GoodsSupplied + ", address=" + address + ", contact_person_name="
 				+ contact_person_name + ", contact_person_email=" + contact_person_email + ", contact_person_mobile="
 				+ contact_person_mobile + ", contact_person_alternate_phone_no=" + contact_person_alternate_phone_no
-				+ ", vendorTypeId=" + vendorTypeId + ", bankId=" + bankId + ", branchId=" + branchId + "]";
+				+ ", vendorTypeId=" + vendorTypeId + ", vendor_type=" + vendor_type + ", bank_account_number="
+				+ bank_account_number + ", bank_branch_ifsc=" + bank_branch_ifsc + ", bank_name=" + bank_name
+				+ ", bank_branch_name=" + bank_branch_name + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((bank_account_number == null) ? 0 : bank_account_number.hashCode());
+		result = prime * result + ((bank_branch_ifsc == null) ? 0 : bank_branch_ifsc.hashCode());
+		result = prime * result + ((bank_branch_name == null) ? 0 : bank_branch_name.hashCode());
+		result = prime * result + ((bank_name == null) ? 0 : bank_name.hashCode());
+		result = prime * result
+				+ ((contact_person_alternate_phone_no == null) ? 0 : contact_person_alternate_phone_no.hashCode());
+		result = prime * result + ((contact_person_email == null) ? 0 : contact_person_email.hashCode());
+		result = prime * result + ((contact_person_mobile == null) ? 0 : contact_person_mobile.hashCode());
+		result = prime * result + ((contact_person_name == null) ? 0 : contact_person_name.hashCode());
+		result = prime * result
+				+ ((serviceRendered_GoodsSupplied == null) ? 0 : serviceRendered_GoodsSupplied.hashCode());
+		result = prime * result + (int) (vendorTypeId ^ (vendorTypeId >>> 32));
+		result = prime * result + ((vendor_gst_number == null) ? 0 : vendor_gst_number.hashCode());
+		result = prime * result + (int) (vendor_id ^ (vendor_id >>> 32));
+		result = prime * result + ((vendor_name == null) ? 0 : vendor_name.hashCode());
+		result = prime * result + ((vendor_nickName == null) ? 0 : vendor_nickName.hashCode());
+		result = prime * result + ((vendor_type == null) ? 0 : vendor_type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vendor other = (Vendor) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (bank_account_number == null) {
+			if (other.bank_account_number != null)
+				return false;
+		} else if (!bank_account_number.equals(other.bank_account_number))
+			return false;
+		if (bank_branch_ifsc == null) {
+			if (other.bank_branch_ifsc != null)
+				return false;
+		} else if (!bank_branch_ifsc.equals(other.bank_branch_ifsc))
+			return false;
+		if (bank_branch_name == null) {
+			if (other.bank_branch_name != null)
+				return false;
+		} else if (!bank_branch_name.equals(other.bank_branch_name))
+			return false;
+		if (bank_name == null) {
+			if (other.bank_name != null)
+				return false;
+		} else if (!bank_name.equals(other.bank_name))
+			return false;
+		if (contact_person_alternate_phone_no == null) {
+			if (other.contact_person_alternate_phone_no != null)
+				return false;
+		} else if (!contact_person_alternate_phone_no.equals(other.contact_person_alternate_phone_no))
+			return false;
+		if (contact_person_email == null) {
+			if (other.contact_person_email != null)
+				return false;
+		} else if (!contact_person_email.equals(other.contact_person_email))
+			return false;
+		if (contact_person_mobile == null) {
+			if (other.contact_person_mobile != null)
+				return false;
+		} else if (!contact_person_mobile.equals(other.contact_person_mobile))
+			return false;
+		if (contact_person_name == null) {
+			if (other.contact_person_name != null)
+				return false;
+		} else if (!contact_person_name.equals(other.contact_person_name))
+			return false;
+		if (serviceRendered_GoodsSupplied == null) {
+			if (other.serviceRendered_GoodsSupplied != null)
+				return false;
+		} else if (!serviceRendered_GoodsSupplied.equals(other.serviceRendered_GoodsSupplied))
+			return false;
+		if (vendorTypeId != other.vendorTypeId)
+			return false;
+		if (vendor_gst_number == null) {
+			if (other.vendor_gst_number != null)
+				return false;
+		} else if (!vendor_gst_number.equals(other.vendor_gst_number))
+			return false;
+		if (vendor_id != other.vendor_id)
+			return false;
+		if (vendor_name == null) {
+			if (other.vendor_name != null)
+				return false;
+		} else if (!vendor_name.equals(other.vendor_name))
+			return false;
+		if (vendor_nickName == null) {
+			if (other.vendor_nickName != null)
+				return false;
+		} else if (!vendor_nickName.equals(other.vendor_nickName))
+			return false;
+		if (vendor_type == null) {
+			if (other.vendor_type != null)
+				return false;
+		} else if (!vendor_type.equals(other.vendor_type))
+			return false;
+		return true;
+	}
+
+	
+	
+
+	
 }

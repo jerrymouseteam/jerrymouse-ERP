@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ERP.model.User;
-import com.ERP.model.VendorDTO;
+import com.ERP.model.Vendor;
 import com.ERP.util.Utilities;
 
 @Controller
@@ -33,7 +33,7 @@ public class ChallanController {
 	@RequestMapping(value = { "/createChallan" }, method = RequestMethod.GET)
 	public String createChallan(ModelMap model) {
 
-		VendorDTO vendor = new VendorDTO();
+		Vendor vendor = new Vendor();
 
 		System.out.println("createChallan");
 		model.addAttribute("vendorForm", vendor);

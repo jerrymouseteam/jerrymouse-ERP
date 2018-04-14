@@ -87,4 +87,12 @@ public class BankApiHandler implements RestApiHandler<Bank> {
 		
 		return response;
 	}
+
+	
+
+	@Override
+	public ResponseEntity<List> getListEntityInfo(AuthTokenInfo tokenInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
