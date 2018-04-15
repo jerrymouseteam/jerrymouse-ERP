@@ -45,26 +45,13 @@ import org.springframework.web.servlet.view.JstlView;
 
 import com.ERP.constants.ErpConstants;
 import com.ERP.constants.UserStatus;
-import com.ERP.model.Address;
 import com.ERP.model.AuthTokenInfo;
-import com.ERP.model.Bank;
-import com.ERP.model.BankBranch;
 import com.ERP.model.Project;
 import com.ERP.model.User;
 import com.ERP.model.UserProfile;
-import com.ERP.model.Vendor;
-import com.ERP.model.VendorTypeForm;
-import com.ERP.model.VendorBankProfile;
-
 import com.ERP.service.UserProfileService;
 import com.ERP.service.UserService;
 import com.ERP.service.UserServiceImpl;
-import com.ERP.util.AddressApiHandler;
-import com.ERP.util.BankApiHandler;
-import com.ERP.util.BankBranchApiHandler;
-import com.ERP.util.VendorApiHandler;
-import com.ERP.util.VendorBankProfileApiHandler;
-import com.ERP.util.VendorTypeApiHandler;
 
 @Controller
 @RequestMapping("/")
@@ -233,127 +220,6 @@ public class UserController {
 		model.addAttribute("edit", false);
 		model.addAttribute("loggedinuser", getPrincipal());
 		model.addAttribute("success", "");
-
-		// ============================================
-		
-
-		//BankApiHandler bankApi = new BankApiHandler();
-		/*
-		 * Bank bank=new Bank("IDBI"); ResponseEntity<Bank>
-		 * respBank=bankApi.saveBank(sendTokenRequest(), bank);
-		 * System.out.println("@@@@@@@@@@@ respBank : "+respBank);
-		 * List<LinkedHashMap<String, Object>>
-		 * respAllBank=bankApi.findAllBanks(sendTokenRequest());
-		 * System.out.println("@@@@@@@@@@@ respAllBank : "+respAllBank);
-		 */
-
-		/*Bank bank = new Bank();
-		bank.setBank_id(1l);
-		bank.setBank_name("HDFC");
-*/		/*
-		 * Bank_Branch bankBranch=new Bank_Branch(); bankBranch.setBank(bank);
-		 * bankBranch.setBranch_ifsc("1111111111");
-		 * bankBranch.setBranch_name("Dadar"); ResponseEntity<Bank_Branch>
-		 * respBankBranch=bankApi.saveBankBranch(sendTokenRequest(),
-		 * bankBranch); System.out.println("@@@@@@@@@@@ respBankBranch : "
-		 * +respBankBranch);
-		 */
-		//List<LinkedHashMap<String, Object>> respAllBankBranches = bankApi.findAllInfo(sendTokenRequest());
-		//System.out.println("@@@@@@@@@@@ respAllBankBranches : " + respAllBankBranches);
-
-		// ************************************************************
-
-		try {
-			/*BankApiHandler bankApiHandler = new BankApiHandler();
-			
-			Bank bank1 = new Bank("PNB");
-			Bank bank2 = new Bank("CITI");
-			
-			ResponseEntity<Bank> responseBank2=bankApiHandler.save(sendTokenRequest(), bank2);
-			System.out.println("@@@@@@@@@@@ responseBank2 : "+responseBank2.getBody().getBank_id() +"----"+responseBank2.getBody().getBank_name());
-			
-			ResponseEntity<Bank> responseBank2=bankApiHandler.getDetailsById(sendTokenRequest(), 1L);
-			System.out.println("@@@@@@@@@@@ responseBank2 : "+responseBank2.getBody().getBank_id() +"----"+responseBank2.getBody().getBank_name());
-			
-			List<com.ERP.model.BankBranch> list=responseBank2.getBody().getBank_branches();
-			for(com.ERP.model.BankBranch b: list)
-			{
-				System.out.println("=>>>>>>>>>>>>>>>>> "+b.getBank_branch_id()+" -- "+b.getBranch_ifsc());
-			}*/
-			
-			BankApiHandler bankApiHandler = new BankApiHandler();
-			Bank b1 = new Bank("US BANK");
-			ResponseEntity<Bank> responseBank1=bankApiHandler.save(sendTokenRequest(), b1);
-			Bank responseB1 = responseBank1.getBody();
-			System.out.println("----------------------------------------------------------- responseB1 : "+responseB1.getBank_id());
-			
-			ResponseEntity<Bank> responseBank2=bankApiHandler.getDetailsById(sendTokenRequest(), responseB1.getBank_id());
-			System.out.println("@@@@@@@@@@@ responseBank2 : "+responseBank2.getBody().getBank_id() +"----"+responseBank2.getBody().getBank_name());
-		/*	
-			List<com.ERP.model.BankBranch> list=responseBank2.getBody().getBank_branches();
-			for(com.ERP.model.BankBranch b: list)
-			{
-				System.out.println("=>>>>>>>>>>>>>>>>> "+b.getBank_branch_id()+" -- "+b.getBranch_ifsc());
-			}*/
-			
-			/*BankBranchApiHandler bankBranchApiHandler = new BankBranchApiHandler();
-			BankBranch bb1 = new BankBranch();
-			bb1.setBank(responseB1);
-			bb1.setBranch_ifsc("US40000");
-			bb1.setBranch_name("USA");
-			ResponseEntity<BankBranch> responseBankBranch1=bankBranchApiHandler.save(sendTokenRequest(), bb1);
-			BankBranch responseBB1 = responseBankBranch1.getBody();
-			System.out.println("----------------------------------------------------------- responseBB1 : "+responseBB1.getBank_branch_id());
-			
-			
-			VendorTypeApiHandler vendorTypeApiHandler = new VendorTypeApiHandler();
-			VendorType vt1 = new VendorType("Test Vendor Type");
-			ResponseEntity<VendorType> responseVendorType1=vendorTypeApiHandler.save(sendTokenRequest(), vt1);
-			VendorType responseVT1 = responseVendorType1.getBody();
-			System.out.println("----------------------------------------------------------- responseVT1 : "+responseVT1.getVendor_type_id());
-			 
-			
-			AddressApiHandler addressApiHandler = new AddressApiHandler();
-			Address a1=new Address();
-			a1.setAddres_line1("Address2");
-			ResponseEntity<Address> responseAddress1=addressApiHandler.save(sendTokenRequest(), a1);
-			Address responseA1 = responseAddress1.getBody();
-			System.out.println("----------------------------------------------------------- responseA1 : "+responseA1.getAddress_id());
-			
-			VendorApiHandler vendorApiHandler = new VendorApiHandler();
-			Vendor v1=new Vendor();
-			v1.setVendor_name("Harshad");
-			v1.setVendor_gst_number("Test1235");
-			v1.setVendor_type(responseVT1);
-			v1.setAddress(responseA1);
-			ResponseEntity<Vendor> responseVendor1=vendorApiHandler.save(sendTokenRequest(), v1);
-			Vendor responseV1 = responseVendor1.getBody();
-			System.out.println("----------------------------------------------------------- responseV1 : "+responseV1.getVendor_id());
-			
-			VendorBankProfileApiHandler vendorBankProfileApiHandler = new VendorBankProfileApiHandler();
-			VendorBankProfile vbf1 = new VendorBankProfile();
-			vbf1.setBank_account_number("Account NUmber 1");
-			vbf1.setBank_branch(responseBB1);
-			vbf1.setVendor(responseV1);
-			ResponseEntity<VendorBankProfile> responseVendorBankProfile1=vendorBankProfileApiHandler.save(sendTokenRequest(), vbf1);
-			VendorBankProfile responsevbf1 = responseVendorBankProfile1.getBody();
-			System.out.println("----------------------------------------------------------- responsevbf1 : "+responsevbf1.getVendor_bank_profile_id());
-			*/
-			
-			
-			/*BankBranchApiHandler bankBranchApiHandler = new BankBranchApiHandler();
-			ResponseEntity<BankBranch> responseBank2=bankBranchApiHandler.getDetailsById(sendTokenRequest(), 1111111111L);
-			
-			BankBranch bb= responseBank2.getBody();
-			System.out.println("@@@@@@@@@@@ responseBank2 : "+bb.getBank_branch_id() +"----"+bb.getBranch_ifsc()+" --- "+bb.getBranch_name()+" -- "+bb.getBank().getBank_name());*/
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// ************************************************************
-
-		// ============================================
 
 		return "registration";
 	}

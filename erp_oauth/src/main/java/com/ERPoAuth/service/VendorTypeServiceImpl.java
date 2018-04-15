@@ -1,6 +1,5 @@
 package com.ERPoAuth.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ERPoAuth.dao.VendorTypeDao;
 import com.ERPoAuth.model.VendorType;
-import com.ERPoAuth.model.VendorTypeForm;
 
 
 

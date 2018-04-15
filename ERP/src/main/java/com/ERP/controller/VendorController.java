@@ -31,15 +31,13 @@ import com.ERP.constants.ErpConstants;
 import com.ERP.constants.Test;
 import com.ERP.model.Address;
 import com.ERP.model.AuthTokenInfo;
-import com.ERP.model.Project;
 import com.ERP.model.Vendor;
 import com.ERP.model.VendorType;
-import com.ERP.model.VendorTypeForm;
 import com.ERP.util.Utilities;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes({ "roles", "getVendorTypes","getEditVendorsListDetails"})
+@SessionAttributes({ "roles", "getVendorTypes", "getEditVendorsListDetails" })
 public class VendorController {
 
 	@Autowired
@@ -52,8 +50,6 @@ public class VendorController {
 	AuthenticationTrustResolver authenticationTrustResolver;
 
 	Utilities u = new com.ERP.util.Utilities();
-
-	private List<VendorTypeForm> vendorTypes = null;
 
 	@RequestMapping(value = { "/registerVendor" }, method = RequestMethod.GET)
 	public String registerVendor(ModelMap model) {
@@ -75,18 +71,15 @@ public class VendorController {
 	public String saveVendor(@ModelAttribute("vendorForm") Vendor vendor, BindingResult result, ModelMap model,
 			@ModelAttribute("getVendorTypes") List<VendorType> vendorTypes) {
 
-		
 		for (VendorType vt : vendorTypes) {
 			if (vt.getVendorType_id() == vendor.getVendorTypeId()) {
-				
+
 				vendor.setVendor_type(vt);
 				break;
 			}
 		}
 
 		try {
-
-			
 
 			AuthTokenInfo tokenInfo = sendTokenRequest();
 
@@ -99,8 +92,6 @@ public class VendorController {
 			} catch (HttpClientErrorException excep) {
 
 			}
-
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,8 +109,6 @@ public class VendorController {
 	@RequestMapping(value = { "/getVendors" }, method = RequestMethod.GET)
 	public String getVendors(@ModelAttribute("vendorForm") Vendor vendor, BindingResult result, ModelMap model) {
 
-		
-
 		List<Vendor> vendorList = null;
 
 		try {
@@ -136,7 +125,6 @@ public class VendorController {
 				List<LinkedHashMap<String, Object>> vendorMap = (List<LinkedHashMap<String, Object>>) response
 						.getBody();
 
-				
 				if (vendorMap != null) {
 					vendorList = new ArrayList<>();
 
@@ -209,20 +197,20 @@ public class VendorController {
 
 	@Transactional
 	@RequestMapping(value = { "/editVendorDetails/{vendorId}" }, method = RequestMethod.GET)
-	public String editVendorDetails(@PathVariable Long vendorId, ModelMap model,@ModelAttribute("getEditVendorsListDetails") List<Vendor> vendors) {
+	public String editVendorDetails(@PathVariable Long vendorId, ModelMap model,
+			@ModelAttribute("getEditVendorsListDetails") List<Vendor> vendors) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		
+
 		Vendor vendor = null;
 
-		
 		for (Vendor v : vendors) {
 			if (v.getVendor_id() == vendorId) {
-				
-				vendor=v;
+
+				vendor = v;
 				break;
 			}
 		}
-		
+
 		model.addAttribute("vendorForm", vendor);
 
 		model.addAttribute("editVendorStage", "editVendorDetails");
@@ -230,54 +218,51 @@ public class VendorController {
 	}
 
 	@RequestMapping(value = { "/updateVendorDetails" }, method = RequestMethod.POST)
-	public String updateVendorDetails(ModelMap model, @ModelAttribute("vendorForm") Vendor vendor,@ModelAttribute("getVendorTypes") List<VendorType> vendorTypes) {
+	public String updateVendorDetails(ModelMap model, @ModelAttribute("vendorForm") Vendor vendor,
+			@ModelAttribute("getVendorTypes") List<VendorType> vendorTypes) {
 
 		System.out.println("\nTesting updateUserProjectDetails API---------- Vendor :: " + vendor);
-		
+
 		for (VendorType vt : vendorTypes) {
 			if (vt.getVendorType_id() == vendor.getVendorTypeId()) {
-				
+
 				vendor.setVendor_type(vt);
 				break;
 			}
 		}
-		
-		try {
 
+		try {
 
 			AuthTokenInfo tokenInfo = sendTokenRequest();
 			RestTemplate restTemplate = new RestTemplate();
-			HttpEntity<Object> request = new HttpEntity<Object>(vendor,
-					getHeaders());
+			HttpEntity<Object> request = new HttpEntity<Object>(vendor, getHeaders());
 			try {
-				restTemplate.put(ErpConstants.VENDOR_UPDATE + ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), request, Vendor.class);
+				restTemplate.put(
+						ErpConstants.VENDOR_UPDATE + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+						request, Vendor.class);
 			} catch (HttpClientErrorException excep) {
 				excep.printStackTrace();
 			}
-
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		
 		model.addAttribute("loggedinuser", u.getPrincipal());
 		return "redirect:/getVendors";
 	}
 
 	@RequestMapping(value = { "/getVendorDetails/{vendorId}" }, method = RequestMethod.GET)
-	public String getVendorDetails(@PathVariable Long vendorId, ModelMap model,@ModelAttribute("getEditVendorsListDetails") List<Vendor> vendors) {
+	public String getVendorDetails(@PathVariable Long vendorId, ModelMap model,
+			@ModelAttribute("getEditVendorsListDetails") List<Vendor> vendors) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		
 
 		Vendor vendor = null;
-		
+
 		for (Vendor v : vendors) {
 			if (v.getVendor_id() == vendorId) {
-				
-				vendor=v;
+
+				vendor = v;
 				break;
 			}
 		}
@@ -415,7 +400,6 @@ public class VendorController {
 				List<LinkedHashMap<String, Object>> vendorTypeMap = (List<LinkedHashMap<String, Object>>) response
 						.getBody();
 
-				
 				if (vendorTypeMap != null) {
 					vendorTypeList = new ArrayList<>();
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ERPoAuth.model.VendorType;
-import com.ERPoAuth.model.VendorTypeForm;
 import com.ERPoAuth.service.VendorTypeService;
 
 
