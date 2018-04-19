@@ -69,10 +69,10 @@ public class Grade implements Serializable {
 	
 	
 	
+	
 	@Override
 	public String toString() {
-		return "Grade [gradeId=" + gradeId + ", gradeName=" + gradeName + ", gradeDesc=" + gradeDesc + ", units="
-				+ units + "]";
+		return "Grade [gradeId=" + gradeId + ", gradeName=" + gradeName + ", gradeDesc=" + gradeDesc + "]";
 	}
 	public Grade() {
 		super();

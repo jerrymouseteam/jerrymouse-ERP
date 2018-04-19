@@ -46,13 +46,15 @@ import com.ERP.model.Requisition;
 import com.ERP.model.RequisitionItem;
 import com.ERP.model.Unit;
 import com.ERP.model.User;
+import com.ERP.model.VendorType;
 import com.ERP.service.UserProfileService;
 import com.ERP.util.AuthTokenAccess;
 import com.ERP.util.Utilities;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes({ "roles", "getItemsList2"})
+@SessionAttributes({ "roles", "getItemsList2" })
 public class RequisitionController {
 
 	@Autowired
@@ -66,8 +68,8 @@ public class RequisitionController {
 
 	@Autowired
 	RestTemplate restTemplate;
-	
-	Utilities u= new com.ERP.util.Utilities();
+
+	Utilities u = new com.ERP.util.Utilities();
 
 	/**
 	 * This method will provide the medium to add a new user.
@@ -77,15 +79,13 @@ public class RequisitionController {
 		AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
 
 		Requisition requisition = null;
-		HttpEntity<String> request = new HttpEntity<String>(
-				AuthTokenAccess.getHeaders());
+		HttpEntity<String> request = new HttpEntity<String>(AuthTokenAccess.getHeaders());
 		try {
-			ResponseEntity<Requisition> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI
-							+ "/requisitionAuth/addRequisition"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, Requisition.class);
+			ResponseEntity<Requisition> response = restTemplate
+					.exchange(
+							ErpConstants.REST_SERVICE_URI + "/requisitionAuth/addRequisition"
+									+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+							HttpMethod.GET, request, Requisition.class);
 			requisition = response.getBody();
 		} catch (Exception excep) {
 			excep.printStackTrace();
@@ -122,14 +122,12 @@ public class RequisitionController {
 		GradeUnitVo conventionalVo = new GradeUnitVo();
 		aggregateVo.getGradeType().add(GradeType.N_A.getGradeType());
 		aggregateVo.getUnitType().add(UnitType.sqm.getUnitType());
-		itemTypeMap.put(MaterialType.ConventionalShuttering.getMaterialType(),
-				conventionalVo);
+		itemTypeMap.put(MaterialType.ConventionalShuttering.getMaterialType(), conventionalVo);
 
 		GradeUnitVo mivanVo = new GradeUnitVo();
 		aggregateVo.getGradeType().add(GradeType.N_A.getGradeType());
 		aggregateVo.getUnitType().add(UnitType.sqm.getUnitType());
-		itemTypeMap
-				.put(MaterialType.MivanShuttering.getMaterialType(), mivanVo);
+		itemTypeMap.put(MaterialType.MivanShuttering.getMaterialType(), mivanVo);
 
 		GradeUnitVo rmcVo = new GradeUnitVo();
 		aggregateVo.getGradeType().add(GradeType.M20.getGradeType());
@@ -148,49 +146,21 @@ public class RequisitionController {
 		itemTypeMap.put(MaterialType.Sand.getMaterialType(), sandVo);
 
 		GradeUnitVo steelVo = new GradeUnitVo();
-		aggregateVo.getGradeType().add(
-				GradeType.FE415.getGradeType() + " "
-						+ GradeType.d6mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE415.getGradeType() + " "
-						+ GradeType.d8mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE415.getGradeType() + " "
-						+ GradeType.d12mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE415.getGradeType() + " "
-						+ GradeType.d16mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE415.getGradeType() + " "
-						+ GradeType.d20mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE415.getGradeType() + " "
-						+ GradeType.d25mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE415.getGradeType() + " "
-						+ GradeType.d30mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE415.getGradeType() + " " + GradeType.d6mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE415.getGradeType() + " " + GradeType.d8mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE415.getGradeType() + " " + GradeType.d12mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE415.getGradeType() + " " + GradeType.d16mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE415.getGradeType() + " " + GradeType.d20mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE415.getGradeType() + " " + GradeType.d25mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE415.getGradeType() + " " + GradeType.d30mm.getGradeType());
 
-		aggregateVo.getGradeType().add(
-				GradeType.FE500.getGradeType() + " "
-						+ GradeType.d6mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE500.getGradeType() + " "
-						+ GradeType.d8mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE500.getGradeType() + " "
-						+ GradeType.d12mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE500.getGradeType() + " "
-						+ GradeType.d16mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE500.getGradeType() + " "
-						+ GradeType.d20mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE500.getGradeType() + " "
-						+ GradeType.d25mm.getGradeType());
-		aggregateVo.getGradeType().add(
-				GradeType.FE500.getGradeType() + " "
-						+ GradeType.d30mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE500.getGradeType() + " " + GradeType.d6mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE500.getGradeType() + " " + GradeType.d8mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE500.getGradeType() + " " + GradeType.d12mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE500.getGradeType() + " " + GradeType.d16mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE500.getGradeType() + " " + GradeType.d20mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE500.getGradeType() + " " + GradeType.d25mm.getGradeType());
+		aggregateVo.getGradeType().add(GradeType.FE500.getGradeType() + " " + GradeType.d30mm.getGradeType());
 		aggregateVo.getUnitType().add(UnitType.Mt.getUnitType());
 		itemTypeMap.put(MaterialType.Steel.getMaterialType(), steelVo);
 
@@ -201,15 +171,12 @@ public class RequisitionController {
 		 * will take place.
 		 */
 
-		HttpEntity<String> requestUser = new HttpEntity<String>(
-				AuthTokenAccess.getHeaders());
+		HttpEntity<String> requestUser = new HttpEntity<String>(AuthTokenAccess.getHeaders());
 		User user = null;
 		String userName = getPrincipal();
 		try {
-			ResponseEntity<User> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI + "/user/ssoid/" + userName
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
+			ResponseEntity<User> response = restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/ssoid/"
+					+ userName + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.GET,
 					requestUser, User.class);
 			user = response.getBody();
 		} catch (Exception excep) {
@@ -224,42 +191,33 @@ public class RequisitionController {
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/addrequisition" }, method = RequestMethod.POST)
-	public String createRequisition(
-			@ModelAttribute("requistionForm") Requisition requistion,
-			BindingResult result, ModelMap model) {
-		//AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
-		
+	public String createRequisition(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
+			ModelMap model) {
+		// AuthTokenInfo tokenInfo = AuthTokenAccess.sendTokenRequest();
+
 		System.out.println("==========================================");
-		
-		System.out.println("Requisition : "+requistion);
-		
+
+		System.out.println("Requisition : " + requistion);
+
 		System.out.println("==========================================");
-		
 
-	/*	if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
-			model.addObject("error", result.getAllErrors());
-			model.setViewName("raisedRequistion");
-			return model;
-		}*/
+		/*
+		 * if (result.hasErrors()) { System.out.println(result.getAllErrors());
+		 * model.addObject("error", result.getAllErrors());
+		 * model.setViewName("raisedRequistion"); return model; }
+		 */
 
-	/*	HttpEntity<Object> request = new HttpEntity<Object>(requistionForm,
-				AuthTokenAccess.getHeaders());
-		try {
-			restTemplate.postForEntity(
-					ErpConstants.REST_SERVICE_URI
-							+ "/requisitionAuth/addRequisition/"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), request,
-					Requisition.class);
-		} catch (HttpClientErrorException excep) {
-
-			excep.printStackTrace();
-
-		}*/
-	
-		
-		
+		/*
+		 * HttpEntity<Object> request = new HttpEntity<Object>(requistionForm,
+		 * AuthTokenAccess.getHeaders()); try { restTemplate.postForEntity(
+		 * ErpConstants.REST_SERVICE_URI + "/requisitionAuth/addRequisition/" +
+		 * ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), request,
+		 * Requisition.class); } catch (HttpClientErrorException excep) {
+		 * 
+		 * excep.printStackTrace();
+		 * 
+		 * }
+		 */
 
 		return "raisedRequistion";
 	}
@@ -293,95 +251,72 @@ public class RequisitionController {
 	/* Requistion Controller */
 
 	@RequestMapping(value = { "/raisedRequistion" }, method = RequestMethod.GET)
-	public String raisedRequistion(
-			@ModelAttribute("requistionForm") Requisition requistion,
-			BindingResult result, ModelMap model) {
+	public String raisedRequistion(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
+			ModelMap model) {
 
-		System.out
-				.println("*********** INSIDE raisedRequistion *******************8");
-		
-		
+		System.out.println("*********** INSIDE raisedRequistion *******************8");
+
 		model.addAttribute("editRequisitionStage", "getRequisitionList");
 
 		return "raisedRequistion";
 
 	}
-	
 
 	@RequestMapping(value = { "/editRequisitionDetails/{reqNo}" }, method = RequestMethod.GET)
 	public String editRequisitionDetails(@PathVariable Long reqNo, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting editRequisitionDetails API---------- reqNo :: " + reqNo);
-		
-		Requisition requisition=null;
-		if(reqNo ==1)
-		{
-			requisition=Test.getRequisition1();
-		}
-		else
-		{
 
-			requisition=Test.getRequisition2();
-			
+		Requisition requisition = null;
+		if (reqNo == 1) {
+			requisition = Test.getRequisition1();
+		} else {
+
+			requisition = Test.getRequisition2();
+
 		}
 
-		
-
-		
 		model.addAttribute("requistionForm", requisition);
-	
+
 		model.addAttribute("editRequisitionStage", "editRequisitionDetails");
 		return "editRequistion";
 	}
-	
+
 	@RequestMapping(value = { "/updateRequisitionDetails" }, method = RequestMethod.POST)
 	public String updateMyData(ModelMap model, @ModelAttribute("requistionForm") Requisition requisition) {
 
 		System.out.println("\nTesting updateMyData API---------- Requisition :: " + requisition);
 
-	
-		//model.addAttribute("loggedinuser", u.getPrincipal());
+		// model.addAttribute("loggedinuser", u.getPrincipal());
 		return "redirect:/editRequistion";
 	}
-	
-	
+
 	@RequestMapping(value = { "/getRequisitionDetails/{reqNo}" }, method = RequestMethod.GET)
 	public String getRequisitionDetails(@PathVariable Long reqNo, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting getRequisitionDetails API---------- reqNo :: " + reqNo);
-		
-		Requisition requisition=null;
-		if(reqNo ==1)
-		{
-			requisition=Test.getRequisition1();
-		}
-		else
-		{
 
-			requisition=Test.getRequisition2();
-			
+		Requisition requisition = null;
+		if (reqNo == 1) {
+			requisition = Test.getRequisition1();
+		} else {
+
+			requisition = Test.getRequisition2();
+
 		}
 
-
-		
-
-		
 		model.addAttribute("requistionForm", requisition);
 		model.addAttribute("loggedinuser", u.getPrincipal());
 		model.addAttribute("editRequisitionStage", "getRequisitionDetails");
 		return "editRequistion";
 	}
-	
-	
 
 	@RequestMapping(value = { "/editRequistion" }, method = RequestMethod.GET)
-	public String editRequistion(
-			@ModelAttribute("requistionForm") Requisition requistion,
-			BindingResult result, ModelMap model) {
+	public String editRequistion(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
+			ModelMap model) {
 
-		System.out
-				.println("*********** INSIDE editRequistion *******************8");
-		 requistion=null;
+		System.out.println("*********** INSIDE editRequistion *******************8");
+		requistion = null;
 
 		model.addAttribute("editRequisitionStage", "getRequisitionList");
 		return "editRequistion";
@@ -389,25 +324,44 @@ public class RequisitionController {
 	}
 
 	@RequestMapping(value = { "/deleteRequistion" }, method = RequestMethod.GET)
-	public String deleteRequistion(
-			@ModelAttribute("requistionForm") Requisition requistion,
-			BindingResult result, ModelMap model) {
+	public String deleteRequistion(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
+			ModelMap model) {
 
-		System.out
-				.println("*********** INSIDE raisedRequistion *******************8");
+		System.out.println("*********** INSIDE raisedRequistion *******************8");
 
 		return "deleteRequistion";
 
 	}
-	
-	
+
 	@RequestMapping(value = "/getGradesForItems", method = RequestMethod.GET)
-	public @ResponseBody
-	List<String> getGradesForItems(
+	public @ResponseBody List<String> getGradesForItems(
 			@RequestParam(value = "bankId", required = true) String itemName) {
-		
+
 		System.out.println("*************** finding getGradesForItems for itemName " + itemName);
 		return Test.getGradesForItems(itemName);
+	}
+
+	@RequestMapping(value = "/findGradesByItemId", method = RequestMethod.GET)
+	public @ResponseBody List<Grade> findGradesByItemId(@RequestParam(value = "itemId", required = true) Long itemId,
+			@ModelAttribute("getItemsList2") List<Item> items) {
+
+		System.out.println("*************** finding Grades for itemId " + itemId);
+
+		List<Grade> grades = null;
+		for (Item item : items) {
+
+			if (item.getItemId() == itemId) {
+				grades = new ArrayList<>();
+
+				grades.addAll(item.getGrades());
+
+				break;
+
+			}
+		}
+
+		return grades;
+
 	}
 
 	/**
@@ -415,8 +369,7 @@ public class RequisitionController {
 	 */
 	private String getPrincipal() {
 		String userName = null;
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
 			userName = ((UserDetails) principal).getUsername();
@@ -425,11 +378,64 @@ public class RequisitionController {
 		}
 		return userName;
 	}
-	
+
 	@ModelAttribute("getProjectsList")
-	public List<Project> getProjectsList()
-	{
-		return Test.getProjectListDetails();
+	public List<Project> getProjectsList() {
+		
+
+
+		System.out.println("########################## FETCH PROJECT #################################");
+
+		List<Project> proejctList = null;
+
+		try {
+
+			AuthTokenInfo tokenInfo = sendTokenRequest();
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpEntity<String> request = new HttpEntity<String>(getHeaders());
+			try {
+				ResponseEntity<List> response = restTemplate.exchange(
+						ErpConstants.PROJECT_GET_ALL + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+						HttpMethod.GET, request, List.class);
+				List<LinkedHashMap<String, Object>> projectMap = (List<LinkedHashMap<String, Object>>) response
+						.getBody();
+
+				
+				if (projectMap != null) {
+					proejctList = new ArrayList<>();
+
+					for (LinkedHashMap<String, Object> linkedHashMap : projectMap) {
+
+						Project project = new Project();
+						Integer i = (Integer) linkedHashMap.get("project_id");
+
+						project.setProject_id(i);
+						project.setProjectName((String) linkedHashMap.get("projectName"));
+
+						proejctList.add(project);
+					}
+
+				} else {
+					System.out.println("No Item exist----------");
+				}
+
+			} catch (Exception excep) {
+				excep.printStackTrace();
+			}
+
+		} catch (HttpClientErrorException excep) {
+			excep.printStackTrace();
+		}
+
+		System.out.println("########################## FETCH PROJECT #################################  ");
+		// ==============================================================
+
+		
+		return proejctList;
+	
+		//return Test.getProjectListDetails();
 	}
 
 	@ModelAttribute("getEditRequisitionListDetails")
@@ -501,209 +507,295 @@ public class RequisitionController {
 
 		
 
+		 return Test.getProjectListDetails();
 		
-		return Test.getProjectListDetails();
 	}
 
+	@ModelAttribute("getItemsList")
+	public List<String> getItemsList() {
+		return Test.getItems();
+	}
 
-	
-	 @ModelAttribute("getItemsList")
-	   public List<String> getItemsList() {
-		 return Test.getItems();
-	   }
-	 @ModelAttribute("getItemsList2")
-	   public List<Item> getItemsList2() {
-		 
-		 //===============================================================
-		 System.out.println("########################## FETCH ITEMS #################################");
-		 
-			List<Item> itemList = null;
+	@ModelAttribute("getItemsList2")
+	public List<Item> getItemsList2() {
 
+		System.out.println("########################## FETCH ITEMS #################################");
+
+		List<Item> itemList = null;
+
+		try {
+
+			AuthTokenInfo tokenInfo = sendTokenRequest();
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 			try {
+				ResponseEntity<List> response = restTemplate.exchange(
+						ErpConstants.ITEM_GET_ALL + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+						HttpMethod.GET, request, List.class);
+				List<LinkedHashMap<String, Object>> itemMap = (List<LinkedHashMap<String, Object>>) response.getBody();
 
-				AuthTokenInfo tokenInfo = sendTokenRequest();
+				if (itemMap != null) {
+					itemList = new ArrayList<>();
 
-				RestTemplate restTemplate = new RestTemplate();
+					for (LinkedHashMap<String, Object> linkedHashMap : itemMap) {
 
-				HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-				try {
-					ResponseEntity<List> response = restTemplate.exchange(
-							ErpConstants.ITEM_GET_ALL + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
-							HttpMethod.GET, request, List.class);
-					List<LinkedHashMap<String, Object>> itemMap = (List<LinkedHashMap<String, Object>>) response
-							.getBody();
-					
-					System.out.println("### itemMap : "+itemMap);
+						Item item = new Item();
+						Integer i = (Integer) linkedHashMap.get("itemId");
 
-					if (itemMap != null) {
-						itemList = new ArrayList<>();
+						Long l = i.longValue();
+						item.setItemId(l);
+						item.setItemName((String) linkedHashMap.get("itemName"));
+						item.setItemDesc((String) linkedHashMap.get("itemDesc"));
 
-						for (LinkedHashMap<String, Object> linkedHashMap : itemMap) {
+						/*try {
 
-							Item item = new Item();
-							Integer i = (Integer) linkedHashMap.get("itemId");
+							List<Grade> grades = new ArrayList<>();
+							List<LinkedHashMap<String, Object>> gradeMap = (List<LinkedHashMap<String, Object>>) linkedHashMap
+									.get("grades");
 
-							Long l = i.longValue();
-							item.setItemId(l);
-							item.setItemName((String) linkedHashMap.get("itemName"));
-							item.setItemDesc((String) linkedHashMap.get("itemDesc"));
-								
-							try {
-								
-								List<Grade> grades=new ArrayList<>();
-								List<LinkedHashMap<String, Object>> gradeMap = (List<LinkedHashMap<String, Object>>) linkedHashMap
-										.get("grades");
-								
-								for (LinkedHashMap<String, Object> linkedHashGradeMap : gradeMap) {
-									
-									Grade grade = new Grade();
-									
-									grade.setGradeId(((Integer) linkedHashGradeMap.get("gradeId")).longValue());
-									grade.setGradeName((String) linkedHashGradeMap.get("gradeName"));
-									grade.setGradeDesc((String) linkedHashMap.get("gradeDesc"));
-									
-									List<LinkedHashMap<String, Object>> unitMap = (List<LinkedHashMap<String, Object>>) linkedHashGradeMap
-											.get("units");
-									
-									List<Unit> units=new ArrayList<>();
-									for (LinkedHashMap<String, Object> linkedHashUnitMap : unitMap) {
-										
-										Unit unit = new Unit();
-										
-										unit.setUnitId(((Integer) linkedHashUnitMap.get("unitId")).longValue());
-										unit.setUnitName((String) linkedHashUnitMap.get("unitName"));
-										unit.setUnitDesc((String) linkedHashMap.get("unitDesc"));
-										units.add(unit);
-									}
-									grade.setUnits(units);
-									grades.add(grade);
+							for (LinkedHashMap<String, Object> linkedHashGradeMap : gradeMap) {
+
+								Grade grade = new Grade();
+
+								grade.setGradeId(((Integer) linkedHashGradeMap.get("gradeId")).longValue());
+								grade.setGradeName((String) linkedHashGradeMap.get("gradeName"));
+								grade.setGradeDesc((String) linkedHashMap.get("gradeDesc"));
+
+								List<LinkedHashMap<String, Object>> unitMap = (List<LinkedHashMap<String, Object>>) linkedHashGradeMap
+										.get("units");
+
+								List<Unit> units = new ArrayList<>();
+								for (LinkedHashMap<String, Object> linkedHashUnitMap : unitMap) {
+
+									Unit unit = new Unit();
+
+									unit.setUnitId(((Integer) linkedHashUnitMap.get("unitId")).longValue());
+									unit.setUnitName((String) linkedHashUnitMap.get("unitName"));
+									unit.setUnitDesc((String) linkedHashMap.get("unitDesc"));
+									units.add(unit);
 								}
-								item.setGrades(grades);
-								
-							} catch (Exception e) {
-								
-								
-								e.printStackTrace();
+								grade.setUnits(units);
+								grades.add(grade);
 							}
+							item.setGrades(grades);
 
+						} catch (Exception e) {
 
-							itemList.add(item);
-						}
+							e.printStackTrace();
+						}*/
 
-					} else {
-						System.out.println("No Item exist----------");
+						itemList.add(item);
 					}
 
-				} catch (Exception excep) {
-					excep.printStackTrace();
+				} else {
+					System.out.println("No Item exist----------");
 				}
 
-			} catch (HttpClientErrorException excep) {
+			} catch (Exception excep) {
 				excep.printStackTrace();
 			}
-		 
-			 System.out.println("########################## FETCH ITEMS ################################# itemList "+itemList);
-		 //==============================================================
-		 
-		 
-		 return Test.getItemsList();
-	   }
-	 
-	 
-	 @ModelAttribute("getGradesList")
-	   public List<String> getGradesList() {
-		 return Test.getGrades();
-	   }
-	 
-	 @ModelAttribute("getGradesList2")
-	   public List<Grade> getGradesList2() {
-		 return Test.getGradesList();
-	   }
-	 
-	 @ModelAttribute("getQuantitiesList")
-	   public List<String> getQuantitiesList() {
-		 return Test.getQuantities();
-	   }
-	 
-	 @ModelAttribute("getUnitsList")
-	   public List<String> getUnitsList() {
-		 return Test.getUnits();
-	   }
-	 
-	 @ModelAttribute("getUnitsList2")
-	   public List<Unit> getUnitsList2() {
-		 return Test.getUnitsList();
-	   }
-	 
-	 @ModelAttribute("getRequisitionItemsList")
-	   public List<RequisitionItem> getRequisitionItemsList() {
-		 return Test.getRequisitionItems();
-	   }
-	 
-	 @ModelAttribute("getRequisitionsList")
-	   public List<Requisition> getRequisitionsList() {
-		 return Test.getRequisitions();
-	   }
-	 
-	 
-	 private static HttpHeaders getHeaders() {
-			HttpHeaders headers = new HttpHeaders();
-			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-			return headers;
-		}
-	 
-	 /*
-		 * Add HTTP Authorization header, using Basic-Authentication to send
-		 * client-credentials.
-		 */
-		private static HttpHeaders getHeadersWithClientCredentials() {
-			String plainClientCredentials = "my-trusted-client:secret";
-			String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
 
-			HttpHeaders headers = getHeaders();
-			headers.add("Authorization", "Basic " + base64ClientCredentials);
-			return headers;
+		} catch (HttpClientErrorException excep) {
+			excep.printStackTrace();
 		}
-	 
-	 @SuppressWarnings({ "unchecked" })
-		private static AuthTokenInfo sendTokenRequest() {
-			AuthTokenInfo tokenInfo = null;
+
+		System.out.println("########################## FETCH ITEMS #################################  ");
+		// ==============================================================
+
+		// return Test.getItemsList();
+		return itemList;
+	}
+
+	@ModelAttribute("getGradesList")
+	public List<String> getGradesList() {
+		return Test.getGrades();
+	}
+
+	@ModelAttribute("getGradesList2")
+	public List<Grade> getGradesList2() {
+
+		System.out.println("########################## FETCH GRADE #################################");
+
+		List<Grade> gradeList = null;
+
+		try {
+
+			AuthTokenInfo tokenInfo = sendTokenRequest();
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 			try {
-				RestTemplate restTemplate = new RestTemplate();
-				HttpHeaders h = getHeadersWithClientCredentials();
-				HttpEntity<String> request = new HttpEntity<String>(h);
-				ResponseEntity<Object> response = restTemplate.exchange(
-						ErpConstants.AUTH_SERVER_URI + ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST, request,
-						Object.class);
-				LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
+				ResponseEntity<List> response = restTemplate.exchange(
+						ErpConstants.GRADE_GET_ALL + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+						HttpMethod.GET, request, List.class);
+				List<LinkedHashMap<String, Object>> gradeMap = (List<LinkedHashMap<String, Object>>) response.getBody();
 
-				System.out.println("************************* map " + map);
-				if (map != null) {
-					tokenInfo = new AuthTokenInfo();
-					tokenInfo.setAccess_token((String) map.get("access_token"));
-					tokenInfo.setToken_type((String) map.get("token_type"));
-					tokenInfo.setRefresh_token((String) map.get("refresh_token"));
-					tokenInfo.setExpires_in((Integer) map.get("expires_in"));
-					tokenInfo.setScope((String) map.get("scope"));
-					System.out.println("################# " + tokenInfo);
-					// System.out.println("access_token
-					// ="+map.get("access_token")+",
-					// token_type="+map.get("token_type")+",
-					// refresh_token="+map.get("refresh_token")
-					// +", expires_in="+map.get("expires_in")+",
-					// scope="+map.get("scope"));;
+				if (gradeMap != null) {
+					gradeList = new ArrayList<>();
+
+					for (LinkedHashMap<String, Object> linkedHashMap : gradeMap) {
+
+						Grade grade = new Grade();
+
+						grade.setGradeId(((Integer) linkedHashMap.get("gradeId")).longValue());
+						grade.setGradeName((String) linkedHashMap.get("gradeName"));
+						grade.setGradeDesc((String) linkedHashMap.get("gradeDesc"));
+						gradeList.add(grade);
+					}
+
 				} else {
-					System.out.println("############# No user exist----------");
-
+					System.out.println("No Item exist----------");
 				}
-				return tokenInfo;
-			} catch (final HttpClientErrorException e) {
-				System.out.println(e.getStatusCode());
-				System.out.println(e.getResponseBodyAsString());
-				e.printStackTrace();
+
+			} catch (Exception excep) {
+				excep.printStackTrace();
+			}
+
+		} catch (HttpClientErrorException excep) {
+			excep.printStackTrace();
+		}
+
+		System.out.println("########################## FETCH GRADE #################################  ");
+
+		// return Test.getGradesList();
+
+		return gradeList;
+	}
+
+	@ModelAttribute("getQuantitiesList")
+	public List<String> getQuantitiesList() {
+		return Test.getQuantities();
+	}
+
+	@ModelAttribute("getUnitsList")
+	public List<String> getUnitsList() {
+		return Test.getUnits();
+	}
+
+	@ModelAttribute("getUnitsList2")
+	public List<Unit> getUnitsList2() {
+
+		System.out.println("########################## FETCH UNIT #################################");
+
+		List<Unit> unitList = null;
+
+		try {
+
+			AuthTokenInfo tokenInfo = sendTokenRequest();
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpEntity<String> request = new HttpEntity<String>(getHeaders());
+			try {
+				ResponseEntity<List> response = restTemplate.exchange(
+						ErpConstants.UNIT_GET_ALL + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+						HttpMethod.GET, request, List.class);
+				List<LinkedHashMap<String, Object>> unitMap = (List<LinkedHashMap<String, Object>>) response.getBody();
+
+				if (unitMap != null) {
+					unitList = new ArrayList<>();
+
+					for (LinkedHashMap<String, Object> linkedHashMap : unitMap) {
+
+						Unit unit = new Unit();
+
+						unit.setUnitId(((Integer) linkedHashMap.get("unitId")).longValue());
+						unit.setUnitName((String) linkedHashMap.get("unitName"));
+						unit.setUnitDesc((String) linkedHashMap.get("unitDesc"));
+						unitList.add(unit);
+					}
+
+				} else {
+					System.out.println("No Unit exist----------");
+				}
+
+			} catch (Exception excep) {
+				excep.printStackTrace();
+			}
+
+		} catch (HttpClientErrorException excep) {
+			excep.printStackTrace();
+		}
+
+		System.out.println("########################## FETCH UNIT #################################  ");
+
+		// return Test.getGradesList();
+
+		return unitList;
+
+		// return Test.getUnitsList();
+	}
+
+	@ModelAttribute("getRequisitionItemsList")
+	public List<RequisitionItem> getRequisitionItemsList() {
+		return Test.getRequisitionItems();
+	}
+
+	@ModelAttribute("getRequisitionsList")
+	public List<Requisition> getRequisitionsList() {
+		return Test.getRequisitions();
+	}
+
+	private static HttpHeaders getHeaders() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		return headers;
+	}
+
+	/*
+	 * Add HTTP Authorization header, using Basic-Authentication to send
+	 * client-credentials.
+	 */
+	private static HttpHeaders getHeadersWithClientCredentials() {
+		String plainClientCredentials = "my-trusted-client:secret";
+		String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
+
+		HttpHeaders headers = getHeaders();
+		headers.add("Authorization", "Basic " + base64ClientCredentials);
+		return headers;
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	private static AuthTokenInfo sendTokenRequest() {
+		AuthTokenInfo tokenInfo = null;
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			HttpHeaders h = getHeadersWithClientCredentials();
+			HttpEntity<String> request = new HttpEntity<String>(h);
+			ResponseEntity<Object> response = restTemplate.exchange(
+					ErpConstants.AUTH_SERVER_URI + ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST, request,
+					Object.class);
+			LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
+
+			System.out.println("************************* map " + map);
+			if (map != null) {
+				tokenInfo = new AuthTokenInfo();
+				tokenInfo.setAccess_token((String) map.get("access_token"));
+				tokenInfo.setToken_type((String) map.get("token_type"));
+				tokenInfo.setRefresh_token((String) map.get("refresh_token"));
+				tokenInfo.setExpires_in((Integer) map.get("expires_in"));
+				tokenInfo.setScope((String) map.get("scope"));
+				System.out.println("################# " + tokenInfo);
+				// System.out.println("access_token
+				// ="+map.get("access_token")+",
+				// token_type="+map.get("token_type")+",
+				// refresh_token="+map.get("refresh_token")
+				// +", expires_in="+map.get("expires_in")+",
+				// scope="+map.get("scope"));;
+			} else {
+				System.out.println("############# No user exist----------");
+
 			}
 			return tokenInfo;
+		} catch (final HttpClientErrorException e) {
+			System.out.println(e.getStatusCode());
+			System.out.println(e.getResponseBodyAsString());
+			e.printStackTrace();
 		}
-	 
-	 
+		return tokenInfo;
+	}
+
 }

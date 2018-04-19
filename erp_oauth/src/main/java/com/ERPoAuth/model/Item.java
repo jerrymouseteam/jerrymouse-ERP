@@ -66,10 +66,10 @@ public class Item implements Serializable {
 	
 	
 	
+	
 	@Override
 	public String toString() {
-		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemDesc=" + itemDesc + ", grades=" + grades
-				+ "]";
+		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemDesc=" + itemDesc + "]";
 	}
 	public Item() {
 		super();

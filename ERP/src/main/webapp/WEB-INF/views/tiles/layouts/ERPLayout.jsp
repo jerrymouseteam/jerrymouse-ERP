@@ -197,33 +197,22 @@ iframe {
 		
 		//====================================
 		
-			 /*   $('select').change(
+			/*  $('#requisitionItemParameterses[1].itemId').change(
 			function() {
-				 var id = $(this).attr('id');
-				if((id.indexOf("items") > -1))
-				  {
-					
-					$.getJSON('/ERP/getGradesForItems', {
-						bankId : $(this).val(),
-						ajax : 'true'
-					}, function(data) {
-						var html = '<option value="">------ Select Grade ------</option>';
-						var len = data.length;
-						for ( var i = 0; i < len; i++) {
-							html += '<option value="' + data[i] + '">'
-									+ data[i]+ '</option>';
-						}
-						html += '</option>';
-		 
-						$('#requisitionItemParameterses[1].grades').html(html);
-					});
-					
-				  }
-				else
-					{
-						alert("NA...");
+				$.getJSON('/ERP/findGradesByItemId', {
+					itemId : $(this).val(),
+					ajax : 'true'
+				}, function(data) {
+					var html = '<option value="">------ Select Grades ------</option>';
+					var len = data.length;
+					for ( var i = 0; i < len; i++) {
+						html += '<option value="' + data[i].gradeId + '">'
+								+ data[i].gradeName + '</option>';
 					}
-				
+					html += '</option>';
+	 
+					$('#requisitionItemParameterses[1].gradeId').html(html);
+				});
 			}); */
 		
 		

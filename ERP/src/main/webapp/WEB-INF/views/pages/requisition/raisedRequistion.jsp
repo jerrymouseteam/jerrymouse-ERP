@@ -158,7 +158,7 @@
 												<tr>
 													<th><input type="checkbox" name="selectAll"
 														id="selectAll" class="form-control"
-														onclick="javascript:selectAllFunction('dataTable');"/></th>
+														onclick="javascript:selectAllFunction('dataTable');" /></th>
 
 
 
@@ -276,6 +276,15 @@
 		selectItem.setAttribute("name", "requisitionItemParameterses[" + length
 				+ "].itemId");
 		selectItem.setAttribute("class", "form-control items");
+
+		/*  selectItem.onclick = function() {selectedItem("requisitionItemParameterses[" + length
+				+ "].itemId","requisitionItemParameterses[" + length
+				+ "].gradeId");};  */
+
+		 /* var itemId = "requisitionItemParameterses[" + length + "].itemId";
+		var gradeId = "requisitionItemParameterses[" + length + "].gradeId";
+		selectItem.setAttribute('onclick', 'selectedItem('+itemId+','+gradeId+');');  */
+
 		cell1.appendChild(selectItem);
 
 		<c:forEach var="itemListName2" items="${getItemsList2}" varStatus="loop">
@@ -384,12 +393,12 @@
 		var length = (table.rows.length) - 1;
 
 		var val = document.getElementById("selectAll").checked;
-		
+
 		for (var i = 1; i <= length; i++) {
 			var v = "requisitionItemParameterses[" + i + "].checked"
-			
+
 			var myEle = document.getElementById(v);
-			
+
 			if (myEle) {
 				if (val) {
 
@@ -401,5 +410,60 @@
 
 		}
 
+	}
+
+	function selectedItem(itemIdName, gradeIdName) {
+		
+		/* alert('22222222222');
+
+		var itemIdNameVar = itemIdName;
+		var gradeIdNameVar = gradeIdName;
+		
+		var itemId = $(this).val();
+	        $.ajax({
+	            url : '/ERP/findGradesByItemId/'+itemId,
+	            success : function(data) {
+	            	
+	            	var html = '<option value="">------ Select Grade ------</option>';
+					var len = data.length;
+					for (var i = 0; i < len; i++) {
+						html += '<option value="' + data[i].gradeId + '">'
+								+ data[i].gradeName
+								+ '</option>';
+					}
+					html += '</option>';
+
+					$('#requisitionItemParameterses[1].gradeId').html(
+							html);
+	                //$('#result').html(data);
+	            }
+	        }); */
+	    
+	
+		/* $('#requisitionItemParameterses[1].itemId')
+				.change(
+						function() {
+							alert('11111111111111');
+							$
+									.getJSON(
+											'/ERP/findGradesByItemId',
+											{
+												itemId : $(this).val(),
+												ajax : 'true'
+											},
+											function(data) {
+												var html = '<option value="">------ Select Grade ------</option>';
+												var len = data.length;
+												for (var i = 0; i < len; i++) {
+													html += '<option value="' + data[i].gradeId + '">'
+															+ data[i].gradeName
+															+ '</option>';
+												}
+												html += '</option>';
+
+												$('#requisitionItemParameterses[1].gradeId').html(
+														html);
+											});
+						}); */
 	}
 </SCRIPT>

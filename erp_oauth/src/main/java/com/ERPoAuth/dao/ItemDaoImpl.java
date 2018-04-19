@@ -63,7 +63,7 @@ public class ItemDaoImpl extends AbstractDao<Long, Item> implements ItemDao {
 
 		List<Item> items = (List<Item>) criteria.list();
 		
-		System.out.println("### Item Dao findAllItems items -- "+items);
+		//System.out.println("### Item Dao findAllItems items -- "+items);
 		return items;
 	}
 

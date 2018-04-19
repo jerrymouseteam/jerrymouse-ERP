@@ -34,7 +34,7 @@ public class ItemRestController {
 	
 		System.out.println("================= ItemRestController - getAllItems ====================");
 		List<Item> ItemList = itemService.findAllItems();
-		System.out.println("================= ItemRestController - getAllItems - ItemList : "+ItemList);
+		//System.out.println("================= ItemRestController - getAllItems - ItemList : "+ItemList);
 		if (ItemList.isEmpty()) {
 			return new ResponseEntity<List<Item>>(HttpStatus.NO_CONTENT);
 		}

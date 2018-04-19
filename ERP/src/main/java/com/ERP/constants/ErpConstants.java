@@ -17,6 +17,9 @@ public class ErpConstants {
 	public static final String QPM_PASSWORD_GRANT = "?grant_type=password&username=Sam&password=abc125";
 
 	public static final String QPM_ACCESS_TOKEN = "?access_token=";
+	
+	
+	public static final String PROJECT_GET_ALL = REST_SERVICE_URI + "/project/list/";
 
 	public static final String BANK_CREATE = REST_SERVICE_URI + "/bank/create/";
 	public static final String BANK_UPDATE = REST_SERVICE_URI + "/bank/create/";
@@ -57,6 +60,20 @@ public class ErpConstants {
 	public static final String ITEM_GET_ALL = REST_SERVICE_URI + "/item/list/";
 	public static final String ITEM_GET_MESSAGE = REST_SERVICE_URI + "/item/message";
 	public static final String ITEM_GET_BY_ID = REST_SERVICE_URI + "/item/{itemId}";
+	
+	public static final String GRADE_CREATE = REST_SERVICE_URI + "/grade/create/";
+	public static final String GRADE_UPDATE = REST_SERVICE_URI + "/grade/{gradeId}";
+	public static final String GRADE_DELETE = REST_SERVICE_URI + "/grade/{gradeId}";
+	public static final String GRADE_GET_ALL = REST_SERVICE_URI + "/grade/list/";
+	public static final String GRADE_GET_MESSAGE = REST_SERVICE_URI + "/grade/message";
+	public static final String GRADE_GET_BY_ID = REST_SERVICE_URI + "/grade/{gradeId}";
+	
+	public static final String UNIT_CREATE = REST_SERVICE_URI + "/unit/create/";
+	public static final String UNIT_UPDATE = REST_SERVICE_URI + "/unit/{unitId}";
+	public static final String UNIT_DELETE = REST_SERVICE_URI + "/unit/{unitId}";
+	public static final String UNIT_GET_ALL = REST_SERVICE_URI + "/unit/list/";
+	public static final String UNIT_GET_MESSAGE = REST_SERVICE_URI + "/unit/message";
+	public static final String UNIT_GET_BY_ID = REST_SERVICE_URI + "/unit/{unitId}";
 
 	public static final String VENDOR_BANK_PROFILE_CREATE = REST_SERVICE_URI + "/vendorBankProfile/create/";
 	public static final String VENDOR_BANK_PROFILE_UPDATE = REST_SERVICE_URI
