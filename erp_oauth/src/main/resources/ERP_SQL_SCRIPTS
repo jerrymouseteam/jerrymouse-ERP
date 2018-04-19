@@ -77,4 +77,175 @@ INSERT INTO `vendortypes` (`vendorType_id`, `vendorType_name`) VALUES
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-sss
+
+
+================
+FOR ITEM GRADE UNIT
+
+
+
+-- Dumping structure for table procurement.grades
+CREATE TABLE IF NOT EXISTS grades (
+  gradeId bigint(20) NOT NULL AUTO_INCREMENT,
+  gradeDesc varchar(255) DEFAULT NULL,
+  gradeName varchar(255) DEFAULT NULL,
+  PRIMARY KEY (gradeId),
+  UNIQUE KEY UK_2vae5uan65j1no7nhe7rdcxai (gradeName)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table procurement.grades: ~23 rows (approximately)
+DELETE FROM grades;
+/*!40000 ALTER TABLE grades DISABLE KEYS */;
+INSERT INTO grades (gradeId, gradeDesc, gradeName) VALUES
+	(1, 'PPC', 'PPC'),
+	(2, 'OPC33', 'OPC33'),
+	(3, 'OPC43', 'OPC43'),
+	(4, 'OPC53 ', 'OPC53 '),
+	(5, 'M20', 'M20'),
+	(6, 'M25', 'M25'),
+	(7, 'M30', 'M30'),
+	(8, 'M35', 'M35'),
+	(9, 'M40', 'M40'),
+	(10, 'M45', 'M45'),
+	(11, 'M50', 'M50'),
+	(12, 'd6mm', 'd6mm'),
+	(13, 'd8mm', 'd8mm'),
+	(14, 'd12mm', 'd12mm'),
+	(15, 'd16mm', 'd16mm'),
+	(16, 'd20mm', 'd20mm'),
+	(17, 'd25mm', 'd25mm'),
+	(18, 'd32mm', 'd32mm'),
+	(19, 'inch4', 'inch4'),
+	(20, 'inch6', 'inch6'),
+	(21, 'M1', 'M1'),
+	(22, 'M2', 'M2'),
+	(23, 'N/A', 'N/A');
+/*!40000 ALTER TABLE grades ENABLE KEYS */;
+
+-- Dumping structure for table procurement.grade_units
+CREATE TABLE IF NOT EXISTS grade_units (
+  gradeId bigint(20) NOT NULL,
+  unitId bigint(20) NOT NULL,
+  KEY FK_o3i419mew5lrv02fhig9p9no9 (unitId),
+  KEY FK_i7wmxwdyl2t83btjf4yvhgiw7 (gradeId),
+  CONSTRAINT FK_i7wmxwdyl2t83btjf4yvhgiw7 FOREIGN KEY (gradeId) REFERENCES grades (gradeId),
+  CONSTRAINT FK_o3i419mew5lrv02fhig9p9no9 FOREIGN KEY (unitId) REFERENCES units (unitId)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table procurement.grade_units: ~23 rows (approximately)
+DELETE FROM grade_units;
+/*!40000 ALTER TABLE grade_units DISABLE KEYS */;
+INSERT INTO grade_units (gradeId, unitId) VALUES
+	(1, 1),
+	(2, 1),
+	(3, 1),
+	(4, 1),
+	(5, 2),
+	(6, 2),
+	(7, 2),
+	(8, 2),
+	(9, 2),
+	(10, 2),
+	(11, 2),
+	(12, 3),
+	(13, 3),
+	(14, 3),
+	(15, 3),
+	(16, 3),
+	(17, 3),
+	(18, 3),
+	(19, 4),
+	(20, 4),
+	(21, 5),
+	(22, 5),
+	(23, 6);
+/*!40000 ALTER TABLE grade_units ENABLE KEYS */;
+
+-- Dumping structure for table procurement.items
+CREATE TABLE IF NOT EXISTS items (
+  itemId bigint(20) NOT NULL AUTO_INCREMENT,
+  itemDesc varchar(255) DEFAULT NULL,
+  itemName varchar(255) DEFAULT NULL,
+  PRIMARY KEY (itemId),
+  UNIQUE KEY UK_ix851y7kx79s8w5kg2bixd9xi (itemName)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table procurement.items: ~6 rows (approximately)
+DELETE FROM items;
+/*!40000 ALTER TABLE items DISABLE KEYS */;
+INSERT INTO items (itemId, itemDesc, itemName) VALUES
+	(1, 'Cement', 'Cement'),
+	(2, 'RMC', 'RMC'),
+	(3, 'Steel', 'Steel'),
+	(4, 'Blocks', 'Blocks'),
+	(5, 'Aggregates', 'Aggregates'),
+	(6, 'Sand', 'Sand');
+/*!40000 ALTER TABLE items ENABLE KEYS */;
+
+-- Dumping structure for table procurement.item_grades
+CREATE TABLE IF NOT EXISTS item_grades (
+  itemId bigint(20) NOT NULL,
+  gradeId bigint(20) NOT NULL,
+  KEY FK_cnmb2osfpdbmhjnrugbggdbd3 (gradeId),
+  KEY FK_j7m8wreyi9r3iscqe1yqam3hf (itemId),
+  CONSTRAINT FK_j7m8wreyi9r3iscqe1yqam3hf FOREIGN KEY (itemId) REFERENCES items (itemId),
+  CONSTRAINT FK_cnmb2osfpdbmhjnrugbggdbd3 FOREIGN KEY (gradeId) REFERENCES grades (gradeId)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table procurement.item_grades: ~23 rows (approximately)
+DELETE FROM item_grades;
+/*!40000 ALTER TABLE item_grades DISABLE KEYS */;
+INSERT INTO item_grades (itemId, gradeId) VALUES
+	(1, 1),
+	(1, 2),
+	(1, 3),
+	(1, 4),
+	(2, 5),
+	(2, 6),
+	(2, 7),
+	(2, 8),
+	(2, 9),
+	(2, 10),
+	(2, 11),
+	(3, 12),
+	(3, 13),
+	(3, 14),
+	(3, 15),
+	(3, 16),
+	(3, 17),
+	(3, 18),
+	(4, 19),
+	(4, 20),
+	(5, 21),
+	(5, 22),
+	(6, 23);
+/*!40000 ALTER TABLE item_grades ENABLE KEYS */;
+
+-- Dumping structure for table procurement.units
+CREATE TABLE IF NOT EXISTS units (
+  unitId bigint(20) NOT NULL AUTO_INCREMENT,
+  unitDesc varchar(255) DEFAULT NULL,
+  unitName varchar(255) DEFAULT NULL,
+  PRIMARY KEY (unitId),
+  UNIQUE KEY UK_j9t6byk2g2epy55tpmfu8b9i3 (unitName)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table procurement.units: ~6 rows (approximately)
+DELETE FROM units;
+/*!40000 ALTER TABLE units DISABLE KEYS */;
+INSERT INTO units (unitId, unitDesc, unitName) VALUES
+	(1, 'bags', 'bags'),
+	(2, 'cum', 'cum'),
+	(3, 'kg', 'kg'),
+	(4, 'sqm', 'sqm'),
+	(5, 'brass', 'brass'),
+	(6, 'N/A', 'N/A');
+/*!40000 ALTER TABLE units ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+
+====================
+

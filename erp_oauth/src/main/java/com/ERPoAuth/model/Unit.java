@@ -1,22 +1,36 @@
-package com.ERP.model;
+package com.ERPoAuth.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="units")
 public class Unit implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long unitId;
-	
+	@Column(unique=true)
 	private String unitName;
 	private String unitDesc;
 	
-	
+	@ManyToMany(mappedBy="units")
     private List<Grade> grades = new ArrayList<>();
 	
 	public long getUnitId() {
@@ -46,13 +60,6 @@ public class Unit implements Serializable {
 		this.grades = grades;
 	}
 	
-	
-	
-	public Unit(long unitId, String unitName) {
-		super();
-		this.unitId = unitId;
-		this.unitName = unitName;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

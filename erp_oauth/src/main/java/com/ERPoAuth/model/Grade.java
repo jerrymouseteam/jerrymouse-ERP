@@ -1,36 +1,45 @@
-package com.ERP.model;
+package com.ERPoAuth.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="grades")
 public class Grade implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long gradeId;
-	
+	@Column(unique=true)
 	private String gradeName;
 	private String gradeDesc;
 	
-	
+	@ManyToMany(mappedBy="grades")
     private List<Item> items = new ArrayList<>();
 	
-	
+	@ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinTable(name = "grade_units",joinColumns = @JoinColumn(name = "gradeId"),inverseJoinColumns = @JoinColumn(name = "unitId"))
 	
 	private List<Unit> units=new ArrayList<>();
 	
-	
-	
-	public Grade(long gradeId, String gradeName) {
-		super();
-		this.gradeId = gradeId;
-		this.gradeName = gradeName;
-	}
 	public long getGradeId() {
 		return gradeId;
 	}

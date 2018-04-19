@@ -49,6 +49,14 @@ public class ErpConstants {
 	public static final String VENDOR_TYPE_GET_ALL = REST_SERVICE_URI + "/vendorType/list/";
 	public static final String VENDOR_TYPE_GET_MESSAGE = REST_SERVICE_URI + "/vendorType/message";
 	public static final String VENDOR_TYPE_GET_BY_ID = REST_SERVICE_URI + "/vendorType/{vendorTypeId}";
+	
+	
+	public static final String ITEM_CREATE = REST_SERVICE_URI + "/item/create/";
+	public static final String ITEM_UPDATE = REST_SERVICE_URI + "/item/{itemId}";
+	public static final String ITEM_DELETE = REST_SERVICE_URI + "/item/{itemId}";
+	public static final String ITEM_GET_ALL = REST_SERVICE_URI + "/item/list/";
+	public static final String ITEM_GET_MESSAGE = REST_SERVICE_URI + "/item/message";
+	public static final String ITEM_GET_BY_ID = REST_SERVICE_URI + "/item/{itemId}";
 
 	public static final String VENDOR_BANK_PROFILE_CREATE = REST_SERVICE_URI + "/vendorBankProfile/create/";
 	public static final String VENDOR_BANK_PROFILE_UPDATE = REST_SERVICE_URI

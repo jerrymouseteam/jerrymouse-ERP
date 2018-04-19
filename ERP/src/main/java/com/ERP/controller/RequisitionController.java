@@ -1,15 +1,20 @@
 package com.ERP.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.ERP.constants.ErpConstants;
@@ -46,7 +52,7 @@ import com.ERP.util.Utilities;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes("roles")
+@SessionAttributes({ "roles", "getItemsList2"})
 public class RequisitionController {
 
 	@Autowired
@@ -507,6 +513,99 @@ public class RequisitionController {
 	   }
 	 @ModelAttribute("getItemsList2")
 	   public List<Item> getItemsList2() {
+		 
+		 //===============================================================
+		 System.out.println("########################## FETCH ITEMS #################################");
+		 
+			List<Item> itemList = null;
+
+			try {
+
+				AuthTokenInfo tokenInfo = sendTokenRequest();
+
+				RestTemplate restTemplate = new RestTemplate();
+
+				HttpEntity<String> request = new HttpEntity<String>(getHeaders());
+				try {
+					ResponseEntity<List> response = restTemplate.exchange(
+							ErpConstants.ITEM_GET_ALL + ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+							HttpMethod.GET, request, List.class);
+					List<LinkedHashMap<String, Object>> itemMap = (List<LinkedHashMap<String, Object>>) response
+							.getBody();
+					
+					System.out.println("### itemMap : "+itemMap);
+
+					if (itemMap != null) {
+						itemList = new ArrayList<>();
+
+						for (LinkedHashMap<String, Object> linkedHashMap : itemMap) {
+
+							Item item = new Item();
+							Integer i = (Integer) linkedHashMap.get("itemId");
+
+							Long l = i.longValue();
+							item.setItemId(l);
+							item.setItemName((String) linkedHashMap.get("itemName"));
+							item.setItemDesc((String) linkedHashMap.get("itemDesc"));
+								
+							try {
+								
+								List<Grade> grades=new ArrayList<>();
+								List<LinkedHashMap<String, Object>> gradeMap = (List<LinkedHashMap<String, Object>>) linkedHashMap
+										.get("grades");
+								
+								for (LinkedHashMap<String, Object> linkedHashGradeMap : gradeMap) {
+									
+									Grade grade = new Grade();
+									
+									grade.setGradeId(((Integer) linkedHashGradeMap.get("gradeId")).longValue());
+									grade.setGradeName((String) linkedHashGradeMap.get("gradeName"));
+									grade.setGradeDesc((String) linkedHashMap.get("gradeDesc"));
+									
+									List<LinkedHashMap<String, Object>> unitMap = (List<LinkedHashMap<String, Object>>) linkedHashGradeMap
+											.get("units");
+									
+									List<Unit> units=new ArrayList<>();
+									for (LinkedHashMap<String, Object> linkedHashUnitMap : unitMap) {
+										
+										Unit unit = new Unit();
+										
+										unit.setUnitId(((Integer) linkedHashUnitMap.get("unitId")).longValue());
+										unit.setUnitName((String) linkedHashUnitMap.get("unitName"));
+										unit.setUnitDesc((String) linkedHashMap.get("unitDesc"));
+										units.add(unit);
+									}
+									grade.setUnits(units);
+									grades.add(grade);
+								}
+								item.setGrades(grades);
+								
+							} catch (Exception e) {
+								
+								
+								e.printStackTrace();
+							}
+
+
+							itemList.add(item);
+						}
+
+					} else {
+						System.out.println("No Item exist----------");
+					}
+
+				} catch (Exception excep) {
+					excep.printStackTrace();
+				}
+
+			} catch (HttpClientErrorException excep) {
+				excep.printStackTrace();
+			}
+		 
+			 System.out.println("########################## FETCH ITEMS ################################# itemList "+itemList);
+		 //==============================================================
+		 
+		 
 		 return Test.getItemsList();
 	   }
 	 
@@ -546,6 +645,65 @@ public class RequisitionController {
 		 return Test.getRequisitions();
 	   }
 	 
+	 
+	 private static HttpHeaders getHeaders() {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+			return headers;
+		}
+	 
+	 /*
+		 * Add HTTP Authorization header, using Basic-Authentication to send
+		 * client-credentials.
+		 */
+		private static HttpHeaders getHeadersWithClientCredentials() {
+			String plainClientCredentials = "my-trusted-client:secret";
+			String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
+
+			HttpHeaders headers = getHeaders();
+			headers.add("Authorization", "Basic " + base64ClientCredentials);
+			return headers;
+		}
+	 
+	 @SuppressWarnings({ "unchecked" })
+		private static AuthTokenInfo sendTokenRequest() {
+			AuthTokenInfo tokenInfo = null;
+			try {
+				RestTemplate restTemplate = new RestTemplate();
+				HttpHeaders h = getHeadersWithClientCredentials();
+				HttpEntity<String> request = new HttpEntity<String>(h);
+				ResponseEntity<Object> response = restTemplate.exchange(
+						ErpConstants.AUTH_SERVER_URI + ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST, request,
+						Object.class);
+				LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
+
+				System.out.println("************************* map " + map);
+				if (map != null) {
+					tokenInfo = new AuthTokenInfo();
+					tokenInfo.setAccess_token((String) map.get("access_token"));
+					tokenInfo.setToken_type((String) map.get("token_type"));
+					tokenInfo.setRefresh_token((String) map.get("refresh_token"));
+					tokenInfo.setExpires_in((Integer) map.get("expires_in"));
+					tokenInfo.setScope((String) map.get("scope"));
+					System.out.println("################# " + tokenInfo);
+					// System.out.println("access_token
+					// ="+map.get("access_token")+",
+					// token_type="+map.get("token_type")+",
+					// refresh_token="+map.get("refresh_token")
+					// +", expires_in="+map.get("expires_in")+",
+					// scope="+map.get("scope"));;
+				} else {
+					System.out.println("############# No user exist----------");
+
+				}
+				return tokenInfo;
+			} catch (final HttpClientErrorException e) {
+				System.out.println(e.getStatusCode());
+				System.out.println(e.getResponseBodyAsString());
+				e.printStackTrace();
+			}
+			return tokenInfo;
+		}
 	 
 	 
 }

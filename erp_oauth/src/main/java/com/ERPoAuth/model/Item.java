@@ -1,23 +1,38 @@
-package com.ERP.model;
+package com.ERPoAuth.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="items")
 public class Item implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long itemId;
-	
+	@Column(unique=true)
 	private String itemName;
 	private String itemDesc;
 	
-	
+	@ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinTable(name = "item_grades",joinColumns = @JoinColumn(name = "itemId"),inverseJoinColumns = @JoinColumn(name = "gradeId"))
 	
 	private List<Grade> grades=new ArrayList<>();
 	
@@ -51,12 +66,6 @@ public class Item implements Serializable {
 	
 	
 	
-	
-	public Item(long itemId, String itemName) {
-		super();
-		this.itemId = itemId;
-		this.itemName = itemName;
-	}
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemDesc=" + itemDesc + ", grades=" + grades
