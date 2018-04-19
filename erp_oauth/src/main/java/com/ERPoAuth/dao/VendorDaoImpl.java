@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ERPoAuth.model.Vendor;
 import com.ERPoAuth.model.VendorType;
@@ -39,18 +42,26 @@ public class VendorDaoImpl extends AbstractDao<Long, Vendor> implements VendorDa
 
 	@Override
 	public void saveVendor(Vendor vendor) {
-		persist(vendor);
+		
+		 
+		Long l=saveEntity(vendor);
 
 	}
 
 	@Override
 	public Vendor updateVendor(Vendor vendor) {
-		return merge(vendor);
+		System.out.println("### DOA IMPL updateVendor "+vendor);
+		updateEntity(vendor);
+		return null;
 	}
 
 	@Override
 	public List<Vendor> findAllVendors() {
+		
+		
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("vendor_name"));
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(10);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
 

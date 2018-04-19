@@ -5,15 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.ERP.model.Address;
-import com.ERP.model.Bank;
-import com.ERP.model.BankBranch;
 import com.ERP.model.Grade;
 import com.ERP.model.Item;
 import com.ERP.model.Project;
 import com.ERP.model.Requisition;
 import com.ERP.model.RequisitionItem;
 import com.ERP.model.Unit;
-import com.ERP.model.VendorDTO;
+import com.ERP.model.Vendor;
 import com.ERP.model.VendorType;
 
 public class Test {
@@ -31,7 +29,7 @@ public class Test {
 
 	}
 
-	public static List<Bank> getBankList() {
+	/*public static List<Bank> getBankList() {
 		List<Bank> list = new ArrayList<>();
 
 		Bank b1 = new Bank(-1, "------ Select Bank ------");
@@ -44,9 +42,9 @@ public class Test {
 
 		return list;
 
-	}
+	}*/
 
-	public static List<BankBranch> getBankBranchList() {
+	/*public static List<BankBranch> getBankBranchList() {
 		List<BankBranch> list = new ArrayList<>();
 
 		Bank b1 = new Bank(1, "HDFC");
@@ -83,9 +81,9 @@ public class Test {
 
 		return list;
 
-	}
+	}*/
 
-	public static List<BankBranch> getBankBranchList2(Long bankId) {
+	/*public static List<BankBranch> getBankBranchList2(Long bankId) {
 		List<BankBranch> list = new ArrayList<>();
 
 		Bank b1 = new Bank(1, "HDFC");
@@ -125,38 +123,38 @@ public class Test {
 
 		return list;
 
-	}
+	}*/
 
-	public static List<VendorDTO> getVendorList() {
+	public static List<Vendor> getVendorList() {
 
-		List<VendorDTO> list = new ArrayList<>();
+		List<Vendor> list = new ArrayList<>();
 
-		VendorDTO v1 = new VendorDTO();
+		Vendor v1 = new Vendor();
 		v1.setVendor_id(1);
 		v1.setVendor_name("Harshad");
 		v1.setVendor_nickName("Harsh");
 		v1.setVendorTypeId(1);
 		v1.setVendor_gst_number("123456789");
-		v1.setBankAccountNumber("Account Number");
-		v1.setBankId(1);
-		v1.setBranch_ifsc("IFSC Code 123");
-		v1.setBranchId(11);
+		//v1.setBankAccountNumber("Account Number");
+		//v1.setBankId(1);
+		//v1.setBranch_ifsc("IFSC Code 123");
+		//v1.setBranchId(11);
 		v1.setContact_person_alternate_phone_no("1234567899");
 		v1.setContact_person_email("Test#@gmail.com");
 		v1.setContact_person_mobile("1234567899");
 		v1.setContact_person_name("Balaji");
 		v1.setServiceRendered_GoodsSupplied("serviceRendered_GoodsSupplied");
 
-		VendorDTO v2 = new VendorDTO();
+		Vendor v2 = new Vendor();
 		v2.setVendor_id(2);
 		v2.setVendor_name("John");
 		v2.setVendor_nickName("jo");
 		v2.setVendorTypeId(2);
 		v2.setVendor_gst_number("123456789");
-		v2.setBankAccountNumber("Account Number");
-		v2.setBankId(2);
-		v2.setBranch_ifsc("IFSC Code 123");
-		v2.setBranchId(22);
+		//v2.setBankAccountNumber("Account Number");
+		//v2.setBankId(2);
+		//v2.setBranch_ifsc("IFSC Code 123");
+		//v2.setBranchId(22);
 		v2.setContact_person_alternate_phone_no("1234567899");
 		v2.setContact_person_email("Test#@gmail.com");
 		v2.setContact_person_mobile("1234567899");
@@ -169,21 +167,21 @@ public class Test {
 
 	}
 
-	public static VendorDTO getVendor1() {
+	public static Vendor getVendor1() {
 
-		VendorDTO v1 = new VendorDTO();
+		Vendor v1 = new Vendor();
 		v1.setVendor_id(1);
 		v1.setVendor_name("Harshad");
 		v1.setVendor_nickName("Harsh");
 		v1.setVendorTypeId(1);
 		v1.setVendor_gst_number("123456789");
-		v1.setBankAccountNumber("Account Number");
-		Address a = new Address();
-		a.setAddres_line1("Mumbai");
-		v1.setAddress(a);
-		v1.setBankId(1);
-		v1.setBranch_ifsc("IFSC Code 123");
-		v1.setBranchId(11);
+		//v1.setBankAccountNumber("Account Number");
+		
+		v1.setAddress(null);
+		
+		//v1.setBankId(1);
+		//v1.setBranch_ifsc("IFSC Code 123");
+		//v1.setBranchId(11);
 		v1.setContact_person_alternate_phone_no("1234567899");
 		v1.setContact_person_email("Test#@gmail.com");
 		v1.setContact_person_mobile("1234567899");
@@ -193,21 +191,21 @@ public class Test {
 		return v1;
 	}
 
-	public static VendorDTO getVendor2() {
+	public static Vendor getVendor2() {
 
-		VendorDTO v2 = new VendorDTO();
+		Vendor v2 = new Vendor();
 		v2.setVendor_id(2);
 		v2.setVendor_name("John");
 		v2.setVendor_nickName("jo");
 		v2.setVendorTypeId(2);
-		v2.setVendor_gst_number("123456789");
-		v2.setBankAccountNumber("Account Number");
-		v2.setBankId(2);
+//		v2.setVendor_gst_number("123456789");
+//		v2.setBankAccountNumber("Account Number");
+//		v2.setBankId(2);
 		Address a = new Address();
 		a.setAddres_line1("Pune");
-		v2.setAddress(a);
-		v2.setBranch_ifsc("IFSC Code 123");
-		v2.setBranchId(22);
+//		v2.setAddress(null);
+//		v2.setBranch_ifsc("IFSC Code 123");
+//		v2.setBranchId(22);
 		v2.setContact_person_alternate_phone_no("1234567899");
 		v2.setContact_person_email("Test#@gmail.com");
 		v2.setContact_person_mobile("1234567899");

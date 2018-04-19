@@ -2,9 +2,9 @@ package com.ERPoAuth.service;
 
 import java.util.List;
 
-import com.ERPoAuth.model.Bank;
-import com.ERPoAuth.model.BankBranch;
 import com.ERPoAuth.model.VendorType;
+
+
 
 public interface VendorTypeService {
 

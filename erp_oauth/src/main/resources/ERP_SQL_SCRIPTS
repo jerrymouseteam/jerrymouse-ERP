@@ -1,67 +1,80 @@
-CREATE TABLE `addresses` (
-	`address_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-	`addres_line1` VARCHAR(255) NULL DEFAULT NULL,
-	`addres_line2` VARCHAR(255) NULL DEFAULT NULL,
-	`addres_line3` VARCHAR(255) NULL DEFAULT NULL,
-	`city` VARCHAR(255) NULL DEFAULT NULL,
-	`country` VARCHAR(255) NULL DEFAULT NULL,
-	`state` VARCHAR(255) NULL DEFAULT NULL,
-	`zipcode` VARCHAR(255) NULL DEFAULT NULL,
-	PRIMARY KEY (`address_id`)
-)
-COLLATE='latin1_swedish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=1
-;
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.1.72-community - MySQL Community Server (GPL)
+-- Server OS:                    Win32
+-- HeidiSQL Version:             9.4.0.5125
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
-CREATE TABLE `vendor_types` (
-	`vendor_type_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-	`vendor_type_name` VARCHAR(255) NULL DEFAULT NULL,
-	PRIMARY KEY (`vendor_type_id`),
-	UNIQUE INDEX `UK_cdavmvfuntp91yy59x0jjjbgq` (`vendor_type_name`)
-)
-COLLATE='latin1_swedish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=1
-;
+-- Dumping database structure for procurement
+CREATE DATABASE IF NOT EXISTS `procurement2` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `procurement`;
 
+-- Dumping structure for table procurement.addresses
+CREATE TABLE IF NOT EXISTS `addresses` (
+  `address_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `addres_line1` varchar(255) DEFAULT NULL,
+  `addres_line2` varchar(255) DEFAULT NULL,
+  `addres_line3` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `zipcode` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`address_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `vendors` (
-	`vendor_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-	`contact_person_alternate_phone_no` VARCHAR(255) NULL DEFAULT NULL,
-	`contact_person_email` VARCHAR(255) NULL DEFAULT NULL,
-	`contact_person_mobile` VARCHAR(255) NULL DEFAULT NULL,
-	`contact_person_name` VARCHAR(255) NULL DEFAULT NULL,
-	`vendor_gst_number` VARCHAR(255) NULL DEFAULT NULL,
-	`vendor_name` VARCHAR(255) NULL DEFAULT NULL,
-	`vendor_nickName` VARCHAR(255) NULL DEFAULT NULL,
-	`address_id` BIGINT(20) NULL DEFAULT NULL,
-	`vendor_type_id` BIGINT(20) NULL DEFAULT NULL,
-	PRIMARY KEY (`vendor_id`),
-	INDEX `FK_1qu4pvdfu17ohbv437xl1rkfi` (`address_id`),
-	INDEX `FK_hlafp7ubifnodhm9yh9sh5uce` (`vendor_type_id`),
-	CONSTRAINT `FK_hlafp7ubifnodhm9yh9sh5uce` FOREIGN KEY (`vendor_type_id`) REFERENCES `vendor_types` (`vendor_type_id`),
-	CONSTRAINT `FK_1qu4pvdfu17ohbv437xl1rkfi` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`address_id`)
-)
-COLLATE='latin1_swedish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=1
-;
+-- Dumping data for table procurement.addresses: ~7 rows (approximately)
 
+/*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
 
-CREATE TABLE `vendor_bank_profiles` (
-	`vendor_bank_profile_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-	`bank_account_number` VARCHAR(255) NULL DEFAULT NULL,
-	`bank_branch_id` BIGINT(20) NOT NULL,
-	`vendor_id` BIGINT(20) NOT NULL,
-	PRIMARY KEY (`vendor_bank_profile_id`),
-	INDEX `FK_6hy7n1lhm6s1pxrilb3sv7gt9` (`bank_branch_id`),
-	INDEX `FK_4xxmy9l2bvyuqe6npeqjjp4me` (`vendor_id`),
-	CONSTRAINT `FK_4xxmy9l2bvyuqe6npeqjjp4me` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`),
-	CONSTRAINT `FK_6hy7n1lhm6s1pxrilb3sv7gt9` FOREIGN KEY (`bank_branch_id`) REFERENCES `bank_branches` (`bank_branch_id`)
-)
-COLLATE='latin1_swedish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=1
-;
+-- Dumping structure for table procurement.vendors
+CREATE TABLE IF NOT EXISTS `vendors` (
+  `vendor_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `bank_account_number` varchar(255) DEFAULT NULL,
+  `bank_branch_ifsc` varchar(255) DEFAULT NULL,
+  `bank_branch_name` varchar(255) DEFAULT NULL,
+  `bank_name` varchar(255) DEFAULT NULL,
+  `contact_person_alternate_phone_no` varchar(255) DEFAULT NULL,
+  `contact_person_email` varchar(255) DEFAULT NULL,
+  `contact_person_mobile` varchar(255) DEFAULT NULL,
+  `contact_person_name` varchar(255) DEFAULT NULL,
+  `serviceRendered_GoodsSupplied` varchar(255) DEFAULT NULL,
+  `vendor_gst_number` varchar(255) DEFAULT NULL,
+  `vendor_name` varchar(255) DEFAULT NULL,
+  `vendor_nickName` varchar(255) DEFAULT NULL,
+  `address_id` bigint(20) DEFAULT NULL,
+  `vendor_type_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`vendor_id`),
+  KEY `FK_vendors_vendortypes` (`vendor_type_id`),
+  KEY `FK_vendors_addresses` (`address_id`),
+  CONSTRAINT `FK_vendors_addresses` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`address_id`),
+  CONSTRAINT `FK_vendors_vendortypes` FOREIGN KEY (`vendor_type_id`) REFERENCES `vendortypes` (`vendorType_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table procurement.vendors: ~5 rows (approximately)
+
+-- Dumping structure for table procurement.vendortypes
+CREATE TABLE IF NOT EXISTS `vendortypes` (
+  `vendorType_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `vendorType_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`vendorType_id`),
+  UNIQUE KEY `UK_9g65j9ooid5ji81uy7w7j61b8` (`vendorType_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table procurement.vendortypes: ~2 rows (approximately)
+DELETE FROM `vendortypes`;
+/*!40000 ALTER TABLE `vendortypes` DISABLE KEYS */;
+INSERT INTO `vendortypes` (`vendorType_id`, `vendorType_name`) VALUES
+	(2, 'Goods'),
+	(1, 'Services');
+/*!40000 ALTER TABLE `vendortypes` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+sss

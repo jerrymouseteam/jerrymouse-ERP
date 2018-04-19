@@ -1,7 +1,5 @@
 package com.ERPoAuth.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ERPoAuth.model.Address;
-import com.ERPoAuth.model.VendorType;
 import com.ERPoAuth.service.AddressService;
 
 @RestController
@@ -26,6 +23,7 @@ public class AddressRestController {
 	@RequestMapping(value = "/address/create/", method = RequestMethod.POST)
 	public ResponseEntity<Address> createVendorType(@RequestBody Address address, UriComponentsBuilder ucBuilder) {
 
+		
 		try {
 			addressService.saveAddress(address);
 		} catch (Exception e) {

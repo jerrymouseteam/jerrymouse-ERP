@@ -61,8 +61,8 @@
 											<div class="form-group">
 												<label>Bank Account Number</label>
 
-												<form:input path="bankAccountNumber" type="text"
-													class="form-control" id="bankAccountNumber"
+												<form:input path="bank_account_number" type="text"
+													class="form-control" id="bank_account_number"
 													placeholder="A/c Number"
 													cssErrorClass="form-control errorTrial" />
 
@@ -85,15 +85,20 @@
 											<div class="form-group">
 												<label>Select Bank</label>
 
-												 <form:select path="bankId" items="${getBanks}"
+												<%--  <form:select path="bankId" items="${getBanks}"
 													multiple="false" itemValue="bank_id" itemLabel="bank_name"
 													class="form-control">
 
 												</form:select> 
+ --%>
+
+												<form:input path="bank_name" type="text"
+													class="form-control" id="bank_name"
+													placeholder="Bank Name"
+													cssErrorClass="form-control errorTrial" />
 
 
 
-											
 											</div>
 										</div>
 
@@ -113,8 +118,8 @@
 											<div class="form-group">
 												<label>IFSC Code :</label>
 
-												<form:input path="branch_ifsc" type="text"
-													class="form-control" id="branch_ifsc"
+												<form:input path="bank_branch_ifsc" type="text"
+													class="form-control" id="bank_branch_ifsc"
 													placeholder="IFSC Code"
 													cssErrorClass="form-control errorTrial" />
 
@@ -128,8 +133,8 @@
 												<label>Type of Vendor</label>
 
 												<form:select path="vendorTypeId" items="${getVendorTypes}"
-													multiple="false" itemValue="vendor_type_id"
-													itemLabel="vendor_type_name" class="form-control" />
+													multiple="false" itemValue="vendorType_id"
+													itemLabel="vendorType_name" class="form-control" />
 
 
 											</div>
@@ -139,15 +144,18 @@
 											<div class="form-group">
 												<label>Select Branch</label>
 
-												<%-- <form:select path="bankBranches" items="${getBankBranches}"
-													multiple="false" itemValue="bank_branch_id"
-													itemLabel="branch_name" class="form-control" /> --%>
+												
 
 
-												<form:select path="branchId" multiple="false"
+											<%-- 	<form:select path="branchId" multiple="false"
 													itemValue="bank_branch_id" itemLabel="branch_name"
 													class="form-control">
-												</form:select>
+												</form:select> --%>
+												
+													<form:input path="bank_branch_name" type="text"
+													class="form-control" id="bank_branch_name"
+													placeholder="Branch Name"
+													cssErrorClass="form-control errorTrial" />
 
 											</div>
 										</div>
@@ -269,61 +277,3 @@
 	</div>
 </div>
 
-<!--  <script>
-        
-        $(document).ready(
-        function() {
-
-            $('#banks').change(
-            function() {
-                
-                $.getJSON('loadStates.htm', {
-                	banks : $(this).val(),
-                    ajax : 'true'
-                }, function(data) {
-                    
-                    var html = '<option value="">----Select State----</option>';
-                    var len = data.length;
-     
-                    
-                    for ( var i = 0; i < len; i++) {
-                        html += '<option value="' + data[i].bank_branch_id + '">' + data[i].branch_name + '</option>';
-                    }
-                    html += '</option>';
-   
-                    $('#bankBranches').html(html);
-                });
-            });
-            
-        });
-        
-    </script>
- -->
-
-<c:url var="findStateCitiesURL" value="/cities" />
-
-<script type="text/javascript">
-/* $(document).ready(function() { 
-	$('#banks').change(
-		function() {
-			$.getJSON('${findStateCitiesURL}', {
-				stateName : $(this).val(),
-				ajax : 'true'
-			}, function(data) {
-				var html = '<option value="">City</option>';
-				var len = data.length;
-				for ( var i = 0; i < len; i++) {
-					html += '<option value="' + data[i].bank_branch_id + '">'
-							+ data[i].branch_name + '</option>';
-				}
-				html += '</option>';
- 
-				$('#bankBranches').html(html);
-			});
-		});
-});
-
-
-
-  */
-</script>
