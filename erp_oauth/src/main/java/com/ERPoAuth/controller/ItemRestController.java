@@ -78,9 +78,8 @@ public class ItemRestController {
 		return new ResponseEntity<Item>(HttpStatus.NO_CONTENT);
 	}
 
-	@RequestMapping(value = "/item/{itemId}", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Item> getUser(@PathVariable("itemId") Long itemId) {
+	@RequestMapping(value = "/item/{itemId}", method = RequestMethod.GET)
+	public ResponseEntity<Item> findItemById(@PathVariable("itemId") Long itemId) {
 		System.out.println("Fetching User with id " + itemId);
 		Item Item = itemService.findByItemId(itemId);
 		if (Item == null) {

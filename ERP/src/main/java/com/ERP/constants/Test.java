@@ -467,9 +467,9 @@ public class Test {
 		List<RequisitionItem> requisitionItem = new ArrayList<>();
 
 		RequisitionItem i1 = new RequisitionItem();
-		i1.setRequisitionLineItemId(1);
+		//i1.setRequisitionLineItemId(1);
 
-		i1.setQuantity("2");
+		i1.setQuantity(2);
 
 		i1.setUsedFor("Test1");
 		i1.setItemId(1);
@@ -478,9 +478,9 @@ public class Test {
 		i1.setChecked(true);
 
 		RequisitionItem i2 = new RequisitionItem();
-		i2.setRequisitionLineItemId(2);
+		//i2.setRequisitionLineItemId(2);
 
-		i2.setQuantity("3");
+		i2.setQuantity(3);
 
 		i2.setUsedFor("Test2");
 		i2.setItemId(2);

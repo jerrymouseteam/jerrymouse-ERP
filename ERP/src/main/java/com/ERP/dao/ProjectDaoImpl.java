@@ -19,11 +19,11 @@ public class ProjectDaoImpl extends AbstractDao<Integer, Project> implements
 
 	final static Logger logger = Logger.getLogger(ProjectDaoImpl.class);
 
-	public Project findByProjectid(int projectId) {
-		Project project = getByKey(projectId);
+	public Project findByProjectid(long projectId) {
+		/*Project project = getByKey(projectId);
 		if (project != null) {
 			return project;
-		}
+		}*/
 		return null;
 	}
 
@@ -58,5 +58,7 @@ public class ProjectDaoImpl extends AbstractDao<Integer, Project> implements
 		Project project = (Project) crit.uniqueResult();
 		delete(project);
 	}
+
+	
 
 }

@@ -39,6 +39,13 @@ public class ErpConstants {
 	public static final String ADDRESS_DELETE = REST_SERVICE_URI + "/address/{addressId}";
 	public static final String ADDRESS_GET_ALL = REST_SERVICE_URI + "/address/list/";
 	public static final String ADDRESS_GET_BY_ID = REST_SERVICE_URI + "/address/{addressId}";
+	
+	public static final String PROJECTREQUISITION_CREATE = REST_SERVICE_URI + "/projectRequisition/create/";
+	public static final String PROJECTREQUISITION_GET_ALL = REST_SERVICE_URI + "/projectRequisition/list";
+	public static final String PROJECTREQUISITION_UPDATE = REST_SERVICE_URI + "/projectRequisition/update/";
+	public static final String PROJECTREQUISITION_DELETE = REST_SERVICE_URI + "/projectRequisition/{projectRequisitionId}";
+	
+	
 
 	public static final String VENDOR_CREATE = REST_SERVICE_URI + "/vendor/create2/";
 	public static final String VENDOR_UPDATE = REST_SERVICE_URI + "/vendor/update/";

@@ -87,4 +87,10 @@ public class BankApiHandler implements RestApiHandler<Bank> {
 		
 		return response;
 	}
+
+	@Override
+	public ResponseEntity<Bank> findEntityDetailById(AuthTokenInfo tokenInfo, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

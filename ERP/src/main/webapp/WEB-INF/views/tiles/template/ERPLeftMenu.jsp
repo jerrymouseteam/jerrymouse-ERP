@@ -61,10 +61,10 @@
 			</a></li>
 			<div id="dropdownReq" align="left"
 				style="display: none; color: black">
-				<li><a href="<%=request.getContextPath()%>/raisedRequistion">
+				<li><a href="<%=request.getContextPath()%>/projectRequisition/raisedRequistion">
 						<p style="color: burlywood;" id="addReqq">Raise Requistion</p>
 				</a></li>
-				<li><a href="<%=request.getContextPath()%>/editRequistion">
+				<li><a href="<%=request.getContextPath()%>/projectRequisition/editRequistion">
 						<p style="color: burlywood;" id="viewEditReqq">View / Edit
 							Requistion</p>
 				</a></li>

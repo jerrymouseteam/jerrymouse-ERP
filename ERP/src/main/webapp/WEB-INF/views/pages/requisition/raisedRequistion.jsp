@@ -17,9 +17,9 @@
 						raised</p>
 				</div>
 				<div class="content">
-					<spring:url value="/addrequisition" var="requisitionActionUrl" />
+					<spring:url value="/projectRequisition/addrequisition" var="requisitionActionUrl" />
 
-					<form:form method="post" modelAttribute="requistionForm"
+					<form:form method="post" modelAttribute="projectRequistionForm"
 						action="${requisitionActionUrl}">
 						<div class="col-md-12">
 
@@ -28,15 +28,15 @@
 								<div class="row">
 									<div class="col-md-12">
 
-										<div class="col-md-9">
+										<%-- <div class="col-md-9">
 											<label>Requistion Number</label>
 											<div class="form-group">
 
 												<div class="col-md-2">
 
 
-													<form:input path="reqType" type="text" class="form-control"
-														id="reqType" placeholder="Type" value="CC" />
+													<form:input path="requisitionType" type="text" class="form-control"
+														id="requisitionType" placeholder="Type" value="CC" />
 
 
 												</div>
@@ -44,8 +44,8 @@
 
 
 
-													<form:input path="reqNo" type="text" class="form-control"
-														id="reqNo" placeholder="Num" />
+													<form:input path="requisitionId" type="text" class="form-control"
+														id="requisitionId" placeholder="Num" />
 												</div>
 												<div class="col-md-5">
 
@@ -54,15 +54,15 @@
 
 												</div>
 											</div>
-										</div>
+										</div> --%>
 
 										<div class="col-md-3">
 											<div class="form-group">
 												<label>Expected Delivery</label>
 
 
-												<form:input path="expectedDt" type="date"
-													class="form-control" id="expectedDt"
+												<form:input path="requisitionExpectedDelivery" type="date"
+													class="form-control" id="requisitionExpectedDelivery"
 													placeholder="Expected Delivery" />
 											</div>
 										</div>
@@ -73,8 +73,8 @@
 
 
 
-												<form:input path="dateGen" type="date" class="form-control"
-													id="dateGen" placeholder="Date of Generation" />
+												<form:input path="requisitionDateOfGeneration" type="date" class="form-control"
+													id="requisitionDateOfGeneration" placeholder="Date of Generation" />
 											</div>
 										</div>
 
@@ -82,8 +82,8 @@
 											<div class="form-group">
 												<label>Requested By</label>
 
-												<form:input path="requestedBy" type="text"
-													class="form-control" id="requestedBy"
+												<form:input path="requisitionRequestedBY" type="text"
+													class="form-control" id="requisitionRequestedBY"
 													placeholder="Requested by" />
 
 											</div>
@@ -106,9 +106,9 @@
 												<label>Justification for Request</label>
 
 
-												<form:textarea path="justification" rows="4" cols="50"
+												<form:textarea path="requisitionJustification" rows="4" cols="50"
 													class="form-control" placeholder="Comments"
-													id="justification" />
+													id="requisitionJustification" />
 
 											</div>
 										</div>
@@ -177,18 +177,18 @@
 
 
 
-												<c:forEach items="${requisitionItemParameterses}"
+												<c:forEach items="${requisitionItems}"
 													var="value" varStatus="loop">
 													<tr>
 
 														<td><form:checkbox
-																path="requisitionItemParameterses[${loop.index}].checked"
-																id="requisitionItemParameterses[${loop.index}].checked" />
+																path="requisitionItems[${loop.index}].checked"
+																id="requisitionItems[${loop.index}].checked" />
 														</td>
 
 
 														<td><form:select
-																path="requisitionItemParameterses[${loop.index}].itemId"
+																path="requisitionItems[${loop.index}].itemId"
 																items="${getItemsList2}" multiple="false"
 																itemValue="itemId" itemLabel="itemName"
 																class="form-control">
@@ -196,24 +196,24 @@
 															</form:select></td>
 
 														<td><form:select
-																path="requisitionItemParameterses[${loop.index}].gradeId"
+																path="requisitionItems[${loop.index}].gradeId"
 																items="${getGradesList2}" multiple="false"
 																itemValue="gradeId" itemLabel="gradeName"
 																class="form-control">
 
 															</form:select></td>
 														<td><form:input
-																path="requisitionItemParameterses[${loop.index}].usedFor"
+																path="requisitionItems[${loop.index}].usedFor"
 																type="text" class="form-control"
-																id="requisitionItemParameterses[${loop.index}].usedFor"
+																id="requisitionItems[${loop.index}].usedFor"
 																placeholder="Used For" /></td>
 														<td><form:input
-																path="requisitionItemParameterses[${loop.index}].quantity"
+																path="requisitionItems[${loop.index}].quantity"
 																type="text" class="form-control"
-																id="requisitionItemParameterses[${loop.index}].quantity"
+																id="requisitionItems[${loop.index}].quantity"
 																placeholder="Quantity" /></td>
 														<td><form:select
-																path="requisitionItemParameterses[${loop.index}].unitId"
+																path="requisitionItems[${loop.index}].unitId"
 																items="${getUnitsList2}" multiple="false"
 																itemValue="unitId" itemLabel="unitName"
 																class="form-control">
@@ -261,8 +261,8 @@
 		var cell0 = row.insertCell(0);
 		var element0 = document.createElement("input");
 		element0.type = "checkbox";
-		element0.id = "requisitionItemParameterses[" + length + "].checked";
-		element0.name = "requisitionItemParameterses[" + length + "].checked";
+		element0.id = "requisitionItems[" + length + "].checked";
+		element0.name = "requisitionItems[" + length + "].checked";
 		element0.setAttribute("class", "form-control");
 		cell0.appendChild(element0);
 
@@ -271,9 +271,9 @@
 		var cell1 = row.insertCell(1);
 
 		var selectItem = document.createElement("select");
-		selectItem.setAttribute("id", "requisitionItemParameterses[" + length
+		selectItem.setAttribute("id", "requisitionItems[" + length
 				+ "].itemId");
-		selectItem.setAttribute("name", "requisitionItemParameterses[" + length
+		selectItem.setAttribute("name", "requisitionItems[" + length
 				+ "].itemId");
 		selectItem.setAttribute("class", "form-control items");
 
@@ -299,9 +299,9 @@
 		var cell2 = row.insertCell(2);
 
 		var selectGrade = document.createElement("select");
-		selectGrade.setAttribute("id", "requisitionItemParameterses[" + length
+		selectGrade.setAttribute("id", "requisitionItems[" + length
 				+ "].gradeId");
-		selectGrade.setAttribute("name", "requisitionItemParameterses["
+		selectGrade.setAttribute("name", "requisitionItems["
 				+ length + "].gradeId");
 		selectGrade.setAttribute("class", "form-control items");
 		cell2.appendChild(selectGrade);
@@ -319,9 +319,9 @@
 		var cell3 = row.insertCell(3);
 		var usedForTextBox = document.createElement("input");
 		usedForTextBox.type = "text";
-		usedForTextBox.setAttribute("id", "requisitionItemParameterses["
+		usedForTextBox.setAttribute("id", "requisitionItems["
 				+ length + "].usedFor");
-		usedForTextBox.setAttribute("name", "requisitionItemParameterses["
+		usedForTextBox.setAttribute("name", "requisitionItems["
 				+ length + "].usedFor");
 		usedForTextBox.setAttribute("class", "form-control");
 		//usedForTextBox.name = "operationParameterses[" + length + "].usedFor";
@@ -333,9 +333,9 @@
 		var cell4 = row.insertCell(4);
 		var quantityTextBox = document.createElement("input");
 		quantityTextBox.type = "text";
-		quantityTextBox.setAttribute("id", "requisitionItemParameterses["
+		quantityTextBox.setAttribute("id", "requisitionItems["
 				+ length + "].quantity");
-		quantityTextBox.setAttribute("name", "requisitionItemParameterses["
+		quantityTextBox.setAttribute("name", "requisitionItems["
 				+ length + "].quantity");
 		quantityTextBox.setAttribute("class", "form-control");
 
@@ -346,9 +346,9 @@
 		var cell5 = row.insertCell(5);
 
 		var selectUnit = document.createElement("select");
-		selectUnit.setAttribute("id", "requisitionItemParameterses[" + length
+		selectUnit.setAttribute("id", "requisitionItems[" + length
 				+ "].unitId");
-		selectUnit.setAttribute("name", "requisitionItemParameterses[" + length
+		selectUnit.setAttribute("name", "requisitionItems[" + length
 				+ "].unitId");
 		selectUnit.setAttribute("class", "form-control");
 		cell5.appendChild(selectUnit);
@@ -395,7 +395,7 @@
 		var val = document.getElementById("selectAll").checked;
 
 		for (var i = 1; i <= length; i++) {
-			var v = "requisitionItemParameterses[" + i + "].checked"
+			var v = "requisitionItems[" + i + "].checked"
 
 			var myEle = document.getElementById(v);
 

@@ -69,4 +69,10 @@ public class VendorBankProfileApiHandler implements RestApiHandler<VendorBankPro
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ResponseEntity<VendorBankProfile> findEntityDetailById(AuthTokenInfo tokenInfo, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

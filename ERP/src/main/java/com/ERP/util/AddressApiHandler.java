@@ -72,4 +72,10 @@ public class AddressApiHandler implements RestApiHandler<Address> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ResponseEntity<Address> findEntityDetailById(AuthTokenInfo tokenInfo, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

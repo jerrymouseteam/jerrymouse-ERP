@@ -7,7 +7,7 @@ import com.ERP.model.Project;
 
 public interface ProjectDao {
 
-	Project findByProjectid(int projectId);
+	Project findByProjectid(long projectId);
 	
 	Project findByProjectname(String projectName);
 	

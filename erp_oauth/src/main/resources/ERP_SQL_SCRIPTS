@@ -249,3 +249,56 @@ INSERT INTO units (unitId, unitDesc, unitName) VALUES
 
 ====================
 
+
+
+
+CREATE TABLE `requisitionitems` (
+	`requisitionItemId` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`checked` BIT(1) NOT NULL,
+	`createdDate` DATETIME NULL DEFAULT NULL,
+	`quantity` BIGINT(20) NOT NULL,
+	`updatedDate` DATETIME NULL DEFAULT NULL,
+	`usedFor` VARCHAR(255) NULL DEFAULT NULL,
+	`gradeId` BIGINT(20) NULL DEFAULT NULL,
+	`itemId` BIGINT(20) NULL DEFAULT NULL,
+	`projectRequisitionId` BIGINT(20) NULL DEFAULT NULL,
+	`unitId` BIGINT(20) NULL DEFAULT NULL,
+	PRIMARY KEY (`requisitionItemId`),
+	INDEX `FK_o3b4m9vm0cva7r3pdvn0spfgm` (`gradeId`),
+	INDEX `FK_cgbkcknbw4du7krggf4s9roh4` (`itemId`),
+	INDEX `FK_k5kmbx4f4uwswb6pdsptmaqmo` (`projectRequisitionId`),
+	INDEX `FK_4nkdcs8ribhpchyghwcdsistp` (`unitId`),
+	CONSTRAINT `FK_k5kmbx4f4uwswb6pdsptmaqmo` FOREIGN KEY (`projectRequisitionId`) REFERENCES `project_requisitions` (`requisitionId`),
+	CONSTRAINT `FK_4nkdcs8ribhpchyghwcdsistp` FOREIGN KEY (`unitId`) REFERENCES `units` (`unitId`),
+	CONSTRAINT `FK_cgbkcknbw4du7krggf4s9roh4` FOREIGN KEY (`itemId`) REFERENCES `items` (`itemId`),
+	CONSTRAINT `FK_o3b4m9vm0cva7r3pdvn0spfgm` FOREIGN KEY (`gradeId`) REFERENCES `grades` (`gradeId`)
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=13
+;
+
+CREATE TABLE `project_requisitions` (
+	`requisitionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`requisitionCreatedDate` DATETIME NULL DEFAULT NULL,
+	`requisitionDateOfGeneration` DATE NULL DEFAULT NULL,
+	`requisitionExpectedDelivery` DATE NULL DEFAULT NULL,
+	`requisitionJustification` VARCHAR(255) NULL DEFAULT NULL,
+	`requisitionRequestedBY` VARCHAR(255) NULL DEFAULT NULL,
+	`requisitionStatus` VARCHAR(255) NULL DEFAULT NULL,
+	`requisitionUpdatedDate` DATETIME NULL DEFAULT NULL,
+	`project_id` BIGINT(20) NULL DEFAULT NULL,
+	PRIMARY KEY (`requisitionId`),
+	INDEX `FK_project_requisitions_app_project` (`project_id`),
+	CONSTRAINT `FK_project_requisitions_app_project` FOREIGN KEY (`project_id`) REFERENCES `app_project` (`project_id`)
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=10
+;
+
+
+
+
+===============
+

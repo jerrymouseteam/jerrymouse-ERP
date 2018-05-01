@@ -70,4 +70,10 @@ public class VendorApiHandler implements RestApiHandler<VendorDTO> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ResponseEntity<VendorDTO> findEntityDetailById(AuthTokenInfo tokenInfo, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

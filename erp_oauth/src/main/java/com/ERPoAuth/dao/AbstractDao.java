@@ -27,7 +27,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		return sessionFactory.getCurrentSession();
 	}
 
-	protected Session getOpenSession() {
+	 Session getOpenSession() {
 		return sessionFactory.openSession();
 	}
 
@@ -78,6 +78,25 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		try {
 
 			session.update(entity);
+
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+
+			session.close();
+		}
+
+	}
+	
+	public void saveupdateEntity(T entity) {
+
+		Session session = getOpenSession();
+		Transaction tx = session.beginTransaction();
+
+		try {
+
+			session.saveOrUpdate(entity);
 
 			tx.commit();
 		} catch (Exception e) {

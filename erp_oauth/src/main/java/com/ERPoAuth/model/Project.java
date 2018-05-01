@@ -27,13 +27,13 @@ public class Project implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "project_id")
-	private Integer project_id;
+	private long project_id;
 
-	public Integer getProject_id() {
+	public long getProject_id() {
 		return project_id;
 	}
 
-	public void setProject_id(Integer project_id) {
+	public void setProject_id(long project_id) {
 		this.project_id = project_id;
 	}
 
@@ -278,12 +278,13 @@ public class Project implements Serializable {
 		this.projectStatus = projectStatus;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((project_id == null) ? 0 : project_id.hashCode());
+		result = prime * result + (int) (project_id ^ (project_id >>> 32));
 		return result;
 	}
 
@@ -296,10 +297,7 @@ public class Project implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		if (project_id == null) {
-			if (other.project_id != null)
-				return false;
-		} else if (!project_id.equals(other.project_id))
+		if (project_id != other.project_id)
 			return false;
 		return true;
 	}

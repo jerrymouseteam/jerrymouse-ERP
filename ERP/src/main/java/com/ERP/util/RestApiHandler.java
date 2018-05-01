@@ -15,4 +15,5 @@ public interface RestApiHandler<T> {
 	ResponseEntity<T> save(AuthTokenInfo tokenInfo, T className);
 	List<LinkedHashMap<String, Object>> findAllInfo(AuthTokenInfo tokenInfo);
 	ResponseEntity<T> getDetailsById(AuthTokenInfo tokenInfo, Long id);
+	ResponseEntity<T> findEntityDetailById(AuthTokenInfo tokenInfo, Long id);
 }

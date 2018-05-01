@@ -42,6 +42,7 @@ import com.ERP.model.AuthTokenInfo;
 import com.ERP.model.Grade;
 import com.ERP.model.Item;
 import com.ERP.model.Project;
+import com.ERP.model.ProjectRequisition;
 import com.ERP.model.Requisition;
 import com.ERP.model.RequisitionItem;
 import com.ERP.model.Unit;
@@ -381,8 +382,6 @@ public class RequisitionController {
 
 	@ModelAttribute("getProjectsList")
 	public List<Project> getProjectsList() {
-		
-
 
 		System.out.println("########################## FETCH PROJECT #################################");
 
@@ -402,7 +401,6 @@ public class RequisitionController {
 				List<LinkedHashMap<String, Object>> projectMap = (List<LinkedHashMap<String, Object>>) response
 						.getBody();
 
-				
 				if (projectMap != null) {
 					proejctList = new ArrayList<>();
 
@@ -432,10 +430,9 @@ public class RequisitionController {
 		System.out.println("########################## FETCH PROJECT #################################  ");
 		// ==============================================================
 
-		
 		return proejctList;
-	
-		//return Test.getProjectListDetails();
+
+		// return Test.getProjectListDetails();
 	}
 
 	@ModelAttribute("getEditRequisitionListDetails")
@@ -505,10 +502,8 @@ public class RequisitionController {
 	@ModelAttribute("getEditProjectListDetails")
 	public List<Project> getEditProjectListDetails() {
 
-		
+		return Test.getProjectListDetails();
 
-		 return Test.getProjectListDetails();
-		
 	}
 
 	@ModelAttribute("getItemsList")
@@ -549,42 +544,49 @@ public class RequisitionController {
 						item.setItemName((String) linkedHashMap.get("itemName"));
 						item.setItemDesc((String) linkedHashMap.get("itemDesc"));
 
-						/*try {
-
-							List<Grade> grades = new ArrayList<>();
-							List<LinkedHashMap<String, Object>> gradeMap = (List<LinkedHashMap<String, Object>>) linkedHashMap
-									.get("grades");
-
-							for (LinkedHashMap<String, Object> linkedHashGradeMap : gradeMap) {
-
-								Grade grade = new Grade();
-
-								grade.setGradeId(((Integer) linkedHashGradeMap.get("gradeId")).longValue());
-								grade.setGradeName((String) linkedHashGradeMap.get("gradeName"));
-								grade.setGradeDesc((String) linkedHashMap.get("gradeDesc"));
-
-								List<LinkedHashMap<String, Object>> unitMap = (List<LinkedHashMap<String, Object>>) linkedHashGradeMap
-										.get("units");
-
-								List<Unit> units = new ArrayList<>();
-								for (LinkedHashMap<String, Object> linkedHashUnitMap : unitMap) {
-
-									Unit unit = new Unit();
-
-									unit.setUnitId(((Integer) linkedHashUnitMap.get("unitId")).longValue());
-									unit.setUnitName((String) linkedHashUnitMap.get("unitName"));
-									unit.setUnitDesc((String) linkedHashMap.get("unitDesc"));
-									units.add(unit);
-								}
-								grade.setUnits(units);
-								grades.add(grade);
-							}
-							item.setGrades(grades);
-
-						} catch (Exception e) {
-
-							e.printStackTrace();
-						}*/
+						/*
+						 * try {
+						 * 
+						 * List<Grade> grades = new ArrayList<>();
+						 * List<LinkedHashMap<String, Object>> gradeMap =
+						 * (List<LinkedHashMap<String, Object>>) linkedHashMap
+						 * .get("grades");
+						 * 
+						 * for (LinkedHashMap<String, Object> linkedHashGradeMap
+						 * : gradeMap) {
+						 * 
+						 * Grade grade = new Grade();
+						 * 
+						 * grade.setGradeId(((Integer)
+						 * linkedHashGradeMap.get("gradeId")).longValue());
+						 * grade.setGradeName((String)
+						 * linkedHashGradeMap.get("gradeName"));
+						 * grade.setGradeDesc((String)
+						 * linkedHashMap.get("gradeDesc"));
+						 * 
+						 * List<LinkedHashMap<String, Object>> unitMap =
+						 * (List<LinkedHashMap<String, Object>>)
+						 * linkedHashGradeMap .get("units");
+						 * 
+						 * List<Unit> units = new ArrayList<>(); for
+						 * (LinkedHashMap<String, Object> linkedHashUnitMap :
+						 * unitMap) {
+						 * 
+						 * Unit unit = new Unit();
+						 * 
+						 * unit.setUnitId(((Integer)
+						 * linkedHashUnitMap.get("unitId")).longValue());
+						 * unit.setUnitName((String)
+						 * linkedHashUnitMap.get("unitName"));
+						 * unit.setUnitDesc((String)
+						 * linkedHashMap.get("unitDesc")); units.add(unit); }
+						 * grade.setUnits(units); grades.add(grade); }
+						 * item.setGrades(grades);
+						 * 
+						 * } catch (Exception e) {
+						 * 
+						 * e.printStackTrace(); }
+						 */
 
 						itemList.add(item);
 					}
@@ -736,6 +738,153 @@ public class RequisitionController {
 
 	@ModelAttribute("getRequisitionsList")
 	public List<Requisition> getRequisitionsList() {
+
+		System.out.println("########################## getRequisitionsList #################################");
+
+		List<ProjectRequisition> projectRequisitionList = null;
+
+		try {
+
+			AuthTokenInfo tokenInfo = sendTokenRequest();
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpEntity<String> request = new HttpEntity<String>(getHeaders());
+			try {
+				ResponseEntity<List> response = restTemplate.exchange(ErpConstants.PROJECTREQUISITION_GET_ALL
+						+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.GET, request,
+						List.class);
+				List<LinkedHashMap<String, Object>> projectRequisitionMap = (List<LinkedHashMap<String, Object>>) response
+						.getBody();
+
+				if (projectRequisitionMap != null) {
+					projectRequisitionList = new ArrayList<>();
+
+					for (LinkedHashMap<String, Object> linkedHashMap : projectRequisitionMap) {
+
+						ProjectRequisition projectRequisition = new ProjectRequisition();
+						System.out.println("linkedHashMap.get(requisitionId) " + linkedHashMap.get("requisitionId"));
+						System.out.println("linkedHashMap.get(requisitionCreatedDate) "
+								+ linkedHashMap.get("requisitionCreatedDate"));
+						System.out.println("linkedHashMap.get(requisitionUpdatedDate) "
+								+ linkedHashMap.get("requisitionUpdatedDate"));
+						System.out.println("linkedHashMap.get(requisitionRequestedBY) "
+								+ linkedHashMap.get("requisitionRequestedBY"));
+						System.out.println("linkedHashMap.get(requisitionDateOfGeneration) "
+								+ linkedHashMap.get("requisitionDateOfGeneration"));
+						System.out.println(
+								"linkedHashMap.get(requisitionStatus) " + linkedHashMap.get("requisitionStatus"));
+						Integer i = (Integer) linkedHashMap.get("requisitionId");
+
+						projectRequisition.setRequisitionId(i.longValue());
+
+						/*projectRequisition
+								.setRequisitionCreatedDate((Date) linkedHashMap.get("requisitionCreatedDate"));
+						projectRequisition
+								.setRequisitionUpdatedDate((Date) linkedHashMap.get("requisitionUpdatedDate"));*/
+						projectRequisition.setRequisitionStatus((String) linkedHashMap.get("requisitionStatus"));
+						projectRequisition
+								.setRequisitionJustification((String) linkedHashMap.get("requisitionJustification"));
+						projectRequisition.setRequisitionDateOfGeneration(
+								(String) linkedHashMap.get("requisitionDateOfGeneration"));
+						projectRequisition.setRequisitionExpectedDelivery(
+								(String) linkedHashMap.get("requisitionExpectedDelivery"));
+						projectRequisition
+								.setRequisitionRequestedBY((String) linkedHashMap.get("requisitionRequestedBY"));
+
+						LinkedHashMap<String, Object> projectMap = (LinkedHashMap<String, Object>) linkedHashMap
+								.get("project");
+
+						// Project project = new Project();
+
+						// project.setProject_id(((Integer)
+						// projectMap.get("project_id")));
+						System.out.println("projectMap.get(project_id)).longValue() " + projectMap.get("project_id"));
+						projectRequisition.setProjectId(((Integer) projectMap.get("project_id")));
+						List<RequisitionItem> requisitionItems = new ArrayList<>();
+						List<LinkedHashMap<String, Object>> requisitionItemsMap = (List<LinkedHashMap<String, Object>>) linkedHashMap
+								.get("requisitionItems");
+
+						for (LinkedHashMap<String, Object> linkedHashrequisitionItemsMap : requisitionItemsMap) {
+
+							RequisitionItem requisitionItem = new RequisitionItem();
+
+							LinkedHashMap<String, Object> itemMap = (LinkedHashMap<String, Object>) linkedHashrequisitionItemsMap
+									.get("item");
+
+							System.out.println("itemMap.get(itemId)).longValue() " + itemMap.get("itemId"));
+							/*
+							 * Item item = new Item();
+							 * 
+							 * item.setItemId(((Integer)
+							 * itemMap.get("itemId")).longValue());
+							 */
+							requisitionItem.setItemId(((Integer) itemMap.get("itemId")).longValue());
+
+							LinkedHashMap<String, Object> gradeMap = (LinkedHashMap<String, Object>) linkedHashrequisitionItemsMap
+									.get("grade");
+
+							/*
+							 * Grade grade = new Grade();
+							 * 
+							 * grade.setGradeId(((Integer)
+							 * gradeMap.get("gradeId")).longValue());
+							 */
+
+							System.out.println("gradeMap.get(gradeId)).longValue() " + gradeMap.get("gradeId"));
+							requisitionItem.setGradeId(((Integer) gradeMap.get("gradeId")).longValue());
+
+							LinkedHashMap<String, Object> unitMap = (LinkedHashMap<String, Object>) linkedHashrequisitionItemsMap
+									.get("unit");
+
+							/*
+							 * Unit unit = new Unit();
+							 * 
+							 * unit.setUnitId(((Integer)
+							 * unitMap.get("unitId")).longValue());
+							 */
+							System.out.println("unitMap.get(unitId)).longValue() " + unitMap.get("unitId"));
+							System.out.println("linkedHashrequisitionItemsMap.get(quantity)).longValue() "
+									+ linkedHashrequisitionItemsMap.get("quantity"));
+							System.out.println("linkedHashrequisitionItemsMap.get(checked)).longValue() "
+									+ linkedHashrequisitionItemsMap.get("checked"));
+							System.out.println("linkedHashrequisitionItemsMap.get(usedFor)).longValue() "
+									+ linkedHashrequisitionItemsMap.get("usedFor"));
+
+							requisitionItem.setUnitId(((Integer) unitMap.get("unitId")).longValue());
+
+							requisitionItem
+									.setQuantity(((Integer) linkedHashrequisitionItemsMap.get("quantity")).longValue());
+
+							requisitionItem.setChecked(((boolean) linkedHashrequisitionItemsMap.get("checked")));
+
+							requisitionItem.setUsedFor(((String) linkedHashrequisitionItemsMap.get("usedFor")));
+
+							requisitionItems.add(requisitionItem);
+
+						}
+
+						projectRequisition.setRequisitionItems(requisitionItems);
+						projectRequisitionList.add(projectRequisition);
+					}
+
+					System.out.println(
+							"==> PROJECT REQUISITION CONTROLLER : projectRequisitionList : " + projectRequisitionList);
+
+				} else {
+					System.out.println("No Item exist----------");
+				}
+
+			} catch (Exception excep) {
+				excep.printStackTrace();
+			}
+
+		} catch (HttpClientErrorException excep) {
+			excep.printStackTrace();
+		}
+
+		System.out.println("########################## getRequisitionsList #################################  ");
+
 		return Test.getRequisitions();
 	}
 
