@@ -69,13 +69,13 @@ public class ProjectRequisitionRestController {
 		return new ResponseEntity<ProjectRequisition>(mergedProjectRequisition, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/projectRequisition/{projectRequisitionId}", method = RequestMethod.DELETE)
-	public ResponseEntity<ProjectRequisition> deleteProjectRequisition(@PathVariable("projectRequisitionId") Long projectRequisitionId) {
-		System.out.println("Fetching & Deleting User with ssoId " + projectRequisitionId);
+	@RequestMapping(value = "/projectRequisition/delete", method = RequestMethod.PUT)
+	public ResponseEntity<ProjectRequisition> deleteProjectRequisition(@RequestBody ProjectRequisition projectRequisition) {
+		System.out.println("Fetching & Deleting User with ssoId " + projectRequisition.getRequisitionId());
 
-		ProjectRequisition ProjectRequisition = projectRequisitionService.findByProjectRequisitionId(projectRequisitionId);
+		ProjectRequisition ProjectRequisition = projectRequisitionService.findByProjectRequisitionId(projectRequisition.getRequisitionId());
 		if (ProjectRequisition == null) {
-			System.out.println("Unable to delete. User with ProjectRequisitionId " + projectRequisitionId + " not found");
+			System.out.println("Unable to delete. User with ProjectRequisitionId " + projectRequisition.getRequisitionId() + " not found");
 			return new ResponseEntity<ProjectRequisition>(HttpStatus.NOT_FOUND);
 		}
 

@@ -43,7 +43,7 @@ public class ErpConstants {
 	public static final String PROJECTREQUISITION_CREATE = REST_SERVICE_URI + "/projectRequisition/create/";
 	public static final String PROJECTREQUISITION_GET_ALL = REST_SERVICE_URI + "/projectRequisition/list";
 	public static final String PROJECTREQUISITION_UPDATE = REST_SERVICE_URI + "/projectRequisition/update/";
-	public static final String PROJECTREQUISITION_DELETE = REST_SERVICE_URI + "/projectRequisition/{projectRequisitionId}";
+	public static final String PROJECTREQUISITION_DELETE = REST_SERVICE_URI + "/projectRequisition/delete/";
 	
 	
 

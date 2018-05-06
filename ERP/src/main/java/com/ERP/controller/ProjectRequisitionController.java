@@ -60,7 +60,8 @@ import com.ERP.util.Utilities;
 @Controller
 @RequestMapping("/projectRequisition")
 
-@SessionAttributes({ "roles", "getItemsList2", "getGradesList2", "getUnitsList2", "getProjectsList","getRequisitionsList" })
+@SessionAttributes({ "roles", "getItemsList2", "getGradesList2", "getUnitsList2", "getProjectsList",
+		"getRequisitionsList" })
 public class ProjectRequisitionController {
 
 	@Autowired
@@ -371,9 +372,10 @@ public class ProjectRequisitionController {
 	}
 
 	@RequestMapping(value = { "/editRequisitionDetails/{requisitionId}" }, method = RequestMethod.GET)
-	public String editProjectRequisitionDetails(@PathVariable Long requisitionId, ModelMap model,@ModelAttribute("getRequisitionsList") List<ProjectRequisition> projectRequisitions) {
-System.out.println("\nTesting getProjectRequisitionDetails API---------- requisitionId :: " + requisitionId);
-		
+	public String editProjectRequisitionDetails(@PathVariable Long requisitionId, ModelMap model,
+			@ModelAttribute("getRequisitionsList") List<ProjectRequisition> projectRequisitions) {
+		System.out.println("\nTesting getProjectRequisitionDetails API---------- requisitionId :: " + requisitionId);
+
 		ProjectRequisition projectRequisition = null;
 
 		for (ProjectRequisition v : projectRequisitions) {
@@ -384,9 +386,9 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 			}
 		}
 
-		List<RequisitionItem> requisitionItems=projectRequisition.getRequisitionItems();
+		List<RequisitionItem> requisitionItems = projectRequisition.getRequisitionItems();
 		for (RequisitionItem requisitionItem : requisitionItems) {
-			System.out.println("################ "+requisitionItem.getItemId());
+			System.out.println("################ " + requisitionItem.getItemId());
 		}
 
 		model.addAttribute("projectRequistionForm", projectRequisition);
@@ -396,16 +398,16 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 	}
 
 	@RequestMapping(value = { "/updateRequisitionDetails" }, method = RequestMethod.POST)
-	public String updateMyData(ModelMap model, @ModelAttribute("projectRequistionForm") ProjectRequisition projectRequisition) {
+	public String updateMyData(ModelMap model,
+			@ModelAttribute("projectRequistionForm") ProjectRequisition projectRequisition) {
 
 		System.out.println("\nTesting updateMyData API---------- Requisition :: " + projectRequisition);
-		
-		
+
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 
-		//projectRequisition.setRequisitionCreatedDate(new Date());
+		// projectRequisition.setRequisitionCreatedDate(new Date());
 		projectRequisition.setRequisitionUpdatedDate(new Date());
-		//projectRequisition.setRequisitionStatus("ACTIVE");
+		// projectRequisition.setRequisitionStatus("ACTIVE");
 
 		try {
 
@@ -425,10 +427,10 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 
 				try {
 
-					System.out.println("^^^ requisitionItem.getItemId()"+requisitionItem.getItemId());
-					System.out.println("^^^ requisitionItem.getGradeId()"+requisitionItem.getGradeId());
-					System.out.println("^^^ requisitionItem.getUnitId()"+requisitionItem.getUnitId());
-					
+					System.out.println("^^^ requisitionItem.getItemId()" + requisitionItem.getItemId());
+					System.out.println("^^^ requisitionItem.getGradeId()" + requisitionItem.getGradeId());
+					System.out.println("^^^ requisitionItem.getUnitId()" + requisitionItem.getUnitId());
+
 					ResponseEntity<Item> itemResponse = new ItemApiHandler().findEntityDetailById(tokenInfo,
 							requisitionItem.getItemId());
 					Item item = (Item) itemResponse.getBody();
@@ -446,13 +448,15 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 					Unit unit = (Unit) unitResponse.getBody();
 					// System.out.println("#### UNIT : " + unit);
 					requisitionItem.setUnit(unit);
-					/*requisitionItem.setCreatedDate(new Date());
-					requisitionItem.setUpdatedDate(new Date());*/
+					/*
+					 * requisitionItem.setCreatedDate(new Date());
+					 * requisitionItem.setUpdatedDate(new Date());
+					 */
 
 					requisitionItemLists.add(requisitionItem);
 
 				} catch (Exception e) {
-				e.printStackTrace();
+					e.printStackTrace();
 				}
 
 			}
@@ -466,15 +470,13 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 
 			RestTemplate restTemplate = new RestTemplate();
 			HttpEntity<Object> request = new HttpEntity<Object>(projectRequisition, getHeaders());
-			
-			
+
 			try {
 				restTemplate.put(ErpConstants.PROJECTREQUISITION_UPDATE + ErpConstants.QPM_ACCESS_TOKEN
 						+ tokenInfo.getAccess_token(), request, ProjectRequisition.class);
 			} catch (HttpClientErrorException excep) {
 				excep.printStackTrace();
 			}
-
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -485,10 +487,11 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 	}
 
 	@RequestMapping(value = { "/getRequisitionDetails/{requisitionId}" }, method = RequestMethod.GET)
-	public String getProjectRequisitionDetails(@PathVariable Long requisitionId, ModelMap model,@ModelAttribute("getRequisitionsList") List<ProjectRequisition> projectRequisitions) {
+	public String getProjectRequisitionDetails(@PathVariable Long requisitionId, ModelMap model,
+			@ModelAttribute("getRequisitionsList") List<ProjectRequisition> projectRequisitions) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting getProjectRequisitionDetails API---------- requisitionId :: " + requisitionId);
-		
+
 		ProjectRequisition projectRequisition1 = null;
 
 		AuthTokenInfo tokenInfo = sendTokenRequest();
@@ -498,18 +501,17 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 		try {
 			ResponseEntity<ProjectRequisition> response = restTemplate.exchange(
 					ErpConstants.REST_SERVICE_URI + "/projectRequisition/" + requisitionId
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, ProjectRequisition.class);
-			
-			System.out.println("mmm response.getBody() : "+response.getBody());
+							+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(),
+					HttpMethod.GET, request, ProjectRequisition.class);
+
+			System.out.println("mmm response.getBody() : " + response.getBody());
 			projectRequisition1 = (ProjectRequisition) response.getBody();
 			System.out.println(projectRequisition1 + " 3###############projectssMap");
 
 		} catch (Exception excep) {
 			excep.printStackTrace();
 		}
-		
+
 		ProjectRequisition projectRequisition = null;
 
 		for (ProjectRequisition v : projectRequisitions) {
@@ -520,13 +522,10 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 			}
 		}
 
-		List<RequisitionItem> requisitionItems=projectRequisition.getRequisitionItems();
+		List<RequisitionItem> requisitionItems = projectRequisition.getRequisitionItems();
 		for (RequisitionItem requisitionItem : requisitionItems) {
-			System.out.println("################ "+requisitionItem.getItemId());
+			System.out.println("################ " + requisitionItem.getItemId());
 		}
-	
-		
-		
 
 		model.addAttribute("projectRequistionForm", projectRequisition1);
 		model.addAttribute("loggedinuser", u.getPrincipal());
@@ -537,7 +536,7 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 	@RequestMapping(value = { "/editRequistion" }, method = RequestMethod.GET)
 	public String editRequistion(@ModelAttribute("requistionForm") Requisition requistion, BindingResult result,
 			ModelMap model) {
-		
+
 		List<ProjectRequisition> projectRequisitionList = null;
 
 		try {
@@ -575,10 +574,12 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 
 						projectRequisition.setRequisitionId(i.longValue());
 
-						/*projectRequisition
-								.setRequisitionCreatedDate((Date) linkedHashMap.get("requisitionCreatedDate"));
-						projectRequisition
-								.setRequisitionUpdatedDate((Date) linkedHashMap.get("requisitionUpdatedDate"));*/
+						/*
+						 * projectRequisition .setRequisitionCreatedDate((Date)
+						 * linkedHashMap.get("requisitionCreatedDate"));
+						 * projectRequisition .setRequisitionUpdatedDate((Date)
+						 * linkedHashMap.get("requisitionUpdatedDate"));
+						 */
 						projectRequisition.setRequisitionStatus((String) linkedHashMap.get("requisitionStatus"));
 						projectRequisition
 								.setRequisitionJustification((String) linkedHashMap.get("requisitionJustification"));
@@ -647,10 +648,11 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 									+ linkedHashrequisitionItemsMap.get("checked"));
 							System.out.println("linkedHashrequisitionItemsMap.get(usedFor)).longValue() "
 									+ linkedHashrequisitionItemsMap.get("usedFor"));
-							
+
 							requisitionItem.setUnitId(((Integer) unitMap.get("unitId")).longValue());
 
-							requisitionItem.setRequisitionItemId(((Integer) linkedHashrequisitionItemsMap.get("requisitionItemId")).longValue());
+							requisitionItem.setRequisitionItemId(
+									((Integer) linkedHashrequisitionItemsMap.get("requisitionItemId")).longValue());
 
 							requisitionItem
 									.setQuantity(((Integer) linkedHashrequisitionItemsMap.get("quantity")).longValue());
@@ -684,7 +686,6 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 
 		System.out.println("########################## getRequisitionsList #################################  ");
 
-
 		model.addAttribute("getRequisitionsList", projectRequisitionList);
 		model.addAttribute("editRequisitionStage", "getRequisitionList");
 		return "editRequistion";
@@ -692,52 +693,35 @@ System.out.println("\nTesting getProjectRequisitionDetails API---------- requisi
 	}
 
 	@RequestMapping(value = { "/deleteRequisitionDetails/{projectRequisitionId}" }, method = RequestMethod.GET)
-	public String deleteProjectRequisitionDetails(@PathVariable("projectRequisitionId") Long projectRequisitionId, ModelMap model) {
+	public String deleteProjectRequisitionDetails(@PathVariable("projectRequisitionId") Long projectRequisitionId,
+			ModelMap model) {
 
+		System.out.println("\nTesting deleteRequisitionDetails API---------- requisitionId :: " + projectRequisitionId);
 
-System.out.println("\nTesting deleteRequisitionDetails API---------- requisitionId :: " + projectRequisitionId);
-		
-		ProjectRequisition projectRequisition1 = null;
+		ProjectRequisition projectRequisition = new ProjectRequisition();
+		projectRequisition.setRequisitionId(projectRequisitionId);
 
 		AuthTokenInfo tokenInfo = sendTokenRequest();
-		RestTemplate restTemplate = new RestTemplate();
-		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
+		// RestTemplate restTemplate = new RestTemplate();
+		// HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 
-	/*	try {
-			ResponseEntity<ProjectRequisition> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI + "/projectRequisition/" + requisitionId
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, ProjectRequisition.class);
-			
-			System.out.println("mmm response.getBody() : "+response.getBody());
-			projectRequisition1 = (ProjectRequisition) response.getBody();
-			System.out.println(projectRequisition1 + " 3###############projectssMap");
+		try {
 
-		} catch (Exception excep) {
-			excep.printStackTrace();
+			// AuthTokenInfo tokenInfo = sendTokenRequest();
+
+			RestTemplate restTemplate = new RestTemplate();
+			HttpEntity<Object> request = new HttpEntity<Object>(projectRequisition, getHeaders());
+
+			try {
+				restTemplate.put(ErpConstants.PROJECTREQUISITION_DELETE + ErpConstants.QPM_ACCESS_TOKEN
+						+ tokenInfo.getAccess_token(), request, ProjectRequisition.class);
+			} catch (HttpClientErrorException excep) {
+				excep.printStackTrace();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		*/
-		
-		/*AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting delete User API----------");
-		RestTemplate restTemplate = new RestTemplate();
-		HttpEntity<String> request = new HttpEntity<String>(getHeaders());*/
-		/*System.out.println(" URL :::" + ErpConstants.REST_SERVICE_URI
-				+ "/user/delete/" + requisitionId + ErpConstants.QPM_ACCESS_TOKEN
-				+ tokenInfo.getAccess_token() + HttpMethod.GET + request
-				+ User.class);*/
-		restTemplate.exchange(
-				ErpConstants.PROJECTREQUISITION_DELETE + projectRequisitionId
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.DELETE,
-				request, ProjectRequisition.class);
-		
-		
-		
-		
-		
-		
 
 		return "redirect:/projectRequisition/editRequistion";
 
@@ -1187,10 +1171,12 @@ System.out.println("\nTesting deleteRequisitionDetails API---------- requisition
 
 						projectRequisition.setRequisitionId(i.longValue());
 
-						/*projectRequisition
-								.setRequisitionCreatedDate((Date) linkedHashMap.get("requisitionCreatedDate"));
-						projectRequisition
-								.setRequisitionUpdatedDate((Date) linkedHashMap.get("requisitionUpdatedDate"));*/
+						/*
+						 * projectRequisition .setRequisitionCreatedDate((Date)
+						 * linkedHashMap.get("requisitionCreatedDate"));
+						 * projectRequisition .setRequisitionUpdatedDate((Date)
+						 * linkedHashMap.get("requisitionUpdatedDate"));
+						 */
 						projectRequisition.setRequisitionStatus((String) linkedHashMap.get("requisitionStatus"));
 						projectRequisition
 								.setRequisitionJustification((String) linkedHashMap.get("requisitionJustification"));
@@ -1259,10 +1245,11 @@ System.out.println("\nTesting deleteRequisitionDetails API---------- requisition
 									+ linkedHashrequisitionItemsMap.get("checked"));
 							System.out.println("linkedHashrequisitionItemsMap.get(usedFor)).longValue() "
 									+ linkedHashrequisitionItemsMap.get("usedFor"));
-							
+
 							requisitionItem.setUnitId(((Integer) unitMap.get("unitId")).longValue());
 
-							requisitionItem.setRequisitionItemId(((Integer) linkedHashrequisitionItemsMap.get("requisitionItemId")).longValue());
+							requisitionItem.setRequisitionItemId(
+									((Integer) linkedHashrequisitionItemsMap.get("requisitionItemId")).longValue());
 
 							requisitionItem
 									.setQuantity(((Integer) linkedHashrequisitionItemsMap.get("quantity")).longValue());
@@ -1296,7 +1283,7 @@ System.out.println("\nTesting deleteRequisitionDetails API---------- requisition
 
 		System.out.println("########################## getRequisitionsList #################################  ");
 
-		//return Test.getRequisitions();
+		// return Test.getRequisitions();
 		return projectRequisitionList;
 	}
 
