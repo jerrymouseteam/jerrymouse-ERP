@@ -175,7 +175,7 @@
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Select Bank</label>
+											<label>Bank Name</label>
 											
 											<form:input path="bank_name" type="text"
 													class="form-control" id="bank_name"
@@ -222,7 +222,7 @@
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Select Branch</label>
+											<label>Bank Branch Name</label>
 											
 											<form:input path="bank_branch_name" type="text"
 													class="form-control" id="bank_branch_name"

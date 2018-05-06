@@ -83,7 +83,7 @@
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Select Bank</label>
+												<label>Bank Name</label>
 
 												<%--  <form:select path="bankId" items="${getBanks}"
 													multiple="false" itemValue="bank_id" itemLabel="bank_name"
@@ -142,7 +142,7 @@
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Select Branch</label>
+												<label>Bank Branch Name</label>
 
 												
 
