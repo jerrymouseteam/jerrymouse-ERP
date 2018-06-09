@@ -88,8 +88,7 @@ public class UserController {
 	 */
 	private static HttpHeaders getHeadersWithClientCredentials() {
 		String plainClientCredentials = "my-trusted-client:secret";
-		String base64ClientCredentials = new String(
-				Base64.encodeBase64(plainClientCredentials.getBytes()));
+		String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
 
 		HttpHeaders headers = getHeaders();
 		headers.add("Authorization", "Basic " + base64ClientCredentials);
@@ -108,11 +107,9 @@ public class UserController {
 			HttpHeaders h = getHeadersWithClientCredentials();
 			HttpEntity<String> request = new HttpEntity<String>(h);
 			ResponseEntity<Object> response = restTemplate.exchange(
-					ErpConstants.AUTH_SERVER_URI
-							+ ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST,
-					request, Object.class);
-			LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response
-					.getBody();
+					ErpConstants.AUTH_SERVER_URI + ErpConstants.QPM_PASSWORD_GRANT, HttpMethod.POST, request,
+					Object.class);
+			LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
 
 			if (map != null) {
 				tokenInfo = new AuthTokenInfo();
@@ -141,9 +138,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/", "/project" }, method = RequestMethod.GET)
-	public String UserDashboard(
-			HttpServletRequest request,
-			ModelMap model,
+	public String UserDashboard(HttpServletRequest request, ModelMap model,
 			@RequestParam(value = "remember-me", required = false) boolean asSelectedCheckbox) {
 		System.out.println("asSelectedCheckbox" + asSelectedCheckbox);
 		Cookie[] cookies = request.getCookies();
@@ -192,13 +187,9 @@ public class UserController {
 
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 		try {
-			ResponseEntity<List> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI + "/user/"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, List.class);
-			List<LinkedHashMap<String, Object>> usersMap = (List<LinkedHashMap<String, Object>>) response
-					.getBody();
+			ResponseEntity<List> response = restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/"
+					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.GET, request, List.class);
+			List<LinkedHashMap<String, Object>> usersMap = (List<LinkedHashMap<String, Object>>) response.getBody();
 			if (usersMap != null) {
 
 				model.addAttribute("users", usersMap);
@@ -232,9 +223,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/registerProject" }, method = RequestMethod.GET)
-	public String registerProject(
-			@ModelAttribute("projectForm") Project project,
-			BindingResult result, ModelMap model) {
+	public String registerProject(@ModelAttribute("projectForm") Project project, BindingResult result,
+			ModelMap model) {
 
 		model.addAttribute("success", "");
 
@@ -252,12 +242,10 @@ public class UserController {
 	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-	public String saveUser(@Valid @ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model) {
+	public String saveUser(@Valid @ModelAttribute("userForm") User user, BindingResult result, ModelMap model) {
 
 		System.out.println("AppController -- saveUser -- User : " + user);
-		System.out.println("AppController -- saveUser -- User : "
-				+ user.getUserProfiles());
+		System.out.println("AppController -- saveUser -- User : " + user.getUserProfiles());
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 
 		if (result.hasErrors()) {
@@ -272,25 +260,21 @@ public class UserController {
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		ResponseEntity<User> response = null;
 		try {
-			response = restTemplate.postForEntity(ErpConstants.REST_SERVICE_URI
-					+ "/user/create/" + ErpConstants.QPM_ACCESS_TOKEN
-					+ tokenInfo.getAccess_token(), request, User.class);
+			response = restTemplate.postForEntity(ErpConstants.REST_SERVICE_URI + "/user/create/"
+					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), request, User.class);
 		} catch (HttpClientErrorException excep) {
 			if (HttpStatus.CONFLICT.equals(excep.getStatusCode())) {
-				FieldError ssoError = new FieldError("user", "ssoId",
-						messageSource.getMessage("non.unique.ssoId",
-								new String[] { user.getSsoId() },
-								Locale.getDefault()));
+				FieldError ssoError = new FieldError("user", "ssoId", messageSource.getMessage("non.unique.ssoId",
+						new String[] { user.getSsoId() }, Locale.getDefault()));
 				result.addError(ssoError);
 				return "registration";
 			}
 		}
 
-		System.out.println(" What is the response code "
-				+ response.getStatusCode() + " ## " + user.getSsoId());
+		System.out.println(" What is the response code " + response.getStatusCode() + " ## " + user.getSsoId());
 
-		model.addAttribute("success", "User " + user.getFirstName() + " "
-				+ user.getLastName() + " registered successfully");
+		model.addAttribute("success",
+				"User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		User user1 = new User();
 		model.addAttribute("userForm", user1);
@@ -302,8 +286,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUserList" }, method = RequestMethod.GET)
-	public String editUserList(@ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model) {
+	public String editUserList(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model) {
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 		System.out.println("\nTesting getUser API----------");
 
@@ -323,9 +306,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.POST)
-	public String editUser(@ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model, HttpServletRequest rq,
-			HttpServletResponse resp) {
+	public String editUser(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model,
+			HttpServletRequest rq, HttpServletResponse resp) {
 
 		System.out.println("\n Request " + rq.getPathInfo());
 		System.out.println("AppController -- editUser -- User : " + user);
@@ -337,8 +319,7 @@ public class UserController {
 	@RequestMapping(value = { "/editUserDetails/{ssoId}" }, method = RequestMethod.GET)
 	public String editUserDetails(@PathVariable String ssoId, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting editUserTest API---------- ssoId :: "
-				+ ssoId);
+		System.out.println("\nTesting editUserTest API---------- ssoId :: " + ssoId);
 
 		User user = userService.findBySSO(ssoId);
 
@@ -354,49 +335,42 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/updateUserDetails" }, method = RequestMethod.POST)
-	public String updateUserDetails(ModelMap model,
-			@ModelAttribute("userForm") User user) {
-		System.out
-				.println("*********************************************************");
-		System.out.println("\nTesting updateUserDetails API---------- user :: "
-				+ user);
-		System.out
-				.println("*********************************************************");
+	public String updateUserDetails(ModelMap model, @ModelAttribute("userForm") User user) {
+		System.out.println("*********************************************************");
+		System.out.println("\nTesting updateUserDetails API---------- user :: " + user);
+		System.out.println("*********************************************************");
 
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
 		try {
-			restTemplate.put(
-					ErpConstants.REST_SERVICE_URI + "/user/" + user.getSsoId()
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), request, User.class);
+			restTemplate.put(ErpConstants.REST_SERVICE_URI + "/user/" + user.getSsoId() + ErpConstants.QPM_ACCESS_TOKEN
+					+ tokenInfo.getAccess_token(), request, User.class);
 		} catch (HttpClientErrorException excep) {/*
-												 * if
-												 * (HttpStatus.CONFLICT.equals
-												 * (excep.getStatusCode())) {
-												 * FieldError ssoError = new
-												 * FieldError("user", "ssoId",
-												 * messageSource
-												 * .getMessage("non.unique.ssoId"
-												 * , new String[] {
-												 * user.getSsoId() },
-												 * Locale.getDefault()));
-												 * result.addError(ssoError);
-												 * return "registration"; }
-												 */
+													 * if (HttpStatus.CONFLICT.
+													 * equals
+													 * (excep.getStatusCode()))
+													 * { FieldError ssoError =
+													 * new FieldError("user",
+													 * "ssoId", messageSource
+													 * .getMessage(
+													 * "non.unique.ssoId" , new
+													 * String[] {
+													 * user.getSsoId() },
+													 * Locale.getDefault()));
+													 * result.addError(ssoError)
+													 * ; return "registration";
+													 * }
+													 */
 		}
 
 		return "redirect:/editUserList";
 	}
 
 	@RequestMapping(value = { "/getUserProjectDetails/{ssoId}" }, method = RequestMethod.GET)
-	public String getUserProjectDetails(@PathVariable String ssoId,
-			ModelMap model) {
+	public String getUserProjectDetails(@PathVariable String ssoId, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out
-				.println("\nTesting getUserProjectDetails API---------- ssoId :: "
-						+ ssoId);
+		System.out.println("\nTesting getUserProjectDetails API---------- ssoId :: " + ssoId);
 
 		// user=getEditUserDetails();
 
@@ -413,12 +387,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/updateUserProjectDetails" }, method = RequestMethod.POST)
-	public String updateUserProjectDetails(ModelMap model,
-			@ModelAttribute("proejctForm") Project project) {
+	public String updateUserProjectDetails(ModelMap model, @ModelAttribute("proejctForm") Project project) {
 
-		System.out
-				.println("\nTesting updateUserProjectDetails API---------- Project :: "
-						+ project);
+		System.out.println("\nTesting updateUserProjectDetails API---------- Project :: " + project);
 
 		model.addAttribute("proejctForm", project);
 		model.addAttribute("ssoId", 1);
@@ -429,11 +400,9 @@ public class UserController {
 
 	@Transactional
 	@RequestMapping(value = { "/getUserProjectListDetails/{ssoId}" }, method = RequestMethod.GET)
-	public String getUserProjectListDetails(@PathVariable String ssoId,
-			ModelMap model) {
+	public String getUserProjectListDetails(@PathVariable String ssoId, ModelMap model) {
 		// AuthTokenInfo tokenInfo = sendTokenRequest();
-		System.out.println("\nTesting editUserTest API---------- ssoId :: "
-				+ ssoId);
+		System.out.println("\nTesting editUserTest API---------- ssoId :: " + ssoId);
 
 		User user = userService.findBySSO(ssoId);
 
@@ -444,13 +413,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/editUserProject" }, method = RequestMethod.POST)
-	public String editUserProject(@ModelAttribute("userForm") User user,
-			BindingResult result, ModelMap model, HttpServletRequest rq,
-			HttpServletResponse resp) {
+	public String editUserProject(@ModelAttribute("userForm") User user, BindingResult result, ModelMap model,
+			HttpServletRequest rq, HttpServletResponse resp) {
 
 		System.out.println("\n editUserProject Request " + rq.getPathInfo());
-		System.out
-				.println("AppController -- editUserProject -- User : " + user);
+		System.out.println("AppController -- editUserProject -- User : " + user);
 
 		return "redirect:/editUserList";
 	}
@@ -460,8 +427,7 @@ public class UserController {
 	 * updating user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/editUser/{ssoId}" }, method = RequestMethod.POST)
-	public String updateUser(@Valid User user, BindingResult result,
-			ModelMap model, @PathVariable String ssoId) {
+	public String updateUser(@Valid User user, BindingResult result, ModelMap model, @PathVariable String ssoId) {
 
 		AuthTokenInfo tokenInfo = sendTokenRequest();
 
@@ -486,15 +452,12 @@ public class UserController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		HttpEntity<Object> request = new HttpEntity<Object>(user, getHeaders());
-		ResponseEntity<User> response = restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/user/" + user.getId()
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.PUT, request,
-				User.class);
+		ResponseEntity<User> response = restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/" + user.getId()
+				+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.PUT, request, User.class);
 		System.out.println(response.getBody());
 
-		model.addAttribute("success", "User " + user.getFirstName() + " "
-				+ user.getLastName() + " updated successfully");
+		model.addAttribute("success",
+				"User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registrationsuccess";
 	}
@@ -509,15 +472,10 @@ public class UserController {
 		System.out.println("\nTesting delete User API----------");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
-		System.out.println(" URL :::" + ErpConstants.REST_SERVICE_URI
-				+ "/user/delete/" + ssoId + ErpConstants.QPM_ACCESS_TOKEN
-				+ tokenInfo.getAccess_token() + HttpMethod.GET + request
-				+ User.class);
-		restTemplate.exchange(
-				ErpConstants.REST_SERVICE_URI + "/user/delete/" + ssoId
-						+ ErpConstants.QPM_ACCESS_TOKEN
-						+ tokenInfo.getAccess_token(), HttpMethod.DELETE,
-				request, User.class);
+		System.out.println(" URL :::" + ErpConstants.REST_SERVICE_URI + "/user/delete/" + ssoId
+				+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token() + HttpMethod.GET + request + User.class);
+		restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/delete/" + ssoId + ErpConstants.QPM_ACCESS_TOKEN
+				+ tokenInfo.getAccess_token(), HttpMethod.DELETE, request, User.class);
 
 		return "redirect:/list";
 	}
@@ -563,15 +521,12 @@ public class UserController {
 	 * RememberMe functionality is useless in your app.
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request,
-			HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
+	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			// new SecurityContextLogoutHandler().logout(request, response,
 			// auth);
-			persistentTokenBasedRememberMeServices.logout(request, response,
-					auth);
+			persistentTokenBasedRememberMeServices.logout(request, response, auth);
 			SecurityContextHolder.getContext().setAuthentication(null);
 		}
 		return "redirect:/login?logout";
@@ -582,8 +537,7 @@ public class UserController {
 	 */
 	private String getPrincipal() {
 		String userName = null;
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
 			userName = ((UserDetails) principal).getUsername();
@@ -598,14 +552,12 @@ public class UserController {
 	 * else false.
 	 */
 	private boolean isCurrentAuthenticationAnonymous() {
-		final Authentication authentication = SecurityContextHolder
-				.getContext().getAuthentication();
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return authenticationTrustResolver.isAnonymous(authentication);
 	}
 
 	@RequestMapping(value = { "/forgotPassword" }, method = RequestMethod.POST)
-	public @ResponseBody
-	String forgotPassword(@RequestParam String emailId) {
+	public @ResponseBody String forgotPassword(@RequestParam String emailId) {
 
 		System.out.println("\nTesting delcheckEmail  User API----------");
 		String email = emailId.replaceAll("=", "").replaceAll("%40", "@");
@@ -625,12 +577,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/changepassword" }, method = RequestMethod.GET)
-	public @ResponseBody
-	String changePassword() {
+	public @ResponseBody String changePassword() {
 
 		String userName = null;
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
 			userName = ((UserDetails) principal).getUsername();
@@ -670,11 +620,8 @@ public class UserController {
 		HttpEntity<String> request = new HttpEntity<String>(getHeaders());
 
 		try {
-			ResponseEntity<List> response = restTemplate.exchange(
-					ErpConstants.REST_SERVICE_URI + "/user/"
-							+ ErpConstants.QPM_ACCESS_TOKEN
-							+ tokenInfo.getAccess_token(), HttpMethod.GET,
-					request, List.class);
+			ResponseEntity<List> response = restTemplate.exchange(ErpConstants.REST_SERVICE_URI + "/user/"
+					+ ErpConstants.QPM_ACCESS_TOKEN + tokenInfo.getAccess_token(), HttpMethod.GET, request, List.class);
 			userList = response.getBody();
 		} catch (HttpClientErrorException excep) {
 			if (HttpStatus.NO_CONTENT.equals(excep.getStatusCode())) {
@@ -694,9 +641,8 @@ public class UserController {
 	 * p1.setProjectClientName("projectSet1 ERP CLIENT 1");
 	 * p1.setStructuralName("projectSet1 EPR1 Sector 1");
 	 * 
-	 * Project p2 = new Project(); p2.setProject_id(2);
-	 * p2.setProjectName("projectSet1 EPR2");
-	 * p2.setProjectClientName("projectSet1 ERP CLIENT 2");
+	 * Project p2 = new Project(); p2.setProject_id(2); p2.setProjectName(
+	 * "projectSet1 EPR2"); p2.setProjectClientName("projectSet1 ERP CLIENT 2");
 	 * p2.setStructuralName("projectSet1 EPR1 Sector 2"); projectSet1.add(p1);
 	 * projectSet1.add(p2);
 	 * 

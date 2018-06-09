@@ -82,7 +82,7 @@ public class VendorRestController {
 	}
 
 	@RequestMapping(value = "/vendor/list", method = RequestMethod.GET)
-	public ResponseEntity<List<Vendor>> listAllVendors() {
+	public ResponseEntity<List<Vendor>> listAllVendors() throws Exception {
 		List<Vendor> vendors = vendorService.findAllVendors();
 		System.out.println(" Users in web service " + vendors);
 		if (vendors.isEmpty()) {

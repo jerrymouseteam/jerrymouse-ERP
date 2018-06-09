@@ -52,6 +52,11 @@ public class ErpConstants {
 	public static final String VENDOR_DELETE = REST_SERVICE_URI + "/vendor/{vendorId}";
 	public static final String VENDOR_GET_ALL = REST_SERVICE_URI + "/vendor/list";
 	public static final String VENDOR_GET_BY_ID = REST_SERVICE_URI + "/vendor/{vendorId}";
+	
+	public static final String REQUESTQUOTATION_CREATE_PROC = REST_SERVICE_URI + "/requestQuotation/requestQuotationWithProcedure/";
+	public static final String REQUESTQUOTATION_GET_ALL = REST_SERVICE_URI + "/requestQuotation/list";
+	
+	
 
 	public static final String VENDOR_TYPE_CREATE = REST_SERVICE_URI + "/vendorType/create/";
 	public static final String VENDOR_TYPE_UPDATE = REST_SERVICE_URI + "/vendorType/{vendorTypeId}";

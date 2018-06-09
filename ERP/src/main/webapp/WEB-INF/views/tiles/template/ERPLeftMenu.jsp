@@ -104,6 +104,10 @@
 						<p style="color: burlywood;" id="ReqQuotation">Request for
 							Quotation</p>
 				</a></li>
+				<li><a href="<%=request.getContextPath()%>/getRequestQuotations">
+						<p style="color: burlywood;" id="editRequestQuotations">View/Edit Request for
+							Quotation</p>
+				</a></li>
 
 			</div>
 
@@ -142,7 +146,7 @@
 			<!-- Vendor Menu End  -->
 
 
-			<li><a href="#"> <i class="pe-7s-graph2"></i>
+			<li><a href="<%=request.getContextPath()%>/registerTest"> <i class="pe-7s-graph2"></i>
 					<p>Reports</p>
 			</a></li>
 			<li><a href="#"> <i class="pe-7s-date"></i>

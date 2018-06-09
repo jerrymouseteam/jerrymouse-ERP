@@ -14,7 +14,7 @@ public interface VendorService {
 
 	Vendor updateVendor(Vendor vendor);
 
-	List<Vendor> findAllVendors();
+	List<Vendor> findAllVendors() throws Exception;
 
 	void deleteVendor(Vendor vendor);
 

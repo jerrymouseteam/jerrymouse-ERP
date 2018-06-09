@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDao<PK extends Serializable, T> {
@@ -30,6 +31,11 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	 Session getOpenSession() {
 		return sessionFactory.openSession();
 	}
+	 
+	 protected SessionFactoryImplementor getSessionFactoryImplementor() {
+			return (SessionFactoryImplementor) sessionFactory;
+		}
+	 
 
 	@SuppressWarnings("unchecked")
 	public T getByKey(long bankId) {

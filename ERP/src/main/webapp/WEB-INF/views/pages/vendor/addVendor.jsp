@@ -26,6 +26,13 @@
 
 					<form:form method="post" modelAttribute="vendorForm"
 						action="${userActionUrl}">
+						
+						<% out.print("RESPONSE character encoding=" + response.getCharacterEncoding() + " " );
+out.print("REQUEST character encoding=" + request.getCharacterEncoding() + " ");
+out.print("JVM encoding " + System.getProperty("file.encoding") + " ");
+
+
+%>
 						<div class="col-md-12">
 
 							<div class="content">

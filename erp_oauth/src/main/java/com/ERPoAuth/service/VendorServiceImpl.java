@@ -41,7 +41,7 @@ public class VendorServiceImpl implements VendorService {
 	}
 
 	@Override
-	public List<Vendor> findAllVendors() {
+	public List<Vendor> findAllVendors() throws Exception {
 		// TODO Auto-generated method stub
 		return dao.findAllVendors();
 	}

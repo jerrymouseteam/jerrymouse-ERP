@@ -108,6 +108,13 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/quotation/requestQuotation.jsp" />
 	</definition>
+	
+	<definition name="editRequestQuotation" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/quotation/editRequestQuotation.jsp" />
+	</definition>
+	
+	
 	<!-- Quatation -->
 	
 	<!-- Challan -->
@@ -144,5 +151,17 @@
 	</definition> -->
 
 	<!-- Vendor -->
+	
+	
+	<!-- Test -->
+
+	<definition name="registerTest" extends="erp-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/test.jsp" />
+	</definition>
+	 
+	
+
+	<!-- Test -->
 	
 </tiles-definitions>

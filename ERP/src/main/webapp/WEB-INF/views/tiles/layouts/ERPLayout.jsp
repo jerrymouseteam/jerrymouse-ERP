@@ -7,7 +7,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+<!-- <meta charset="utf-8" /> -->
+<meta http-equiv="Content-Type"  content="text/html; charset=UTF-8">
 <link rel="icon" type="image/png"
 	href="<%=request.getContextPath()%>/static/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -113,12 +114,16 @@ iframe {
 
 
 
-
+ 
 
 
 </head>
 
 <body>
+
+<% response.setContentType( "text/html; charset=utf-8" );
+System.setProperty("file.encoding","UTF-8");
+%>
 	<div class="wrapper">
 
 		<tiles:insertAttribute name="menu" />
@@ -173,11 +178,16 @@ iframe {
 <script
 	src="<%=request.getContextPath()%>/static/js/bootstrap-datepicker.js"
 	type="text/javascript"></script>
+	
+	
 
 <script type="text/javascript">
 	
 	$(document).ready(function() { 
-		$('#bankId').change(
+		
+		 
+		
+		/* $('#bankId').change(
 			function() {
 				$.getJSON('/ERP/getBankBranch', {
 					bankId : $(this).val(),
@@ -193,7 +203,7 @@ iframe {
 	 
 					$('#branchId').html(html);
 				});
-			});
+			}); */
 		
 		//====================================
 		
